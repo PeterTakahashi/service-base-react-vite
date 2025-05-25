@@ -1,0 +1,54 @@
+# React + TypeScript + Vite
+
+## Versions
+
+- node 22.12.0
+- react 19.1.0
+- tailwindcss 4.1.7
+- vite 6.3.5
+- axios 1.9.0
+- swr 2.3.3
+
+## Get started
+
+```sh
+npm install
+npm run dev
+npm run storybook # if you want to see storybook
+```
+
+## openapi type rebuild
+
+```
+npx openapi-typescript config/openapi.json --output src/types/api/base.ts
+```
+
+## screan shots
+
+### SignIn
+
+<img src="docs/img/auth/SignIn.png" width="600" />
+
+### SignUp
+
+<img src="docs/img/auth/SignUp.png" width="600" />
+
+### Forgot Password
+
+<img src="docs/img/auth/ForgotPassword.png" width="600" />
+
+### Check Your Email
+
+<img src="docs/img/auth/CheckYourEmail.png" width="600" />
+
+### Not Verified
+
+<img src="docs/img/auth/NotVerified.png" width="600" />
+
+### Home Page
+
+<img src="docs/img/auth/HomePage.png" width="600" />
+
+### Storybook
+
+<img src="docs/img/storyboard/AuthForm.png" width="600" />
