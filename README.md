@@ -1,4 +1,15 @@
-# React + TypeScript + Vite
+# 🚀 FastAPI Auth Starter Kit — Google & GitHub OAuth + React
+
+This is a starter project for building an AI web service with FastAPI and React.
+
+If you're using the [fastapi-users](https://github.com/fastapi-users/fastapi-users) library for authentication, you'll find there's a lot to set up: configuring APIs, setting up Google and GitHub OAuth, adding tests with pytest, setting up a code linter, and more. It can take a lot of time.
+
+And if you rely too much on LLM-generated code, the result is often insecure and messy.
+
+So I created this project to save you time and give you a clean starting point.
+
+- Backend (FastAPI): [service-base-auth-fastapi](https://github.com/PeterTakahashi/service-base-auth-fastapi)
+- Frontend (React + Vite): [service-base-auth-react-vite](https://github.com/PeterTakahashi/service-base-auth-react-vite)
 
 ## Backend Repository
 
