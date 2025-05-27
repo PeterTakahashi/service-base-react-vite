@@ -4,9 +4,9 @@ import { useCallback, useState } from "react";
 import { CheckoutForm } from "@/components/forms/CheckoutForm";
 import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/useCreatePaymentIntentMutation";
 import {
-  PaymentIntentCreateFrom,
-  type paymentIntentValues,
-} from "@/components/forms/PaymentIntentCreateFrom";
+  PaymentIntentCreateForm,
+  type PaymentIntentValues,
+} from "@/components/forms/PaymentIntentCreateForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 
@@ -16,7 +16,7 @@ export function DepositPage() {
   const [amount, setAmount] = useState<number | null>(null); // Amount in cents
 
   const handlePaymentIntentCreate = useCallback(
-    async (data: paymentIntentValues) => {
+    async (data: PaymentIntentValues) => {
       const centAmount = data.amount * 100; // Convert to cents
       const paymentIntent = await createPaymentIntent({
         amount: centAmount,
@@ -27,7 +27,6 @@ export function DepositPage() {
     [createPaymentIntent]
   );
 
-  console.log(amount);
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
@@ -36,7 +35,7 @@ export function DepositPage() {
             Checkout
           </h2>
           {amount == null && (
-            <PaymentIntentCreateFrom onSubmit={handlePaymentIntentCreate} />
+            <PaymentIntentCreateForm onSubmit={handlePaymentIntentCreate} />
           )}
           {clientSecret && amount && (
             <Elements stripe={stripePromise} options={{ clientSecret }}>
