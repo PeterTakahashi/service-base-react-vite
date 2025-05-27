@@ -446,6 +446,23 @@ export interface components {
              */
             password?: string | null;
         };
+        /** UserWithWalletRead */
+        UserWithWalletRead: {
+            /** Id */
+            id: unknown;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Verified
+             * @default false
+             */
+            is_verified: boolean;
+            /** @description The wallet associated with the user. */
+            wallet: components["schemas"]["WalletRead"];
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -454,6 +471,32 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /**
+         * WalletRead
+         * @description Schema for reading wallet information.
+         */
+        WalletRead: {
+            /**
+             * Balance
+             * @description The current balance of the wallet.
+             * @example 1000
+             */
+            balance: number;
+            /**
+             * Created At
+             * Format: date-time
+             * @description The date and time when the wallet was created.
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description The date and time when the wallet was last updated.
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
         };
     };
     responses: never;
@@ -1474,7 +1517,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserRead"];
+                    "application/json": components["schemas"]["UserWithWalletRead"];
                 };
             };
             /** @description Unauthorized */

@@ -37,7 +37,6 @@ export const PaymentIntentCreateForm: React.FC<
       </div>
 
       <div className="grid gap-1.5">
-        <Label htmlFor="amount">Amount</Label>
         <Input
           type="number"
           id="amount"

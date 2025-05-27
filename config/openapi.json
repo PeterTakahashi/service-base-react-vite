@@ -1126,7 +1126,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserRead" }
+                "schema": { "$ref": "#/components/schemas/UserWithWalletRead" }
               }
             }
           },
@@ -1636,6 +1636,24 @@
         "type": "object",
         "title": "UserUpdate"
       },
+      "UserWithWalletRead": {
+        "properties": {
+          "id": { "title": "Id" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified",
+            "default": false
+          },
+          "wallet": {
+            "$ref": "#/components/schemas/WalletRead",
+            "description": "The wallet associated with the user."
+          }
+        },
+        "type": "object",
+        "required": ["id", "email", "wallet"],
+        "title": "UserWithWalletRead"
+      },
       "ValidationError": {
         "properties": {
           "loc": {
@@ -1649,6 +1667,34 @@
         "type": "object",
         "required": ["loc", "msg", "type"],
         "title": "ValidationError"
+      },
+      "WalletRead": {
+        "properties": {
+          "balance": {
+            "type": "integer",
+            "title": "Balance",
+            "description": "The current balance of the wallet.",
+            "example": 1000
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "The date and time when the wallet was created.",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "The date and time when the wallet was last updated.",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": ["balance", "created_at", "updated_at"],
+        "title": "WalletRead",
+        "description": "Schema for reading wallet information."
       }
     },
     "securitySchemes": {
