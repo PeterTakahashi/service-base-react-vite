@@ -16,6 +16,7 @@ export const HomePage: FC = () => {
     <div className="min-h-screen">
       <Header
         title={serviceName}
+        onDeposit={() => navigate("/deposit")}
         onEditProfile={() => navigate("/me/edit")}
         onLogout={onLogout}
       />

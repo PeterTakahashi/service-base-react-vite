@@ -141,7 +141,7 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ]
@@ -609,7 +609,7 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ]
@@ -722,7 +722,7 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ]
@@ -731,8 +731,8 @@
     "/auth/cookie/google/authorize": {
       "get": {
         "tags": ["auth", "auth"],
-        "summary": "Oauth:Google.Cookie.Authorize",
-        "operationId": "oauth_google_cookie_authorize_auth_cookie_google_authorize_get",
+        "summary": "Oauth:Google.Cookie Oauth.Authorize",
+        "operationId": "oauth_google_cookie_oauth_authorize_auth_cookie_google_authorize_get",
         "parameters": [
           {
             "name": "scopes",
@@ -750,13 +750,6 @@
             "description": "Language preference (e.g., en, ja)",
             "required": false,
             "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -788,23 +781,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
-                    }
-                  ]
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -828,9 +804,9 @@
     "/auth/cookie/google/callback": {
       "get": {
         "tags": ["auth", "auth"],
-        "summary": "Oauth:Google.Cookie.Callback",
+        "summary": "Oauth:Google.Cookie Oauth.Callback",
         "description": "The response varies based on the authentication backend used.",
-        "operationId": "oauth_google_cookie_callback_auth_cookie_google_callback_get",
+        "operationId": "oauth_google_cookie_oauth_callback_auth_cookie_google_callback_get",
         "parameters": [
           {
             "name": "code",
@@ -874,13 +850,6 @@
             "description": "Language preference (e.g., en, ja)",
             "required": false,
             "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -921,23 +890,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
-                    }
-                  ]
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -961,8 +913,8 @@
     "/auth/cookie/github/authorize": {
       "get": {
         "tags": ["auth", "auth"],
-        "summary": "Oauth:Github.Cookie.Authorize",
-        "operationId": "oauth_github_cookie_authorize_auth_cookie_github_authorize_get",
+        "summary": "Oauth:Github.Cookie Oauth.Authorize",
+        "operationId": "oauth_github_cookie_oauth_authorize_auth_cookie_github_authorize_get",
         "parameters": [
           {
             "name": "scopes",
@@ -980,13 +932,6 @@
             "description": "Language preference (e.g., en, ja)",
             "required": false,
             "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -1018,23 +963,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
-                    }
-                  ]
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -1058,9 +986,9 @@
     "/auth/cookie/github/callback": {
       "get": {
         "tags": ["auth", "auth"],
-        "summary": "Oauth:Github.Cookie.Callback",
+        "summary": "Oauth:Github.Cookie Oauth.Callback",
         "description": "The response varies based on the authentication backend used.",
-        "operationId": "oauth_github_cookie_callback_auth_cookie_github_callback_get",
+        "operationId": "oauth_github_cookie_oauth_callback_auth_cookie_github_callback_get",
         "parameters": [
           {
             "name": "code",
@@ -1109,7 +1037,7 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
@@ -1250,7 +1178,7 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ]
@@ -1365,7 +1293,103 @@
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
-            "required": true,
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ]
+      }
+    },
+    "/payment-intents": {
+      "post": {
+        "tags": ["payment_intents"],
+        "summary": "Payment Intents:Create Payment Intent",
+        "operationId": "payment_intents_create_payment_intent_payment_intents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentIntentCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentIntentCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
             "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ]
@@ -1499,6 +1523,57 @@
         "type": "object",
         "required": ["authorization_url"],
         "title": "OAuth2AuthorizeResponse"
+      },
+      "PaymentIntentCreate": {
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "minimum": 100.0,
+            "title": "Amount",
+            "description": "The amount to be charged in the smallest currency unit (e.g., cents for USD).",
+            "example": 1000
+          }
+        },
+        "type": "object",
+        "required": ["amount"],
+        "title": "PaymentIntentCreate"
+      },
+      "PaymentIntentCreateResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The unique identifier for the payment intent.",
+            "example": "pi_1F8Y2e2eZvKYlo2C0d3f4g5h6"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount",
+            "description": "The amount to be charged in the smallest currency unit (e.g., cents for USD).",
+            "example": 1000
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "description": "The currency in which the payment intent is created.",
+            "example": "usd"
+          },
+          "client_secret": {
+            "type": "string",
+            "title": "Client Secret",
+            "description": "The client secret used to confirm the payment intent on the client side.",
+            "example": "pi_1F8Y2e2eZvKYlo2C0d3f4g5h6_secret_1234567890"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "The current status of the payment intent.",
+            "example": "requires_confirmation"
+          }
+        },
+        "type": "object",
+        "required": ["id", "amount", "currency", "client_secret", "status"],
+        "title": "PaymentIntentCreateResponse"
       },
       "UserCreate": {
         "properties": {

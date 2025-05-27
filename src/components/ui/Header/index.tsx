@@ -2,12 +2,14 @@ import React from "react";
 
 type HeaderProps = {
   title: string;
+  onDeposit?: () => void;
   onEditProfile?: () => void;
   onLogout?: () => void;
 };
 
 export const Header: React.FC<HeaderProps> = ({
   title,
+  onDeposit,
   onEditProfile,
   onLogout,
 }) => {
@@ -19,6 +21,13 @@ export const Header: React.FC<HeaderProps> = ({
         </h2>
       </div>
       <div className="mt-4 flex md:mt-0">
+        <button
+          type="button"
+          className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+          onClick={onDeposit}
+        >
+          deposit
+        </button>
         <button
           type="button"
           className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"

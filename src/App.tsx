@@ -12,6 +12,7 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { ProtectedRoute } from "@/components/routes/ProtectedRoute";
 import { PublicOnlyRoute } from "@/components/routes/PublicOnlyRoute";
 import { ToastMessageHandler } from "@/components/common/ToastMessageHandler";
+import { DepositPage } from "@/pages/DepositPage";
 
 const routes = [
   { path: "/", element: <HomePage />, isPrivate: true },
@@ -41,6 +42,11 @@ const routes = [
   {
     path: "/me/edit",
     element: <EditUserPage />,
+    isPrivate: true,
+  },
+  {
+    path: "/deposit",
+    element: <DepositPage />,
     isPrivate: true,
   },
 ];
