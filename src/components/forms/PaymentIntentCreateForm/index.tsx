@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 
 import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
 import { createPaymentIntentSchema } from "@/features/zodSchemas/paymentIntent/createPaymentIntentSchema";
 
