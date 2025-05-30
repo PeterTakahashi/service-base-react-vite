@@ -6,7 +6,7 @@ import { signUpSchema } from "@/features/zodSchemas/auth/signUpSchema";
 import { signInSchema } from "@/features/zodSchemas/auth/signInSchema";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { FormButton } from "@/components/ui/FormButton";
+import { Button } from "@/components/ui/Button";
 import { GithubAuthButton } from "@/components/ui/GithubAuthButton";
 import { GoogleAuthButton } from "@/components/ui/GoogleAuthButton";
 
@@ -77,20 +77,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           <div>
             <a
               href="/forgot-password"
-              className="font-semibold text-sm text-right text-teal-600 hover:text-teal-500"
+              className="font-semibold text-sm text-right text-primary-600 hover:text-primary-500"
             >
               Forgot password?
             </a>
           </div>
         )}
 
-        <FormButton
+        <Button
           type="submit"
           disabled={isSubmitting}
           className="flex w-full justify-center mt-8"
         >
           {isSubmitting ? "Sending..." : isSignUp ? "Sign up" : "Sign in"}
-        </FormButton>
+        </Button>
 
         <div>
           <div className="relative mt-10">

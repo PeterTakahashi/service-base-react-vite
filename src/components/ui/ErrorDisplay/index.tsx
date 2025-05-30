@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/Button";
 
 type ErrorDisplayProps = {
   status: number;
@@ -10,9 +11,9 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
   errorMessage,
 }) => {
   return (
-    <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <main className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
       <div className="text-center">
-        <p className="text-base font-semibold text-teal-600">{status}</p>
+        <p className="text-base font-semibold text-primary-600">{status}</p>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-balance text-gray-900">
           {errorMessage}
         </h1>
@@ -20,11 +21,8 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
           Sorry, we couldn’t find the page you’re looking for.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <a
-            href="/"
-            className="rounded-md bg-teal-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-teal-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          >
-            Go back home
+          <a href="/">
+            <Button>Go back home</Button>
           </a>
         </div>
       </div>

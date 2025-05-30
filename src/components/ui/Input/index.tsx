@@ -1,4 +1,5 @@
 import * as React from "react";
+import { cn } from "@/lib/utils/cn";
 
 function Input({
   className,
@@ -9,22 +10,26 @@ function Input({
   const hasError = Boolean(errorMessage);
   return (
     <>
-      <div className="grid gap-1.5">
+      <div className="min-h-15">
         <input
           type={type}
           data-slot="input"
-          className={
-            "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 sm:text-sm/6" +
-            (hasError
-              ? "col-start-1 row-start-1 outline-red-300 placeholder:text-red-300 focus:outline-2 focus:-outline-offset-2 focus:outline-red-600"
-              : "focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600") +
-            (className ? ` ${className}` : "")
-          }
+          className={cn(
+            "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+            "focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[3px]",
+            "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+            hasError &&
+              "border-red-600 focus-visible:border-red-600 focus-visible:ring-red-600/10 focus-visible:ring-[3px] placeholder:text-red-300 dark:placeholder:text-red-200",
+            className
+          )}
           {...props}
         />
-      </div>
-      <div className="h-1">
-        {hasError && <p className="text-sm text-red-600">{errorMessage}</p>}
+
+        {hasError && (
+          <div className="h-10">
+            <p className="text-sm text-red-600">{errorMessage}</p>
+          </div>
+        )}
       </div>
     </>
   );

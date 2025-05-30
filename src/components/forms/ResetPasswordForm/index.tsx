@@ -5,7 +5,7 @@ import type { z } from "zod";
 import { resetPasswordSchema } from "@/features/zodSchemas/auth/resetPasswordSchema";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { FormButton } from "@/components/ui/FormButton";
+import { Button } from "@/components/ui/Button";
 
 export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 
@@ -27,7 +27,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="w-full max-w-sm mx-auto">
-        <div className="grid items-center gap-1.5 mt-2">
+        <div className="grid items-center gap-1.5">
           <Label htmlFor="password">New Password</Label>
           <Input
             type="password"
@@ -40,7 +40,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
           />
         </div>
 
-        <div className="grid items-center gap-1.5 mt-2">
+        <div className="grid items-center gap-1.5">
           <Label htmlFor="confirmPassword"> Confirm Password</Label>
           <Input
             type="password"
@@ -55,13 +55,13 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
           />
         </div>
 
-        <FormButton
+        <Button
           type="submit"
           disabled={isSubmitting}
           className="w-full rounded-md mt-4"
         >
           {isSubmitting ? "Sending..." : "Reset Password"}
-        </FormButton>
+        </Button>
       </div>
     </form>
   );

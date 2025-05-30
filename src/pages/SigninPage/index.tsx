@@ -19,7 +19,7 @@ export const SigninPage: FC = () => {
           No account yet?{" "}
           <a
             href="/signup"
-            className="font-semibold text-teal-600 hover:text-teal-500"
+            className="font-semibold text-primary-600 hover:text-primary-500"
           >
             Create an account
           </a>
