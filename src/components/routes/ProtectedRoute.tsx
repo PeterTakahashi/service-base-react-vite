@@ -2,6 +2,7 @@ import type { FC, ReactNode } from "react";
 import { useUser } from "@/features/hooks/swr/fetcher/user/useUser";
 import { Loading } from "@/components/ui/Loading";
 import { ErrorDisplay } from "@/components/ui/ErrorDisplay";
+import { SidebarLayout } from "@/components/layout/SideBarLayout";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -17,5 +18,5 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   } else if (!user) {
     return;
   }
-  return <>{children}</>;
+  return <SidebarLayout>{children}</SidebarLayout>;
 };
