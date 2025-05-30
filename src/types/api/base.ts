@@ -164,8 +164,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Oauth:Google.Cookie.Authorize */
-        get: operations["oauth_google_cookie_authorize_auth_cookie_google_authorize_get"];
+        /** Oauth:Google.Cookie Oauth.Authorize */
+        get: operations["oauth_google_cookie_oauth_authorize_auth_cookie_google_authorize_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -182,10 +182,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Oauth:Google.Cookie.Callback
+         * Oauth:Google.Cookie Oauth.Callback
          * @description The response varies based on the authentication backend used.
          */
-        get: operations["oauth_google_cookie_callback_auth_cookie_google_callback_get"];
+        get: operations["oauth_google_cookie_oauth_callback_auth_cookie_google_callback_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -201,8 +201,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Oauth:Github.Cookie.Authorize */
-        get: operations["oauth_github_cookie_authorize_auth_cookie_github_authorize_get"];
+        /** Oauth:Github.Cookie Oauth.Authorize */
+        get: operations["oauth_github_cookie_oauth_authorize_auth_cookie_github_authorize_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -219,10 +219,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Oauth:Github.Cookie.Callback
+         * Oauth:Github.Cookie Oauth.Callback
          * @description The response varies based on the authentication backend used.
          */
-        get: operations["oauth_github_cookie_callback_auth_cookie_github_callback_get"];
+        get: operations["oauth_github_cookie_oauth_callback_auth_cookie_github_callback_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -247,6 +247,23 @@ export interface paths {
         head?: never;
         /** Users:Patch Current User */
         patch: operations["users_patch_current_user_users_me_patch"];
+        trace?: never;
+    };
+    "/payment-intents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Payment Intents:Create Payment Intent */
+        post: operations["payment_intents_create_payment_intent_payment_intents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
 }
@@ -341,6 +358,48 @@ export interface components {
             /** Authorization Url */
             authorization_url: string;
         };
+        /** PaymentIntentCreate */
+        PaymentIntentCreate: {
+            /**
+             * Amount
+             * @description The amount to be charged in the smallest currency unit (e.g., cents for USD).
+             * @example 1000
+             */
+            amount: number;
+        };
+        /** PaymentIntentCreateResponse */
+        PaymentIntentCreateResponse: {
+            /**
+             * Id
+             * @description The unique identifier for the payment intent.
+             * @example pi_1F8Y2e2eZvKYlo2C0d3f4g5h6
+             */
+            id: string;
+            /**
+             * Amount
+             * @description The amount to be charged in the smallest currency unit (e.g., cents for USD).
+             * @example 1000
+             */
+            amount: number;
+            /**
+             * Currency
+             * @description The currency in which the payment intent is created.
+             * @example usd
+             */
+            currency: string;
+            /**
+             * Client Secret
+             * @description The client secret used to confirm the payment intent on the client side.
+             * @example pi_1F8Y2e2eZvKYlo2C0d3f4g5h6_secret_1234567890
+             */
+            client_secret: string;
+            /**
+             * Status
+             * @description The current status of the payment intent.
+             * @example requires_confirmation
+             */
+            status: string;
+        };
         /** UserCreate */
         UserCreate: {
             /**
@@ -387,6 +446,23 @@ export interface components {
              */
             password?: string | null;
         };
+        /** UserWithWalletRead */
+        UserWithWalletRead: {
+            /** Id */
+            id: unknown;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Verified
+             * @default false
+             */
+            is_verified: boolean;
+            /** @description The wallet associated with the user. */
+            wallet: components["schemas"]["WalletRead"];
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -395,6 +471,32 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /**
+         * WalletRead
+         * @description Schema for reading wallet information.
+         */
+        WalletRead: {
+            /**
+             * Balance
+             * @description The current balance of the wallet.
+             * @example 1000
+             */
+            balance: number;
+            /**
+             * Created At
+             * Format: date-time
+             * @description The date and time when the wallet was created.
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description The date and time when the wallet was last updated.
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
         };
     };
     responses: never;
@@ -489,11 +591,11 @@ export interface operations {
     auth_jwt_logout_auth_jwt_logout_post: {
         parameters: {
             query?: never;
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -902,11 +1004,11 @@ export interface operations {
     verify_request_token_auth_request_verify_token_post: {
         parameters: {
             query?: never;
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -991,11 +1093,11 @@ export interface operations {
     verify_verify_auth_verify_post: {
         parameters: {
             query?: never;
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -1086,16 +1188,14 @@ export interface operations {
             };
         };
     };
-    oauth_google_cookie_authorize_auth_cookie_google_authorize_get: {
+    oauth_google_cookie_oauth_authorize_auth_cookie_google_authorize_get: {
         parameters: {
             query?: {
                 scopes?: string[];
             };
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization: string;
             };
             path?: never;
             cookie?: never;
@@ -1109,25 +1209,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["OAuth2AuthorizeResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -1173,7 +1254,7 @@ export interface operations {
             };
         };
     };
-    oauth_google_cookie_callback_auth_cookie_google_callback_get: {
+    oauth_google_cookie_oauth_callback_auth_cookie_google_callback_get: {
         parameters: {
             query?: {
                 code?: string | null;
@@ -1181,11 +1262,9 @@ export interface operations {
                 state?: string | null;
                 error?: string | null;
             };
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization: string;
             };
             path?: never;
             cookie?: never;
@@ -1210,25 +1289,6 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorModel"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
             /** @description Validation Error */
             422: {
                 headers: {
@@ -1272,16 +1332,14 @@ export interface operations {
             };
         };
     };
-    oauth_github_cookie_authorize_auth_cookie_github_authorize_get: {
+    oauth_github_cookie_oauth_authorize_auth_cookie_github_authorize_get: {
         parameters: {
             query?: {
                 scopes?: string[];
             };
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization: string;
             };
             path?: never;
             cookie?: never;
@@ -1297,25 +1355,6 @@ export interface operations {
                     "application/json": components["schemas"]["OAuth2AuthorizeResponse"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
             /** @description Validation Error */
             422: {
                 headers: {
@@ -1359,7 +1398,7 @@ export interface operations {
             };
         };
     };
-    oauth_github_cookie_callback_auth_cookie_github_callback_get: {
+    oauth_github_cookie_oauth_callback_auth_cookie_github_callback_get: {
         parameters: {
             query?: {
                 code?: string | null;
@@ -1367,11 +1406,11 @@ export interface operations {
                 state?: string | null;
                 error?: string | null;
             };
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -1461,11 +1500,11 @@ export interface operations {
     users_get_current_user_users_me_get: {
         parameters: {
             query?: never;
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -1478,7 +1517,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserRead"];
+                    "application/json": components["schemas"]["UserWithWalletRead"];
                 };
             };
             /** @description Unauthorized */
@@ -1524,11 +1563,11 @@ export interface operations {
     users_patch_current_user_users_me_patch: {
         parameters: {
             query?: never;
-            header: {
+            header?: {
                 /** @description Language preference (e.g., en, ja) */
                 "Accept-Language"?: string;
                 /** @description Bearer token for authentication */
-                Authorization: string;
+                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -1555,6 +1594,95 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ErrorModel"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    payment_intents_create_payment_intent_payment_intents_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentIntentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentIntentCreateResponse"];
                 };
             };
             /** @description Unauthorized */

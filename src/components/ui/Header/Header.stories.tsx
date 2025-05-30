@@ -6,6 +6,7 @@ const meta: Meta<typeof Header> = {
   component: Header,
   tags: ["autodocs"],
   argTypes: {
+    onDeposit: { action: "onDeposit" },
     onEditProfile: { action: "onEditProfile" },
     onLogout: { action: "onLogout" },
   },
