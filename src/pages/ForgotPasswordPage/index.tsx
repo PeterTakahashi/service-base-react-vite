@@ -18,7 +18,7 @@ export const ForgotPasswordPage: FC = () => {
         Remembered your password?{" "}
         <a
           href="/signin"
-          className="font-semibold text-teal-600 hover:text-teal-500"
+          className="font-semibold text-primary-600 hover:text-primary-500"
         >
           Sign in
         </a>

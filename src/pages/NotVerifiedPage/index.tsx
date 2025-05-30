@@ -21,7 +21,7 @@ export const NotVerifiedPage: FC = () => {
           Did you receive the email?{" "}
           <a
             href=""
-            className="font-semibold text-teal-600 hover:text-teal-500"
+            className="font-semibold text-primary-600 hover:text-primary-500"
           >
             Resend verification email
           </a>
@@ -29,7 +29,7 @@ export const NotVerifiedPage: FC = () => {
       </div>
       <button
         onClick={onLogout}
-        className="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+        className="mt-4 px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
       >
         Logout
       </button>

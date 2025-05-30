@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "@/components/ui/Button";
 
 type HeaderProps = {
   title: string;
@@ -35,13 +36,13 @@ export const Header: React.FC<HeaderProps> = ({
         >
           Edit Profile
         </button>
-        <button
+        <Button
           type="button"
-          className="ml-3 inline-flex items-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-teal-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+          className="ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm shadow-xs"
           onClick={onLogout}
         >
           Logout
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { AuthLayout } from "./AuthLayout";
-import { serviceName } from "@/config";
+import { AuthLayout } from "./index";
 
 const meta: Meta<typeof AuthLayout> = {
   title: "Layout/AuthLayout",
@@ -31,6 +30,5 @@ export const Default: Story = {
         <p>You can replace this with your actual form component.</p>
       </div>
     ),
-    serviceName: serviceName,
   },
 };

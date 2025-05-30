@@ -5,7 +5,7 @@ import type { z } from "zod";
 import { userEditSchema } from "@/features/zodSchemas/user/userEditSchema";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { FormButton } from "@/components/ui/FormButton";
+import { Button } from "@/components/ui/Button";
 
 type UserEditFormProps = {
   onSubmit: (data: UserEditValues) => void;
@@ -47,13 +47,13 @@ export const UserEditForm: React.FC<UserEditFormProps> = ({
       </div>
 
       <div>
-        <FormButton
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="flex w-full justify-center"
+          className="flex w-full max-w-sm justify-center"
         >
           {isSubmitting ? "Sending..." : "Update"}
-        </FormButton>
+        </Button>
       </div>
     </form>
   );

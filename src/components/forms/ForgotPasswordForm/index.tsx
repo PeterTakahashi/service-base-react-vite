@@ -5,7 +5,7 @@ import type { z } from "zod";
 import { forgotPasswordSchema } from "@/features/zodSchemas/auth/forgotPasswordSchema";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { FormButton } from "@/components/ui/FormButton";
+import { Button } from "@/components/ui/Button";
 
 export type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 
@@ -40,13 +40,13 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordProps> = ({
           />
         </div>
 
-        <FormButton
+        <Button
           type="submit"
           disabled={isSubmitting}
           className="w-full rounded-md mt-4"
         >
           {isSubmitting ? "Sending..." : "Send Reset Link"}
-        </FormButton>
+        </Button>
       </div>
     </form>
   );

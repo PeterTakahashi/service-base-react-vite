@@ -16,7 +16,7 @@ const sizeMap = {
 };
 
 const colorMap = {
-  primary: "border-teal-500",
+  primary: "border-primary-500",
   secondary: "border-gray-500",
   danger: "border-red-500",
   success: "border-green-500",
