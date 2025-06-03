@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { AddFundsButton } from "./index";
+import { WalletHistoryButton } from "./index";
 
-const meta: Meta<typeof AddFundsButton> = {
-  title: "UI/AddFundsButton",
-  component: AddFundsButton,
+const meta: Meta<typeof WalletHistoryButton> = {
+  title: "molecules/WalletHistoryButton",
+  component: WalletHistoryButton,
   tags: ["autodocs"],
   argTypes: {
     onClick: {
@@ -13,10 +13,10 @@ const meta: Meta<typeof AddFundsButton> = {
   },
 };
 export default meta;
-type Story = StoryObj<typeof AddFundsButton>;
+type Story = StoryObj<typeof WalletHistoryButton>;
 export const Default: Story = {
   args: {
     onClick: () => console.log("Add Funds button clicked"),
   },
-  render: (args) => <AddFundsButton {...args} />,
+  render: (args) => <WalletHistoryButton {...args} />,
 };

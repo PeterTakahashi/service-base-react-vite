@@ -7,8 +7,8 @@ import { signInSchema } from "@/features/zodSchemas/auth/signInSchema";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
-import { GithubAuthButton } from "@/components/ui/GithubAuthButton";
-import { GoogleAuthButton } from "@/components/ui/GoogleAuthButton";
+import { GithubAuthButton } from "@/components/molecules/GithubAuthButton";
+import { GoogleAuthButton } from "@/components/molecules/GoogleAuthButton";
 
 type AuthFormProps = {
   mode: "signup" | "signin";

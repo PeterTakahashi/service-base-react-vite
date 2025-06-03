@@ -27,7 +27,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
             ${toUsdFloat(balance)}
           </CardTitle>
           <div className="absolute right-4 top-2">
-            <WalletMinimalIcon className="size-3" />
+            <WalletMinimalIcon className="size-4 sm:size-5" />
           </div>
         </CardHeader>
       </Card>

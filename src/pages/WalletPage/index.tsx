@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
-import { BalanceCard } from "@/components/organisms/BalanceCard";
-import { AddFundsButton } from "@/components/ui/AddFundsButton";
-import { WalletHistoryButton } from "@/components/ui/WalletHistoryButton";
+import { BalanceCard } from "@/components/molecules/BalanceCard";
+import { AddFundsButton } from "@/components/molecules/AddFundsButton";
+import { WalletHistoryButton } from "@/components/molecules/WalletHistoryButton";
 import { useNavigate } from "react-router-dom";
 
 export const WalletPage: FC = () => {

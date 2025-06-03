@@ -79,7 +79,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() => {
-                  navigate("/me/edit");
+                  navigate("/me/");
                 }}
               >
                 <BadgeCheck />

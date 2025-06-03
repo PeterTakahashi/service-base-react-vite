@@ -18,7 +18,7 @@ export function useEditUserForm() {
           requestData.email = data.email;
         }
         await editUserTrigger(requestData);
-        navigate("/", {
+        navigate("/me", {
           state: { successMessage: "User updated successfully" },
         });
       } catch (error) {
