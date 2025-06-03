@@ -32,7 +32,7 @@ export function DepositPage() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 sm:mx-0 mx-2">
           <h2 className="mb-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Checkout
+            Add Funds
           </h2>
           {amount == null && (
             <PaymentIntentCreateForm onSubmit={handlePaymentIntentCreate} />

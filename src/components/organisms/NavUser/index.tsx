@@ -85,9 +85,9 @@ export function NavUser() {
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/deposit")}>
+              <DropdownMenuItem onClick={() => navigate("/wallet")}>
                 <CreditCard />
-                Billing
+                Wallet
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

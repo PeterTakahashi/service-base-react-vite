@@ -13,6 +13,7 @@ import { ProtectedRoute } from "@/components/routes/ProtectedRoute";
 import { PublicOnlyRoute } from "@/components/routes/PublicOnlyRoute";
 import { ToastMessageHandler } from "@/components/common/ToastMessageHandler";
 import { DepositPage } from "@/pages/DepositPage";
+import { WalletPage } from "@/pages/WalletPage";
 
 const routes = [
   { path: "/", element: <HomePage />, isPrivate: true },
@@ -47,6 +48,11 @@ const routes = [
   {
     path: "/deposit",
     element: <DepositPage />,
+    isPrivate: true,
+  },
+  {
+    path: "/wallet",
+    element: <WalletPage />,
     isPrivate: true,
   },
 ];
