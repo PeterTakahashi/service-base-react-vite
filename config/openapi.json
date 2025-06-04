@@ -1394,6 +1394,972 @@
           }
         ]
       }
+    },
+    "/payment-intents/webhook": {
+      "post": {
+        "tags": ["payment_intents"],
+        "summary": "Payment Intents:Update Payment Intent By Webhook",
+        "operationId": "payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ]
+      }
+    },
+    "/wallet-transactions": {
+      "get": {
+        "tags": ["wallet_transactions"],
+        "summary": "Wallet Transactions:List Wallet Transactions",
+        "description": "Retrieve a list of wallet transactions with filtering, sorting, and pagination.",
+        "operationId": "wallet_transactions_list_wallet_transactions_wallet_transactions_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "default": "id",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "amount__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Amount  Gte"
+            }
+          },
+          {
+            "name": "amount__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Amount  Lte"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "wallet_transaction_type__exact",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/WalletTransactionType" },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Type  Exact"
+            }
+          },
+          {
+            "name": "wallet_transaction_status__exact",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/WalletTransactionStatus" },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Status  Exact"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletTransactionListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet-transactions/{wallet_transaction_id}": {
+      "get": {
+        "tags": ["wallet_transactions"],
+        "summary": "Wallet Transactions:Get Wallet Transaction",
+        "operationId": "wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "wallet_transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Wallet Transaction Id" }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletTransactionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-api-keys": {
+      "get": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:List User Api Keys",
+        "description": "Retrieve a list of user API keys with filtering, sorting, and pagination.",
+        "operationId": "user_api_keys_list_user_api_keys_user_api_keys_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "default": "id",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "name__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Name  Icontains"
+            }
+          },
+          {
+            "name": "api_key__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Api Key  Icontains"
+            }
+          },
+          {
+            "name": "expires_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Expires At  Gte"
+            }
+          },
+          {
+            "name": "expires_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Expires At  Lte"
+            }
+          },
+          {
+            "name": "allowed_origin__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Allowed Origin  Icontains"
+            }
+          },
+          {
+            "name": "allowed_ip__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Allowed Ip  Icontains"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Gte"
+            }
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Lte"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserApiKeyListRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:Create User Api Key",
+        "description": "Create a new user API key.",
+        "operationId": "user_api_keys_create_user_api_key_user_api_keys_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserApiKeyCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserApiKeyRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ]
+      }
+    },
+    "/user-api-keys/{user_api_key_id}": {
+      "patch": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:Update User Api Key",
+        "description": "Update an existing user API key.",
+        "operationId": "user_api_keys_update_user_api_key_user_api_keys__user_api_key_id__patch",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "user_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "User Api Key Id" }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserApiKeyUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserApiKeyRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:Delete User Api Key",
+        "description": "Delete a user API key.",
+        "operationId": "user_api_keys_delete_user_api_key_user_api_keys__user_api_key_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "user_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "User Api Key Id" }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user-api-keys/verify": {
+      "post": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:Verify User Api Key",
+        "operationId": "user_api_keys_verify_user_api_key_user_api_keys_verify_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "X-Api-Key"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserApiKeyVerifyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1513,6 +2479,45 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "ListResponseMeta": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Limit",
+            "description": "Maximum number of items to retrieve",
+            "default": 100
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Offset",
+            "description": "Starting position for retrieval",
+            "default": 0
+          },
+          "sorted_by": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Sorted By",
+            "description": "Field name to sort by",
+            "default": "id"
+          },
+          "sorted_order": {
+            "type": "string",
+            "title": "Sorted Order",
+            "description": "Sort order: asc or desc",
+            "default": "asc"
+          },
+          "total_count": {
+            "type": "integer",
+            "title": "Total Count",
+            "description": "Total number of items matching the search criteria.",
+            "example": 100
+          }
+        },
+        "type": "object",
+        "required": ["total_count"],
+        "title": "ListResponseMeta"
+      },
       "OAuth2AuthorizeResponse": {
         "properties": {
           "authorization_url": {
@@ -1574,6 +2579,167 @@
         "type": "object",
         "required": ["id", "amount", "currency", "client_secret", "status"],
         "title": "PaymentIntentCreateResponse"
+      },
+      "UserApiKeyCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "UserApiKeyCreate"
+      },
+      "UserApiKeyListRead": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/UserApiKeyRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "UserApiKeyListRead"
+      },
+      "UserApiKeyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key",
+            "description": "The actual API key",
+            "example": "1234567890abcdef"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Creation datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Last updated datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "api_key", "created_at", "updated_at"],
+        "title": "UserApiKeyRead"
+      },
+      "UserApiKeyUpdate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "UserApiKeyUpdate"
+      },
+      "UserApiKeyVerifyResponse": {
+        "properties": {
+          "is_valid": {
+            "type": "boolean",
+            "title": "Is Valid",
+            "description": "Indicates whether the API key is valid",
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["is_valid"],
+        "title": "UserApiKeyVerifyResponse",
+        "description": "Response model for verifying an API key."
       },
       "UserCreate": {
         "properties": {
@@ -1695,6 +2861,80 @@
         "required": ["balance", "created_at", "updated_at"],
         "title": "WalletRead",
         "description": "Schema for reading wallet information."
+      },
+      "WalletTransactionListResponse": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/WalletTransactionRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "WalletTransactionListResponse"
+      },
+      "WalletTransactionRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount",
+            "description": "The amount of the transaction in cents.",
+            "example": 1000
+          },
+          "wallet_transaction_type": {
+            "$ref": "#/components/schemas/WalletTransactionType",
+            "description": "The type of the wallet transaction (e.g., 'deposit', 'withdrawal').",
+            "example": "deposit"
+          },
+          "wallet_transaction_status": {
+            "$ref": "#/components/schemas/WalletTransactionStatus",
+            "description": "The status of the wallet transaction (e.g., 'pending', 'completed').",
+            "example": "completed"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "The date and time when the transaction was created.",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "The date and time when the transaction was last updated.",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "amount",
+          "wallet_transaction_type",
+          "wallet_transaction_status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "WalletTransactionRead",
+        "description": "Schema for reading wallet transaction information."
+      },
+      "WalletTransactionStatus": {
+        "type": "string",
+        "enum": ["pending", "completed", "failed"],
+        "title": "WalletTransactionStatus"
+      },
+      "WalletTransactionType": {
+        "type": "string",
+        "enum": ["deposit", "withdrawal", "spend"],
+        "title": "WalletTransactionType"
       }
     },
     "securitySchemes": {
