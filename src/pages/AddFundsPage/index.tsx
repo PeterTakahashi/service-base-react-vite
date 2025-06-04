@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCallback, useState } from "react";
-import { AddFundsForm } from "@/components/forms/AddFundsForm";
+import { PaymentForm } from "@/components/forms/PaymentForm";
 import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/useCreatePaymentIntentMutation";
 import {
   PaymentIntentCreateForm,
@@ -39,7 +39,7 @@ export function AddFundsPage() {
           )}
           {clientSecret && amount && (
             <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <AddFundsForm amount={amount} />
+              <PaymentForm amount={amount} />
             </Elements>
           )}
         </div>

@@ -124,3 +124,13 @@ body,
 #root {
   @apply h-full bg-gray-50;
 }
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.no-spinner[type="number"] {
+  -moz-appearance: textfield;
+}
