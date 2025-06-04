@@ -15,6 +15,7 @@ import { ToastMessageHandler } from "@/components/common/ToastMessageHandler";
 import { AddFundsPage } from "@/pages/AddFundsPage";
 import { WalletPage } from "@/pages/WalletPage";
 import { UserProfilePage } from "@/pages/UserProfilePage";
+import { WalletTransactionsPage } from "@/pages/WalletTransactionsPage";
 
 const routes = [
   { path: "/", element: <HomePage />, isPrivate: true },
@@ -59,6 +60,11 @@ const routes = [
   {
     path: "/me",
     element: <UserProfilePage />,
+    isPrivate: true,
+  },
+  {
+    path: "/wallet-transactions",
+    element: <WalletTransactionsPage />,
     isPrivate: true,
   },
 ];
