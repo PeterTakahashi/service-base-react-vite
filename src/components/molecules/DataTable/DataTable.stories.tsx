@@ -108,6 +108,7 @@ const Wrapper = ({ enableColumnFilters = true }) => {
     <DataTable
       columns={columns}
       data={pageData}
+      totalCount={allData.length}
       pagination={pagination}
       setPagination={setPagination}
       pageCount={pageCount}

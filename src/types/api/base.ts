@@ -799,7 +799,7 @@ export interface components {
              */
             amount: number;
             /**
-             * @description The type of the wallet transaction (e.g., 'deposit', 'withdrawal').
+             * @description The type of the wallet transaction (e.g., 'deposit', 'spend').
              * @example deposit
              */
             wallet_transaction_type: components["schemas"]["WalletTransactionType"];
@@ -832,7 +832,7 @@ export interface components {
          * WalletTransactionType
          * @enum {string}
          */
-        WalletTransactionType: "deposit" | "withdrawal" | "spend";
+        WalletTransactionType: "deposit" | "spend";
     };
     responses: never;
     parameters: never;

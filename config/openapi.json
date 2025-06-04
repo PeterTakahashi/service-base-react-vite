@@ -2891,7 +2891,7 @@
           },
           "wallet_transaction_type": {
             "$ref": "#/components/schemas/WalletTransactionType",
-            "description": "The type of the wallet transaction (e.g., 'deposit', 'withdrawal').",
+            "description": "The type of the wallet transaction (e.g., 'deposit', 'spend').",
             "example": "deposit"
           },
           "wallet_transaction_status": {
@@ -2933,7 +2933,7 @@
       },
       "WalletTransactionType": {
         "type": "string",
-        "enum": ["deposit", "withdrawal", "spend"],
+        "enum": ["deposit", "spend"],
         "title": "WalletTransactionType"
       }
     },

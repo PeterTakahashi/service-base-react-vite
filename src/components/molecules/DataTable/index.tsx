@@ -38,9 +38,11 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   pagination: PaginationState;
   setPagination: OnChangeFn<PaginationState>;
+  totalCount: number;
   pageCount: number;
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
+  className?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -48,9 +50,11 @@ export function DataTable<TData, TValue>({
   data,
   pagination,
   setPagination,
+  totalCount,
   pageCount,
   filterInput,
   enableColumnFilters = true,
+  className = "",
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -87,18 +91,21 @@ export function DataTable<TData, TValue>({
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
                   .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    );
+                    const header = column.columnDef.header;
+                    if (typeof header === "string") {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {header}
+                        </DropdownMenuCheckboxItem>
+                      );
+                    }
                   })}
               </DropdownMenuContent>
             </DropdownMenu>
@@ -106,7 +113,7 @@ export function DataTable<TData, TValue>({
         </div>
       )}
       <div className="rounded-md border">
-        <Table>
+        <Table className={className}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -153,23 +160,31 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="flex items-center py-4">
+        <div className="flex-1">
+          <span className="text-sm text-muted-foreground">
+            {totalCount !== undefined && `Total: ${totalCount} items`} |{" "}
+            {pagination.pageIndex + 1} of {pageCount}
+          </span>
+        </div>
+        <div className="justify-end space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
