@@ -12,7 +12,7 @@ import { NotFoundPage } from "@/pages/NotFoundPage";
 import { ProtectedRoute } from "@/components/routes/ProtectedRoute";
 import { PublicOnlyRoute } from "@/components/routes/PublicOnlyRoute";
 import { ToastMessageHandler } from "@/components/common/ToastMessageHandler";
-import { DepositPage } from "@/pages/DepositPage";
+import { AddFundsPage } from "@/pages/AddFundsPage";
 import { WalletPage } from "@/pages/WalletPage";
 import { UserProfilePage } from "@/pages/UserProfilePage";
 
@@ -47,8 +47,8 @@ const routes = [
     isPrivate: true,
   },
   {
-    path: "/deposit",
-    element: <DepositPage />,
+    path: "/add-funds",
+    element: <AddFundsPage />,
     isPrivate: true,
   },
   {

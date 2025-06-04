@@ -15,7 +15,7 @@ export const WalletPage: FC = () => {
     <div>
       <BalanceCard balance={user.wallet?.balance} className="w-full max-w-sm" />
       <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:gap-6">
-        <AddFundsButton onClick={() => navigate("/deposit")} />
+        <AddFundsButton onClick={() => navigate("/add-funds")} />
         <WalletHistoryButton
           onClick={() => console.log("View Wallet History button clicked")}
         />
