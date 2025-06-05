@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
+import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
 
 import * as React from "react";
 
@@ -222,7 +223,13 @@ export function DataTable<TData, TValue>({
             {pagination.pageIndex + 1} of {pageCount}
           </span>
         </div>
-        <div className="justify-end space-x-2">
+        <div className="justify-end space-x-2 flex items-center">
+          <PageSizeSelect
+            pageSize={pagination.pageSize}
+            onPageSizeChange={(size) => {
+              setPagination((prev) => ({ ...prev, pageSize: size }));
+            }}
+          />
           <Button
             variant="outline"
             size="sm"

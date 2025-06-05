@@ -24,7 +24,7 @@ export function PageSizeSelect({
         onPageSizeChange(Number(value));
       }}
     >
-      <SelectTrigger className="w-[50px]">
+      <SelectTrigger className="w-[80px] bg-white">
         <SelectValue placeholder="Select page size" />
       </SelectTrigger>
       <SelectContent>
