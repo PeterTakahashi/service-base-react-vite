@@ -1467,48 +1467,6 @@
         "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 100,
-              "title": "Limit"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0,
-              "title": "Offset"
-            }
-          },
-          {
-            "name": "sorted_by",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [{ "type": "string" }, { "type": "null" }],
-              "default": "id",
-              "title": "Sorted By"
-            }
-          },
-          {
-            "name": "sorted_order",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": "asc",
-              "title": "Sorted Order"
-            }
-          },
-          {
             "name": "amount__gte",
             "in": "query",
             "required": false,
@@ -1524,6 +1482,40 @@
             "schema": {
               "anyOf": [{ "type": "integer" }, { "type": "null" }],
               "title": "Amount  Lte"
+            }
+          },
+          {
+            "name": "wallet_transaction_type__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletTransactionType"
+                  }
+                },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Type  In"
+            }
+          },
+          {
+            "name": "wallet_transaction_status__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletTransactionStatus"
+                  }
+                },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Status  In"
             }
           },
           {
@@ -1551,27 +1543,27 @@
             }
           },
           {
-            "name": "wallet_transaction_type__exact",
+            "name": "updated_at__gte",
             "in": "query",
             "required": false,
             "schema": {
               "anyOf": [
-                { "$ref": "#/components/schemas/WalletTransactionType" },
+                { "type": "string", "format": "date-time" },
                 { "type": "null" }
               ],
-              "title": "Wallet Transaction Type  Exact"
+              "title": "Updated At  Gte"
             }
           },
           {
-            "name": "wallet_transaction_status__exact",
+            "name": "updated_at__lte",
             "in": "query",
             "required": false,
             "schema": {
               "anyOf": [
-                { "$ref": "#/components/schemas/WalletTransactionStatus" },
+                { "type": "string", "format": "date-time" },
                 { "type": "null" }
               ],
-              "title": "Wallet Transaction Status  Exact"
+              "title": "Updated At  Lte"
             }
           },
           {

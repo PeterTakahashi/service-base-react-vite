@@ -2148,16 +2148,14 @@ export interface operations {
     wallet_transactions_list_wallet_transactions_wallet_transactions_get: {
         parameters: {
             query?: {
-                limit?: number;
-                offset?: number;
-                sorted_by?: string | null;
-                sorted_order?: string;
                 amount__gte?: number | null;
                 amount__lte?: number | null;
+                wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
+                wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
                 created_at__gte?: string | null;
                 created_at__lte?: string | null;
-                wallet_transaction_type__exact?: components["schemas"]["WalletTransactionType"] | null;
-                wallet_transaction_status__exact?: components["schemas"]["WalletTransactionStatus"] | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
             };
             header?: {
                 /** @description Language preference (e.g., en, ja) */

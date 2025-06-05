@@ -32,7 +32,7 @@ export const columns: ColumnDef<Row>[] = [
     header: "Type",
     meta: {
       filterType: "checkbox",
-      filterKey: "wallet_transaction_type__exact",
+      filterKey: "wallet_transaction_type__in",
       filterOptions: WALLET_TRANSACTION_TYPES.map((type) => ({
         label: type,
         value: type,
@@ -50,7 +50,7 @@ export const columns: ColumnDef<Row>[] = [
     header: "Status",
     meta: {
       filterType: "checkbox",
-      filterKey: "wallet_transaction_status__exact",
+      filterKey: "wallet_transaction_status__in",
       filterOptions: WALLET_TRANSACTION_STATUSES.map((status) => ({
         label: status,
         value: status,

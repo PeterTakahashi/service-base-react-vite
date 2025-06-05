@@ -35,6 +35,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 
+type QueryValueType = string | string[];
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -45,8 +47,8 @@ interface DataTableProps<TData, TValue> {
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
   className?: string;
-  query?: Record<string, string>;
-  setQuery?: (query: Record<string, string>) => void;
+  query?: Record<string, QueryValueType>;
+  setQuery?: (query: Record<string, QueryValueType>) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -129,6 +131,7 @@ export function DataTable<TData, TValue>({
                   const meta = header.column.columnDef.meta || {};
                   const filterStartDateKey = meta.filterStartDateKey || "";
                   const filterEndDateKey = meta.filterEndDateKey || "";
+                  const filterKey = meta.filterKey || "";
                   return (
                     <TableHead key={header.id}>
                       {header.isPlaceholder ? null : (
@@ -147,13 +150,21 @@ export function DataTable<TData, TValue>({
                             <CheckboxColumnFilter
                               options={meta.filterOptions || []}
                               onChange={(selectedValues: string[]) => {
-                                console.log("Filter changed:", selectedValues);
+                                const newQuery = { ...query };
+                                if (selectedValues.length > 0) {
+                                  newQuery[filterKey] = selectedValues;
+                                } else {
+                                  delete newQuery[filterKey];
+                                }
+                                setQuery(newQuery);
                               }}
                             />
                           )}
                           {meta?.filterType === "dateRange" &&
                             filterStartDateKey &&
                             filterEndDateKey &&
+                            typeof query[filterStartDateKey] === "string" &&
+                            typeof query[filterEndDateKey] === "string" &&
                             query && (
                               <DateRangeColumnFilter
                                 startDate={query[filterStartDateKey]}
@@ -166,7 +177,6 @@ export function DataTable<TData, TValue>({
                                   } else {
                                     delete newQuery[filterStartDateKey];
                                   }
-
                                   if (endDate) {
                                     newQuery[filterEndDateKey] = endDate;
                                   } else {
