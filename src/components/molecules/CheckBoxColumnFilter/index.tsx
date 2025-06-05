@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type FC, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import { DropdownFilter } from "@/components/molecules/DropdownFilter";
@@ -8,17 +8,18 @@ type Option = {
   label: string;
   value: string;
 };
+
 type CheckboxColumnFilterProps = {
   options: Option[];
   selectedValues?: string[];
   onChange: (selectedValues: string[]) => void;
 };
 
-export function CheckboxColumnFilter({
+export const CheckboxColumnFilter: FC<CheckboxColumnFilterProps> = ({
   options,
   onChange,
   selectedValues = [],
-}: CheckboxColumnFilterProps) {
+}) => {
   const [localSelectedValues, setLocalSelectedValues] =
     useState<string[]>(selectedValues);
 
@@ -54,4 +55,4 @@ export function CheckboxColumnFilter({
       </Button>
     </DropdownFilter>
   );
-}
+};

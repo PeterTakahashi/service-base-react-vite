@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/Table";
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
 import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
-import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter/CheckboxColumnFilter";
+import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
 
 import * as React from "react";
 

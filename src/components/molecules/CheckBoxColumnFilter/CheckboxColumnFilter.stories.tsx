@@ -1,4 +1,4 @@
-import { CheckboxColumnFilter } from "./CheckboxColumnFilter";
+import { CheckboxColumnFilter } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof CheckboxColumnFilter> = {
