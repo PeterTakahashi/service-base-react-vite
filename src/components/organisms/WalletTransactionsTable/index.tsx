@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
 import type { PaginationState } from "@tanstack/react-table";
@@ -17,10 +17,21 @@ export const WalletTransactionsTable: React.FC<
   const [query, setQuery] = useState<WalletTransactionListRequestQuery>({
     sorted_by: "created_at",
     sorted_order: "asc",
+    limit: pagination.pageSize,
+    offset: pagination.pageIndex * pagination.pageSize,
   });
+
   const { walletTransactions, meta } = useWalletTransactions(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
+
+  useEffect(() => {
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      limit: pagination.pageSize,
+      offset: pagination.pageIndex * pagination.pageSize,
+    }));
+  }, [pagination]);
 
   return (
     <DataTable
