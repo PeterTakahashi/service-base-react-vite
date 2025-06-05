@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
 import { DropdownFilter } from "@/components/molecules/DropdownFilter";
 
 type DateRangeColumnFilterProps = {
+  label?: string;
   startDate: string;
   endDate: string;
   onChange: (startDate: string, endDate: string) => void;
 };
 
 export function DateRangeColumnFilter({
+  label,
   startDate,
   endDate,
   onChange,
 }: DateRangeColumnFilterProps) {
+  const [open, setOpen] = useState(false);
   const [localStartDate, setLocalStartDate] = useState(startDate ?? "");
   const [localEndDate, setLocalEndDate] = useState(endDate ?? "");
   const [error, setError] = useState<string | null>(null);
@@ -52,21 +54,21 @@ export function DateRangeColumnFilter({
   };
 
   return (
-    <DropdownFilter>
-      <Label>Start date</Label>
+    <DropdownFilter label={label} open={open} onOpenChange={setOpen}>
+      <div className="text-sm pt-3">Start date</div>
       <Input
         type="date"
         value={localStartDate}
         onChange={(e) => setLocalStartDate(e.target.value)}
       />
-      <Label>End date</Label>
+      <div className="text-sm pt-3">End date</div>
       <Input
         type="date"
         value={localEndDate}
         onChange={(e) => setLocalEndDate(e.target.value)}
       />
       {error && <div className="text-sm text-red-600 mt-2">{error}</div>}
-      <Button variant={"outline"} className="w-full" onClick={reset}>
+      <Button variant={"outline"} className="w-full mt-3" onClick={reset}>
         Reset
       </Button>
       <Button className="w-full" onClick={apply}>

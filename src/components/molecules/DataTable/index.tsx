@@ -148,6 +148,9 @@ export function DataTable<TData, TValue>({
                           )}
                           {meta?.filterType === "checkbox" && (
                             <CheckboxColumnFilter
+                              label={
+                                "Search by " + header.column.columnDef.header
+                              }
                               options={meta.filterOptions || []}
                               onChange={(selectedValues: string[]) => {
                                 const newQuery = { ...query };
@@ -163,12 +166,13 @@ export function DataTable<TData, TValue>({
                           {meta?.filterType === "dateRange" &&
                             filterStartDateKey &&
                             filterEndDateKey &&
-                            typeof query[filterStartDateKey] === "string" &&
-                            typeof query[filterEndDateKey] === "string" &&
                             query && (
                               <DateRangeColumnFilter
-                                startDate={query[filterStartDateKey]}
-                                endDate={query[filterEndDateKey]}
+                                label={
+                                  "Search by " + header.column.columnDef.header
+                                }
+                                startDate={query[filterStartDateKey] as string}
+                                endDate={query[filterEndDateKey] as string}
                                 onChange={(startDate, endDate) => {
                                   const newQuery = { ...query };
 

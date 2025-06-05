@@ -76,6 +76,11 @@ export const columns: ColumnDef<Row>[] = [
   },
   {
     header: "Updated At",
+    meta: {
+      filterType: "dateRange",
+      filterStartDateKey: "updated_at__gte",
+      filterEndDateKey: "updated_at__lte",
+    },
     accessorKey: "updated_at",
     cell: ({ row }) => new Date(row.getValue("updated_at")).toLocaleString(),
   },
