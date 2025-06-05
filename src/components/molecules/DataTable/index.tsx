@@ -34,6 +34,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
+import { type Sort } from "@/types/components/sort";
+import { SortSelect } from "@/components/molecules/SortSelect";
 
 type QueryValueType = string | string[];
 
@@ -46,6 +48,7 @@ interface DataTableProps<TData, TValue> {
   pageCount: number;
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
+  sorts: Sort[];
   className?: string;
   query?: Record<string, QueryValueType>;
   setQuery?: (query: Record<string, QueryValueType>) => void;
@@ -60,6 +63,7 @@ export function DataTable<TData, TValue>({
   pageCount,
   filterInput,
   enableColumnFilters = true,
+  sorts,
   className = "",
   query = {},
   setQuery = () => {},
@@ -86,40 +90,59 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      {(filterInput || enableColumnFilters) && (
+      {(filterInput || enableColumnFilters || sorts.length > 0) && (
         <div className="flex items-center py-4">
           {filterInput}
-          {enableColumnFilters && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  Columns
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    const header = column.columnDef.header;
-                    if (typeof header === "string") {
-                      return (
-                        <DropdownMenuCheckboxItem
-                          key={column.id}
-                          className="capitalize"
-                          checked={column.getIsVisible()}
-                          onCheckedChange={(value) =>
-                            column.toggleVisibility(!!value)
-                          }
-                        >
-                          {header}
-                        </DropdownMenuCheckboxItem>
-                      );
-                    }
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          <div className="flex-1" />
+          <div className="flex items-center space-x-2">
+            {sorts.length > 0 && (
+              <SortSelect
+                sorts={sorts}
+                onSortChange={(newSort) => {
+                  const newQuery = { ...query };
+                  if (newSort) {
+                    newQuery.sorted_by = newSort.sorted_by;
+                    newQuery.sorted_order = newSort.sorted_order;
+                  } else {
+                    delete newQuery.sorted_by;
+                    delete newQuery.sorted_order;
+                  }
+                  setQuery(newQuery);
+                }}
+              />
+            )}
+            {enableColumnFilters && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="ml-auto">
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      const header = column.columnDef.header;
+                      if (typeof header === "string") {
+                        return (
+                          <DropdownMenuCheckboxItem
+                            key={column.id}
+                            className="capitalize"
+                            checked={column.getIsVisible()}
+                            onCheckedChange={(value) =>
+                              column.toggleVisibility(!!value)
+                            }
+                          >
+                            {header}
+                          </DropdownMenuCheckboxItem>
+                        );
+                      }
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </div>
       )}
       <div className="rounded-md border">

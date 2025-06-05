@@ -7,6 +7,13 @@ import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransa
 
 type WalletTransactionTableProps = object;
 
+const sorts = [
+  { sorted_by: "created_at", sorted_order: "desc", name: "Newest" },
+  { sorted_by: "created_at", sorted_order: "asc", name: "Oldest" },
+  { sorted_by: "amount", sorted_order: "desc", name: "Highest Amount" },
+  { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
+];
+
 export const WalletTransactionsTable: React.FC<
   WalletTransactionTableProps
 > = () => {
@@ -44,6 +51,7 @@ export const WalletTransactionsTable: React.FC<
       className="bg-white"
       query={query as Record<string, string>}
       setQuery={setQuery}
+      sorts={sorts}
     />
   );
 };

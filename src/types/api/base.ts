@@ -2148,6 +2148,10 @@ export interface operations {
     wallet_transactions_list_wallet_transactions_wallet_transactions_get: {
         parameters: {
             query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string;
+                sorted_order?: string;
                 amount__gte?: number | null;
                 amount__lte?: number | null;
                 wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
