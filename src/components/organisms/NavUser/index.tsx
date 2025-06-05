@@ -79,15 +79,15 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() => {
-                  navigate("/me/edit");
+                  navigate("/me/");
                 }}
               >
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/deposit")}>
+              <DropdownMenuItem onClick={() => navigate("/wallet")}>
                 <CreditCard />
-                Billing
+                Wallet
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

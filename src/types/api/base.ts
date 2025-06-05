@@ -266,6 +266,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/payment-intents/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Payment Intents:Update Payment Intent By Webhook */
+        post: operations["payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/wallet-transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Wallet Transactions:List Wallet Transactions
+         * @description Retrieve a list of wallet transactions with filtering, sorting, and pagination.
+         */
+        get: operations["wallet_transactions_list_wallet_transactions_wallet_transactions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/wallet-transactions/{wallet_transaction_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Wallet Transactions:Get Wallet Transaction */
+        get: operations["wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user-api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * User Api Keys:List User Api Keys
+         * @description Retrieve a list of user API keys with filtering, sorting, and pagination.
+         */
+        get: operations["user_api_keys_list_user_api_keys_user_api_keys_get"];
+        put?: never;
+        /**
+         * User Api Keys:Create User Api Key
+         * @description Create a new user API key.
+         */
+        post: operations["user_api_keys_create_user_api_key_user_api_keys_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user-api-keys/{user_api_key_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * User Api Keys:Delete User Api Key
+         * @description Delete a user API key.
+         */
+        delete: operations["user_api_keys_delete_user_api_key_user_api_keys__user_api_key_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * User Api Keys:Update User Api Key
+         * @description Update an existing user API key.
+         */
+        patch: operations["user_api_keys_update_user_api_key_user_api_keys__user_api_key_id__patch"];
+        trace?: never;
+    };
+    "/user-api-keys/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** User Api Keys:Verify User Api Key */
+        post: operations["user_api_keys_verify_user_api_key_user_api_keys_verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -353,6 +472,39 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** ListResponseMeta */
+        ListResponseMeta: {
+            /**
+             * Limit
+             * @description Maximum number of items to retrieve
+             * @default 100
+             */
+            limit: number;
+            /**
+             * Offset
+             * @description Starting position for retrieval
+             * @default 0
+             */
+            offset: number;
+            /**
+             * Sorted By
+             * @description Field name to sort by
+             * @default id
+             */
+            sorted_by: string | null;
+            /**
+             * Sorted Order
+             * @description Sort order: asc or desc
+             * @default asc
+             */
+            sorted_order: string;
+            /**
+             * Total Count
+             * @description Total number of items matching the search criteria.
+             * @example 100
+             */
+            total_count: number;
+        };
         /** OAuth2AuthorizeResponse */
         OAuth2AuthorizeResponse: {
             /** Authorization Url */
@@ -399,6 +551,131 @@ export interface components {
              * @example requires_confirmation
              */
             status: string;
+        };
+        /** UserApiKeyCreate */
+        UserApiKeyCreate: {
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+        };
+        /** UserApiKeyListRead */
+        UserApiKeyListRead: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["UserApiKeyRead"][];
+        };
+        /** UserApiKeyRead */
+        UserApiKeyRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Api Key
+             * @description The actual API key
+             * @example 1234567890abcdef
+             */
+            api_key: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             * @description Creation datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description Last updated datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
+        };
+        /** UserApiKeyUpdate */
+        UserApiKeyUpdate: {
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+        };
+        /**
+         * UserApiKeyVerifyResponse
+         * @description Response model for verifying an API key.
+         */
+        UserApiKeyVerifyResponse: {
+            /**
+             * Is Valid
+             * @description Indicates whether the API key is valid
+             * @example true
+             */
+            is_valid: boolean;
         };
         /** UserCreate */
         UserCreate: {
@@ -498,6 +775,64 @@ export interface components {
              */
             updated_at: string;
         };
+        /** WalletTransactionListResponse */
+        WalletTransactionListResponse: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["WalletTransactionRead"][];
+        };
+        /**
+         * WalletTransactionRead
+         * @description Schema for reading wallet transaction information.
+         */
+        WalletTransactionRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Amount
+             * @description The amount of the transaction in cents.
+             * @example 1000
+             */
+            amount: number;
+            /**
+             * @description The type of the wallet transaction (e.g., 'deposit', 'spend').
+             * @example deposit
+             */
+            wallet_transaction_type: components["schemas"]["WalletTransactionType"];
+            /**
+             * @description The status of the wallet transaction (e.g., 'pending', 'completed').
+             * @example completed
+             */
+            wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
+            /**
+             * Created At
+             * Format: date-time
+             * @description The date and time when the transaction was created.
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description The date and time when the transaction was last updated.
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
+        };
+        /**
+         * WalletTransactionStatus
+         * @enum {string}
+         */
+        WalletTransactionStatus: "pending" | "completed" | "failed";
+        /**
+         * WalletTransactionType
+         * @enum {string}
+         */
+        WalletTransactionType: "deposit" | "spend";
     };
     responses: never;
     parameters: never;
@@ -1683,6 +2018,705 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PaymentIntentCreateResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    wallet_transactions_list_wallet_transactions_wallet_transactions_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string;
+                sorted_order?: string;
+                amount__gte?: number | null;
+                amount__lte?: number | null;
+                wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
+                wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WalletTransactionListResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path: {
+                wallet_transaction_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WalletTransactionRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_list_user_api_keys_user_api_keys_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string | null;
+                sorted_order?: string;
+                name__icontains?: string | null;
+                api_key__icontains?: string | null;
+                expires_at__gte?: string | null;
+                expires_at__lte?: string | null;
+                allowed_origin__icontains?: string | null;
+                allowed_ip__icontains?: string | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKeyListRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_create_user_api_key_user_api_keys_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserApiKeyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_delete_user_api_key_user_api_keys__user_api_key_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path: {
+                user_api_key_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_update_user_api_key_user_api_keys__user_api_key_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path: {
+                user_api_key_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserApiKeyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_verify_user_api_key_user_api_keys_verify_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "X-API-KEY"?: string | null;
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKeyVerifyResponse"];
                 };
             };
             /** @description Unauthorized */

@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCallback, useState } from "react";
-import { CheckoutForm } from "@/components/forms/CheckoutForm";
+import { PaymentForm } from "@/components/forms/PaymentForm";
 import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/useCreatePaymentIntentMutation";
 import {
   PaymentIntentCreateForm,
@@ -10,7 +10,7 @@ import {
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 
-export function DepositPage() {
+export function AddFundsPage() {
   const { trigger: createPaymentIntent } = useCreatePaymentIntentMutation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null); // Amount in cents
@@ -32,14 +32,14 @@ export function DepositPage() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 sm:mx-0 mx-2">
           <h2 className="mb-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Checkout
+            Add Funds
           </h2>
           {amount == null && (
             <PaymentIntentCreateForm onSubmit={handlePaymentIntentCreate} />
           )}
           {clientSecret && amount && (
             <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <CheckoutForm amount={amount} />
+              <PaymentForm amount={amount} />
             </Elements>
           )}
         </div>

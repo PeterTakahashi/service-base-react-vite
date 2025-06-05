@@ -7,11 +7,11 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
-type CheckoutFormProps = {
+type PaymentFormProps = {
   amount: number;
 };
 
-export const CheckoutForm: React.FC<CheckoutFormProps> = ({ amount }) => {
+export const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
