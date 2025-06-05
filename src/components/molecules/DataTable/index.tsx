@@ -17,6 +17,8 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
+import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
+import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
 
 import * as React from "react";
 
@@ -32,9 +34,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-
-import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
-import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -147,8 +146,8 @@ export function DataTable<TData, TValue>({
                           {meta?.filterType === "checkbox" && (
                             <CheckboxColumnFilter
                               options={meta.filterOptions || []}
-                              onChange={(value) => {
-                                console.log("Filter changed:", value);
+                              onChange={(selectedValues: string[]) => {
+                                console.log("Filter changed:", selectedValues);
                               }}
                             />
                           )}
