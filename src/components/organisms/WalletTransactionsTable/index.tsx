@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
+import { sorts } from "./sorts";
 import type { PaginationState } from "@tanstack/react-table";
 import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
 import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
 
 type WalletTransactionTableProps = object;
-
-const sorts = [
-  { sorted_by: "created_at", sorted_order: "desc", name: "Newest" },
-  { sorted_by: "created_at", sorted_order: "asc", name: "Oldest" },
-  { sorted_by: "amount", sorted_order: "desc", name: "Highest Amount" },
-  { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
-];
 
 export const WalletTransactionsTable: React.FC<
   WalletTransactionTableProps
