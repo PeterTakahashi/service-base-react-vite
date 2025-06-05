@@ -14,3 +14,14 @@ export type WalletTransactionType =
 
 export type WalletTransactionStatus =
   components["schemas"]["WalletTransactionStatus"];
+
+export const WALLET_TRANSACTION_TYPES: WalletTransactionType[] = [
+  "deposit",
+  "spend",
+] as const;
+
+export const WALLET_TRANSACTION_STATUSES: WalletTransactionStatus[] = [
+  "pending",
+  "completed",
+  "failed",
+] as const;

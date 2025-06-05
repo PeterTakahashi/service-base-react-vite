@@ -3,6 +3,7 @@ import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
 import type { PaginationState } from "@tanstack/react-table";
 import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
+import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
 
 type WalletTransactionTableProps = object;
 
@@ -11,9 +12,13 @@ export const WalletTransactionsTable: React.FC<
 > = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 25,
+    pageSize: 10,
   });
-  const { walletTransactions, meta } = useWalletTransactions();
+  const [query, setQuery] = useState<WalletTransactionListRequestQuery>({
+    sorted_by: "created_at",
+    sorted_order: "asc",
+  });
+  const { walletTransactions, meta } = useWalletTransactions(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
@@ -26,6 +31,8 @@ export const WalletTransactionsTable: React.FC<
       setPagination={setPagination}
       pageCount={pageCount}
       className="bg-white"
+      query={query as Record<string, string>}
+      setQuery={setQuery}
     />
   );
 };

@@ -5,7 +5,6 @@ import {
   type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -33,6 +32,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 
+import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
+import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -43,6 +45,8 @@ interface DataTableProps<TData, TValue> {
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
   className?: string;
+  query?: Record<string, string>;
+  setQuery?: (query: Record<string, string>) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -55,6 +59,8 @@ export function DataTable<TData, TValue>({
   filterInput,
   enableColumnFilters = true,
   className = "",
+  query = {},
+  setQuery = () => {},
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -68,11 +74,13 @@ export function DataTable<TData, TValue>({
     state: { pagination, columnFilters, columnVisibility },
     manualPagination: true,
     onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     getCoreRowModel: getCoreRowModel(),
+    manualFiltering: true,
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
   });
+  const sorted_by = React.useMemo(() => query.sorted_by, [query]);
+  const sorted_order = React.useMemo(() => query.sorted_order, [query]);
 
   return (
     <div>
@@ -117,16 +125,63 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const meta = header.column.columnDef.meta || {};
+                  const filterStartDateKey = meta.filterStartDateKey || "";
+                  const filterEndDateKey = meta.filterEndDateKey || "";
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder ? null : (
+                        <div className="flex items-center">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {header.id === sorted_by && (
+                            <div className="ml-1">
+                              {sorted_order === "asc" && "↑"}
+                              {sorted_order === "desc" && "↓"}
+                            </div>
+                          )}
+                          {meta?.filterType === "checkbox" && (
+                            <CheckboxColumnFilter
+                              options={meta.filterOptions || []}
+                              onChange={(value) => {
+                                console.log("Filter changed:", value);
+                              }}
+                            />
+                          )}
+                          {meta?.filterType === "dateRange" &&
+                            filterStartDateKey &&
+                            filterEndDateKey &&
+                            query && (
+                              <DateRangeColumnFilter
+                                startDate={query[filterStartDateKey]}
+                                endDate={query[filterEndDateKey]}
+                                onChange={(startDate, endDate) => {
+                                  const newQuery = { ...query };
+
+                                  if (startDate) {
+                                    newQuery[filterStartDateKey] = startDate;
+                                  } else {
+                                    delete newQuery[filterStartDateKey];
+                                  }
+
+                                  if (endDate) {
+                                    newQuery[filterEndDateKey] = endDate;
+                                  } else {
+                                    delete newQuery[filterEndDateKey];
+                                  }
+
+                                  setQuery(newQuery);
+                                }}
+                              />
+                            )}
+                        </div>
+                      )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>
