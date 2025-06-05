@@ -1,6 +1,12 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  KeyRound,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import {
@@ -88,6 +94,10 @@ export function NavUser() {
               <DropdownMenuItem onClick={() => navigate("/wallet")}>
                 <CreditCard />
                 Wallet
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/user-api-keys")}>
+                <KeyRound />
+                API Keys
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
