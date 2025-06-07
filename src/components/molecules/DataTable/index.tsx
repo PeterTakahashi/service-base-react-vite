@@ -19,6 +19,7 @@ import {
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
 import { DateRangeColumnFilter } from "@/components/molecules/columnFilters/DateRangeColumnFilter";
 import { CheckboxColumnFilter } from "@/components/molecules/columnFilters/CheckboxColumnFilter";
+import { Eye } from "lucide-react";
 
 import * as React from "react";
 
@@ -115,6 +116,7 @@ export function DataTable<TData, TValue>({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="ml-auto">
+                    <Eye className="h-4 w-4" />
                     Columns
                   </Button>
                 </DropdownMenuTrigger>
