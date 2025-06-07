@@ -5,10 +5,6 @@ type Row = UserApiKeyRead[number];
 
 export const columns: ColumnDef<Row>[] = [
   {
-    header: "ID",
-    accessorKey: "id",
-  },
-  {
     header: "Name",
     accessorKey: "name",
   },
