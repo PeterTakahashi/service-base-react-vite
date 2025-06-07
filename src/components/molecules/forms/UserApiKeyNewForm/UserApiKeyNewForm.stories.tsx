@@ -16,5 +16,7 @@ type Story = StoryObj<typeof UserApiKeyNewForm>;
 export const Default: Story = {
   args: {
     onSubmit: (data) => console.log(data),
+    isMutating: false,
+    errorMessage: null,
   },
 };

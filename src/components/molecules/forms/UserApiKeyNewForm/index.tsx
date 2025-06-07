@@ -10,8 +10,15 @@ import { Button } from "@/components/atoms/Button";
 
 type UserApiKeyNewFormProps = {
   onSubmit: (data: UserApiKeyCreateValues) => void;
+  errorMessage: string | null;
+  isMutating: boolean;
 };
-export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({ onSubmit }) => {
+
+export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
+  onSubmit,
+  errorMessage,
+  isMutating,
+}) => {
   const {
     register,
     handleSubmit,
@@ -26,7 +33,7 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({ onSubmit }) => {
         <Input
           id="name"
           placeholder="My Key"
-          label="Name"
+          label="Name*"
           {...register("name")}
           errorMessage={errors.name?.message}
         />
@@ -53,7 +60,17 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({ onSubmit }) => {
           errorMessage={errors.allowed_ip?.message}
         />
 
-        <Button className="w-full" type="submit" disabled={isSubmitting}>
+        {errorMessage && (
+          <div className="h-10">
+            <p className="text-sm text-red-600">{errorMessage}</p>
+          </div>
+        )}
+
+        <Button
+          className="w-full"
+          type="submit"
+          disabled={isSubmitting || isMutating}
+        >
           Create API Key
         </Button>
       </form>
