@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { AuthForm } from "@/components/forms/AuthForm";
+import { AuthForm } from "@/components/molecules/forms/AuthForm";
 import { useSignUpForm } from "@/features/hooks/form/auth/useSignUpForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 

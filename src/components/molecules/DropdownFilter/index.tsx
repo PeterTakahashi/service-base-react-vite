@@ -4,8 +4,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-} from "@/components/ui/DropdownMenu";
-import { Button } from "@/components/ui/Button";
+} from "@/components/atoms/DropdownMenu";
+import { Button } from "@/components/atoms/Button";
 import { SlidersHorizontal } from "lucide-react";
 
 type DropdownFilterProps = {

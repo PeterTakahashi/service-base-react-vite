@@ -1,12 +1,12 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCallback, useState } from "react";
-import { PaymentForm } from "@/components/forms/PaymentForm";
+import { PaymentForm } from "@/components/molecules/forms/PaymentForm";
 import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/useCreatePaymentIntentMutation";
 import {
   PaymentIntentCreateForm,
   type PaymentIntentValues,
-} from "@/components/forms/PaymentIntentCreateForm";
+} from "@/components/molecules/forms/PaymentIntentCreateForm";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 

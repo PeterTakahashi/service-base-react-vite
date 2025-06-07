@@ -6,13 +6,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/Breadcrumb";
-import { Separator } from "@/components/ui/Separator";
+} from "@/components/atoms/Breadcrumb";
+import { Separator } from "@/components/atoms/Separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/Sidebar";
+} from "@/components/atoms/Sidebar";
 import { type FC } from "react";
 
 type SidebarLayoutProps = {

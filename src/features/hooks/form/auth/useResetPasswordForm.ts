@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 
-import type { ResetPasswordValues } from "@/components/forms/ResetPasswordForm";
+import type { ResetPasswordValues } from "@/components/molecules/forms/ResetPasswordForm";
 import { useResetPasswordMutation } from "@/features/hooks/swr/mutation/useResetPasswordMutation";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 

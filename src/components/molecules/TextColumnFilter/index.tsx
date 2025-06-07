@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/atoms/Button";
+import { Input } from "@/components/atoms/Input";
 import { DropdownFilter } from "@/components/molecules/DropdownFilter";
 
 type TextColumnFilterProps = {

@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import { useUser } from "@/features/hooks/swr/fetcher/user/useUser";
-import { Loading } from "@/components/ui/Loading";
-import { ErrorDisplay } from "@/components/ui/ErrorDisplay";
+import { Loading } from "@/components/atoms/Loading";
+import { ErrorDisplay } from "@/components/atoms/ErrorDisplay";
 import { SidebarLayout } from "@/components/layout/SideBarLayout";
 
 type ProtectedRouteProps = {

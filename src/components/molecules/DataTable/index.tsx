@@ -15,14 +15,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/Table";
+} from "@/components/atoms/Table";
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
 import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
 import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
 
 import * as React from "react";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/atoms/Button";
 import type {
   PaginationState,
   OnChangeFn,
@@ -33,7 +33,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+} from "@/components/atoms/DropdownMenu";
 import { type Sort } from "@/types/components/sort";
 import { SortSelect } from "@/components/molecules/SortSelect";
 

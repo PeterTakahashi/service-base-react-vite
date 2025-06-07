@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { UserApiKeysTable } from "@/components/organisms/UserApiKeysTable";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/atoms/Button";
 import { SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/atoms/Card";
 
 type BalanceCardProps = {
   balance: number;

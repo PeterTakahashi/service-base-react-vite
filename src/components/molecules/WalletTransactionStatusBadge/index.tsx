@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/atoms/Badge";
 import { type FC } from "react";
 import { CheckCircleIcon, XCircleIcon, LoaderCircle } from "lucide-react";
 import { type WalletTransactionStatus } from "@/types/api/walletTransaction/walletTransaction";

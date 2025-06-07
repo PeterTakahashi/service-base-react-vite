@@ -17,7 +17,7 @@ import {
   SidebarHeader,
   SidebarRail,
   SidebarMenuButton,
-} from "@/components/ui/Sidebar";
+} from "@/components/atoms/Sidebar";
 
 const data = {
   navMain: [

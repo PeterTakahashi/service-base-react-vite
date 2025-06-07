@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { ResetPasswordForm } from "@/components/forms/ResetPasswordForm";
+import { ResetPasswordForm } from "@/components/molecules/forms/ResetPasswordForm";
 import { useResetPasswordForm } from "@/features/hooks/form/auth/useResetPasswordForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 

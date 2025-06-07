@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/atoms/Button";
 import { DropdownFilter } from "@/components/molecules/DropdownFilter";
-import { DropdownMenuCheckboxItem } from "@/components/ui/DropdownMenu";
+import { DropdownMenuCheckboxItem } from "@/components/atoms/DropdownMenu";
 
 type Option = {
   label: string;

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Input as InputPrimitive } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
+import { Input as InputPrimitive } from "@/components/atoms/Input";
+import { Label } from "@/components/atoms/Label";
 
 function Input({
   className,
