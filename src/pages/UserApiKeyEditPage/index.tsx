@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { UserApiKeyNewFormContainer } from "@/components/organisms/UserApiKeyNewFormContainer";
 
-export const UserApiKeysNewPage: FC = () => {
+export const UserApiKeyNewPage: FC = () => {
   const { user } = useVerifiedUser();
 
   if (!user) return;

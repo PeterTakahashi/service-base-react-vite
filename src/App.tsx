@@ -17,7 +17,7 @@ import { WalletPage } from "@/pages/WalletPage";
 import { UserProfilePage } from "@/pages/UserProfilePage";
 import { WalletTransactionsPage } from "@/pages/WalletTransactionsPage";
 import { UserApiKeysPage } from "@/pages/UserApiKeysPage";
-import { UserApiKeysNewPage } from "@/pages/UserApiKeysNewPage";
+import { UserApiKeyNewPage } from "@/pages/UserApiKeyNewPage";
 
 const routes = [
   { path: "/", element: <HomePage />, isPrivate: true },
@@ -76,7 +76,7 @@ const routes = [
   },
   {
     path: "/user-api-keys/new",
-    element: <UserApiKeysNewPage />,
+    element: <UserApiKeyNewPage />,
     isPrivate: true,
   },
 ];
