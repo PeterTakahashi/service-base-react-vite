@@ -3,7 +3,7 @@ import { WalletTransactionTypeBadge } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof WalletTransactionTypeBadge> = {
-  title: "Molecules/WalletTransactionTypeBadge",
+  title: "Molecules/Badges/WalletTransactionTypeBadge",
   component: WalletTransactionTypeBadge,
   tags: ["autodocs"],
   argTypes: {
