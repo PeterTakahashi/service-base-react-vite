@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/atoms/Button";
 import { Input } from "@/components/atoms/Input";
-import { DropdownFilter } from "@/components/molecules/DropdownFilter";
+import { DropdownFilter } from "@/components/molecules/columnFilters/DropdownFilter";
 
 type TextColumnFilterProps = {
   value: string;

@@ -2,7 +2,7 @@ import { DateRangeColumnFilter } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof DateRangeColumnFilter> = {
-  title: "Molecules/DateRangeColumnFilter",
+  title: "Molecules/ColumnFilters/DateRangeColumnFilter",
   component: DateRangeColumnFilter,
 };
 

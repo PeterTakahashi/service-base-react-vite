@@ -17,8 +17,8 @@ import {
   TableRow,
 } from "@/components/atoms/Table";
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
-import { DateRangeColumnFilter } from "@/components/molecules/DateRangeColumnFilter";
-import { CheckboxColumnFilter } from "@/components/molecules/CheckboxColumnFilter";
+import { DateRangeColumnFilter } from "@/components/molecules/columnFilters/DateRangeColumnFilter";
+import { CheckboxColumnFilter } from "@/components/molecules/columnFilters/CheckboxColumnFilter";
 
 import * as React from "react";
 

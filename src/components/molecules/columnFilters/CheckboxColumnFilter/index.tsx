@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/atoms/Button";
-import { DropdownFilter } from "@/components/molecules/DropdownFilter";
+import { DropdownFilter } from "@/components/molecules/columnFilters/DropdownFilter";
 import { DropdownMenuCheckboxItem } from "@/components/atoms/DropdownMenu";
 
 type Option = {

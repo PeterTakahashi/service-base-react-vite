@@ -2,7 +2,7 @@ import { TextColumnFilter } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof TextColumnFilter> = {
-  title: "Molecules/TextColumnFilter",
+  title: "Molecules/ColumnFilters/TextColumnFilter",
   component: TextColumnFilter,
 };
 
