@@ -36,8 +36,6 @@ import { Skeleton } from "@/components/atoms/Skeleton";
 import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
 import { useColumnVisibilityOnLocalStorage } from "./hooks/useColumnVisibilityOnLocalStorage";
 
-import { Eye } from "lucide-react";
-
 type QueryValueType = string | string[];
 
 interface DataTableProps<TData, TValue> {
