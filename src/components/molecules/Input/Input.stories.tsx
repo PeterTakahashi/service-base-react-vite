@@ -26,3 +26,10 @@ export const WithError: Story = {
     errorMessage: "Validation Error!",
   },
 };
+
+export const WithLabel: Story = {
+  args: {
+    placeholder: "Type here...",
+    label: "Input Label",
+  },
+};

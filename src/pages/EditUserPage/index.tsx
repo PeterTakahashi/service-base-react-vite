@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
-import { UserEditForm } from "@/components/forms/UserEditForm";
+import { UserEditForm } from "@/components/molecules/forms/UserEditForm";
 import { useEditUserForm } from "@/features/hooks/form/user/useEditUserForm";
 import { UserRoundPenIcon } from "lucide-react";
 

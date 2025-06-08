@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useSignUpMutation } from "@/features/hooks/swr/mutation/useSignUpMutation";
 import { useSignInMutation } from "@/features/hooks/swr/mutation/useSignInMutation";
-import type { SignUpValues } from "@/components/forms/AuthForm";
+import type { SignUpValues } from "@/components/molecules/forms/AuthForm";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 
 export function useSignUpForm() {

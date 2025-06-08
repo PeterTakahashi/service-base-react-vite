@@ -7,7 +7,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/Select";
+} from "@/components/atoms/Select";
 
 type SortSelectProps = {
   sorts: Sort[];

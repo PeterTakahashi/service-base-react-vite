@@ -8,15 +8,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+} from "@/components/atoms/DropdownMenu";
 import { MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/atoms/Button";
 import type {
   ColumnDef,
   PaginationState,
   ColumnFiltersState,
 } from "@tanstack/react-table";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/atoms/Input";
 
 type Row = {
   id: string;

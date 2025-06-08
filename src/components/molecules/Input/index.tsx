@@ -1,16 +1,22 @@
 import * as React from "react";
-import { Input as InputPrimitive } from "@/components/ui/Input";
+import { Input as InputPrimitive } from "@/components/atoms/Input";
+import { Label } from "@/components/atoms/Label";
 
 function Input({
   className,
   type,
   errorMessage,
+  label,
   ...props
-}: React.ComponentProps<"input"> & { errorMessage?: string | undefined }) {
+}: React.ComponentProps<"input"> & {
+  errorMessage?: string | undefined;
+  label?: string | React.ReactNode;
+}) {
   const hasError = Boolean(errorMessage);
   return (
     <>
-      <div className="min-h-15">
+      <div className="min-h-15 grid items-center gap-1.5">
+        {label && <Label htmlFor={props.id}>{label}</Label>}
         <InputPrimitive
           type={type}
           className={className}

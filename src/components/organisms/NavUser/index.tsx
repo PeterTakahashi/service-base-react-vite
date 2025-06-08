@@ -1,8 +1,14 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  KeyRound,
+} from "lucide-react";
 
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { Avatar, AvatarFallback } from "@/components/atoms/Avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,12 +17,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+} from "@/components/atoms/DropdownMenu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/Sidebar";
+} from "@/components/atoms/Sidebar";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { useLogout } from "@/features/hooks/auth/useLogout";
 import { useNavigate } from "react-router-dom";
@@ -88,6 +94,10 @@ export function NavUser() {
               <DropdownMenuItem onClick={() => navigate("/wallet")}>
                 <CreditCard />
                 Wallet
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/user-api-keys")}>
+                <KeyRound />
+                API Keys
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { UserEditButton } from "@/components/molecules/UserEditButton";
+} from "@/components/atoms/Card";
+import { UserEditButton } from "@/components/molecules/buttons/UserEditButton";
 
 export const UserProfilePage: FC = () => {
   const { user } = useVerifiedUser();

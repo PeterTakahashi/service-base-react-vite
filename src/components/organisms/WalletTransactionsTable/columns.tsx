@@ -9,8 +9,8 @@ import {
   WALLET_TRANSACTION_STATUSES,
 } from "@/types/api/walletTransaction/walletTransaction";
 import { toUsdFloat } from "@/lib/toUsdFloat";
-import { WalletTransactionStatusBadge } from "@/components/molecules/WalletTransactionStatusBadge";
-import { WalletTransactionTypeBadge } from "@/components/molecules/WalletTransactionTypeBadge";
+import { WalletTransactionStatusBadge } from "@/components/molecules/badges/WalletTransactionStatusBadge";
+import { WalletTransactionTypeBadge } from "@/components/molecules/badges/WalletTransactionTypeBadge";
 
 type Row = WalletTransactionRead[number];
 
