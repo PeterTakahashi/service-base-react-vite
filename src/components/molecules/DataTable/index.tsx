@@ -1,5 +1,3 @@
-"use client";
-
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -26,7 +24,6 @@ import { Button } from "@/components/atoms/Button";
 import type {
   PaginationState,
   OnChangeFn,
-  VisibilityState,
 } from "@tanstack/react-table";
 import {
   DropdownMenu,
@@ -39,6 +36,7 @@ import { SortSelect } from "@/components/molecules/SortSelect";
 import { Skeleton } from "@/components/atoms/Skeleton";
 
 import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
+import { useColumnVisibilityOnLocalStorage } from "./hooks/useColumnVisibilityOnLocalStorage";
 
 type QueryValueType = string | string[];
 
@@ -82,8 +80,12 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const defaultColumnVisibility = React.useMemo(
+    () => getDefaultColumnVisibility(columns),
+    [columns]
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>(() => getDefaultColumnVisibility(columns));
+    useColumnVisibilityOnLocalStorage(tableName, defaultColumnVisibility);
   const table = useReactTable({
     data,
     columns,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
 import { sorts } from "./sorts";
-import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/useDefaultSortOnLocalStorage";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/hooks/useDefaultSortOnLocalstorage";
 import type { PaginationState } from "@tanstack/react-table";
 import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
 import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";

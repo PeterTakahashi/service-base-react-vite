@@ -17,7 +17,7 @@ import type {
   ColumnFiltersState,
 } from "@tanstack/react-table";
 import { Input } from "@/components/atoms/Input";
-import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/useDefaultSortOnLocalStorage";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/hooks/useDefaultSortOnLocalstorage";
 
 type Row = {
   id: string;
