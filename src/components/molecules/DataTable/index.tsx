@@ -36,6 +36,7 @@ import {
 } from "@/components/atoms/DropdownMenu";
 import { type Sort } from "@/types/components/sort";
 import { SortSelect } from "@/components/molecules/SortSelect";
+import { Skeleton } from "@/components/atoms/Skeleton";
 
 import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
 
@@ -55,6 +56,7 @@ interface DataTableProps<TData, TValue> {
   className?: string;
   query?: Record<string, QueryValueType>;
   setQuery?: (query: Record<string, QueryValueType>) => void;
+  isLoading?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -71,6 +73,7 @@ export function DataTable<TData, TValue>({
   className = "",
   query = {},
   setQuery = () => {},
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -228,7 +231,17 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              Array.from({ length: 5 }).map((_, rowIdx) => (
+                <TableRow key={`skeleton-row-${rowIdx}`}>
+                  {columns.map((_col, colIdx) => (
+                    <TableCell key={`skeleton-cell-${colIdx}`}>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

@@ -90,7 +90,7 @@ const sorts = [
   { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
 ];
 
-const Wrapper = ({ enableColumnFilters = true }) => {
+const Wrapper = ({ enableColumnFilters = true, isLoading = false }) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5,
@@ -127,6 +127,7 @@ const Wrapper = ({ enableColumnFilters = true }) => {
       filterInput={filterInput}
       enableColumnFilters={enableColumnFilters}
       sorts={sorts}
+      isLoading={isLoading}
     />
   );
 };
@@ -147,4 +148,8 @@ export const Default: StoryObj = {
 
 export const WithoutColumnFilters: StoryObj = {
   render: () => <Wrapper enableColumnFilters={false} />,
+};
+
+export const LoadingContent: StoryObj = {
+  render: () => <Wrapper enableColumnFilters={true} isLoading={true} />,
 };
