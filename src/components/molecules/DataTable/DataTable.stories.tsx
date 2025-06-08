@@ -128,6 +128,7 @@ const Wrapper = ({
 
   return (
     <DataTable
+      tableName={tableName}
       columns={columns}
       data={pageData}
       totalCount={allData.length}

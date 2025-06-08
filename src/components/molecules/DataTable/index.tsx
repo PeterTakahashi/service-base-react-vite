@@ -43,6 +43,7 @@ import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
 type QueryValueType = string | string[];
 
 interface DataTableProps<TData, TValue> {
+  tableName: string;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pagination: PaginationState;
@@ -61,6 +62,7 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
+  tableName,
   columns,
   data,
   pagination,

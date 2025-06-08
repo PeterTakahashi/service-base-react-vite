@@ -8,6 +8,7 @@ import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransa
 import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
 
 type WalletTransactionTableProps = object;
+const tableName = "walletTransactionsTable";
 
 export const WalletTransactionsTable: React.FC<
   WalletTransactionTableProps
@@ -39,13 +40,13 @@ export const WalletTransactionsTable: React.FC<
 
   return (
     <DataTable
+      tableName={tableName}
       columns={columns}
       data={walletTransactions}
       pagination={pagination}
       totalCount={totalCount}
       setPagination={setPagination}
       pageCount={pageCount}
-      className="bg-white"
       query={query as Record<string, string>}
       setQuery={setQuery}
       sorts={sorts}

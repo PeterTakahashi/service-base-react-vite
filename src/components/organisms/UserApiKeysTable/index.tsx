@@ -7,9 +7,11 @@ import type { PaginationState } from "@tanstack/react-table";
 import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKeys";
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
 
+const tableName = "userApiKeysTable";
+
 export const UserApiKeysTable: React.FC = () => {
   const [defaultSort, setDefaultSortOnLocalStorage] =
-    useDefaultSortOnLocalStorage("userApiKeysTable", sorts, sorts[0]);
+    useDefaultSortOnLocalStorage(tableName, sorts, sorts[0]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -35,6 +37,7 @@ export const UserApiKeysTable: React.FC = () => {
 
   return (
     <DataTable
+      tableName={tableName}
       columns={columns}
       data={userApiKeys}
       pagination={pagination}
