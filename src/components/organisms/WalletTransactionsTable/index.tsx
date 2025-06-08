@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
-import { sorts, defaultSort } from "./sorts";
+import { sorts } from "./sorts";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/useDefaultSortOnLocalStorage";
 import type { PaginationState } from "@tanstack/react-table";
 import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
 import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
@@ -11,6 +12,8 @@ type WalletTransactionTableProps = object;
 export const WalletTransactionsTable: React.FC<
   WalletTransactionTableProps
 > = () => {
+  const [defaultSort, setDefaultSortOnLocalStorage] =
+    useDefaultSortOnLocalStorage("walletTransactionsTable", sorts, sorts[0]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -48,6 +51,7 @@ export const WalletTransactionsTable: React.FC<
       sorts={sorts}
       defaultSort={defaultSort}
       isLoading={isLoading}
+      setDefaultSortOnLocalStorage={setDefaultSortOnLocalStorage}
     />
   );
 };

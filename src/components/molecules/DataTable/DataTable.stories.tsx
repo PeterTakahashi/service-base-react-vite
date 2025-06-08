@@ -17,6 +17,7 @@ import type {
   ColumnFiltersState,
 } from "@tanstack/react-table";
 import { Input } from "@/components/atoms/Input";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/useDefaultSortOnLocalStorage";
 
 type Row = {
   id: string;
@@ -90,7 +91,16 @@ const sorts = [
   { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
 ];
 
-const Wrapper = ({ enableColumnFilters = true, isLoading = false }) => {
+const Wrapper = ({
+  tableName = "defaultTableName",
+  enableColumnFilters = true,
+  isLoading = false,
+}) => {
+  const [, setDefaultSortOnLocalStorage] = useDefaultSortOnLocalStorage(
+    tableName,
+    sorts,
+    sorts[0]
+  );
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5,
@@ -128,6 +138,7 @@ const Wrapper = ({ enableColumnFilters = true, isLoading = false }) => {
       enableColumnFilters={enableColumnFilters}
       sorts={sorts}
       isLoading={isLoading}
+      setDefaultSortOnLocalStorage={setDefaultSortOnLocalStorage}
     />
   );
 };
@@ -143,13 +154,23 @@ const meta: Meta<typeof DataTable> = {
 export default meta;
 
 export const Default: StoryObj = {
-  render: () => <Wrapper enableColumnFilters={true} />,
+  render: () => (
+    <Wrapper tableName={"DataTableStory"} enableColumnFilters={true} />
+  ),
 };
 
 export const WithoutColumnFilters: StoryObj = {
-  render: () => <Wrapper enableColumnFilters={false} />,
+  render: () => (
+    <Wrapper tableName={"DataTableStory"} enableColumnFilters={false} />
+  ),
 };
 
 export const LoadingContent: StoryObj = {
-  render: () => <Wrapper enableColumnFilters={true} isLoading={true} />,
+  render: () => (
+    <Wrapper
+      tableName={"DataTableStory"}
+      enableColumnFilters={true}
+      isLoading={true}
+    />
+  ),
 };

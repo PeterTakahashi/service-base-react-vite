@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
-import { sorts, defaultSort } from "./sorts";
+import { sorts } from "./sorts";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/useDefaultSortOnLocalStorage";
 import type { PaginationState } from "@tanstack/react-table";
 import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKeys";
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
 
-type UserApiKeyTableProps = object;
-
-export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
+export const UserApiKeysTable: React.FC = () => {
+  const [defaultSort, setDefaultSortOnLocalStorage] =
+    useDefaultSortOnLocalStorage("userApiKeysTable", sorts, sorts[0]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
   const [query, setQuery] = useState<UserApiKeyListRequestQuery>({
-    sorted_by: "created_at",
-    sorted_order: "asc",
+    sorted_by: defaultSort.sorted_by,
+    sorted_order: defaultSort.sorted_order,
     limit: pagination.pageSize,
     offset: pagination.pageIndex * pagination.pageSize,
   });
@@ -40,12 +41,12 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
       totalCount={totalCount}
       setPagination={setPagination}
       pageCount={pageCount}
-      className="bg-white"
       query={query as Record<string, string>}
       setQuery={setQuery}
       sorts={sorts}
       defaultSort={defaultSort}
       isLoading={isLoading}
+      setDefaultSortOnLocalStorage={setDefaultSortOnLocalStorage}
     />
   );
 };

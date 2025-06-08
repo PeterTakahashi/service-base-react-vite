@@ -57,6 +57,7 @@ interface DataTableProps<TData, TValue> {
   query?: Record<string, QueryValueType>;
   setQuery?: (query: Record<string, QueryValueType>) => void;
   isLoading?: boolean;
+  setDefaultSortOnLocalStorage: (sort: Sort) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -74,6 +75,7 @@ export function DataTable<TData, TValue>({
   query = {},
   setQuery = () => {},
   isLoading = false,
+  setDefaultSortOnLocalStorage,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -95,6 +97,22 @@ export function DataTable<TData, TValue>({
   const sorted_by = React.useMemo(() => query.sorted_by, [query]);
   const sorted_order = React.useMemo(() => query.sorted_order, [query]);
 
+  const handleSortChange = React.useCallback(
+    (newSort: Sort) => {
+      const newQuery = { ...query };
+      if (newSort) {
+        newQuery.sorted_by = newSort.sorted_by;
+        newQuery.sorted_order = newSort.sorted_order;
+      } else {
+        delete newQuery.sorted_by;
+        delete newQuery.sorted_order;
+      }
+      setQuery(newQuery);
+      setDefaultSortOnLocalStorage(newSort);
+    },
+    [query, setQuery, setDefaultSortOnLocalStorage]
+  );
+
   return (
     <div>
       {(filterInput || enableColumnFilters || sorts.length > 0) && (
@@ -106,17 +124,7 @@ export function DataTable<TData, TValue>({
               <SortSelect
                 sorts={sorts}
                 defaultSort={defaultSort}
-                onSortChange={(newSort) => {
-                  const newQuery = { ...query };
-                  if (newSort) {
-                    newQuery.sorted_by = newSort.sorted_by;
-                    newQuery.sorted_order = newSort.sorted_order;
-                  } else {
-                    delete newQuery.sorted_by;
-                    delete newQuery.sorted_order;
-                  }
-                  setQuery(newQuery);
-                }}
+                onSortChange={handleSortChange}
               />
             )}
             {enableColumnFilters && (
@@ -154,7 +162,7 @@ export function DataTable<TData, TValue>({
         </div>
       )}
       <div className="rounded-md border">
-        <Table className={className}>
+        <Table className={className + " bg-white"}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

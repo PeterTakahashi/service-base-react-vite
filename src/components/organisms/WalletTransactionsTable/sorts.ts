@@ -4,5 +4,3 @@ export const sorts = [
   { sorted_by: "amount", sorted_order: "desc", name: "Highest Amount" },
   { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
 ];
-
-export const defaultSort = sorts[0];
