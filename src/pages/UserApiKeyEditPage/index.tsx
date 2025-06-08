@@ -3,11 +3,14 @@ import { useParams } from "react-router";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { useUserApiKey } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKey";
 import { UserApiKeyEditFormContainer } from "@/components/organisms/UserApiKeyEditFormContainer";
+import { useUserApiKeyEditPageBreadcrumbs } from "./breadcrumbs";
 
 export const UserApiKeyEditPage: FC = () => {
   const { user } = useVerifiedUser();
   const { id } = useParams<{ id?: string }>();
   const { userApiKey, isLoading } = useUserApiKey(id);
+
+  useUserApiKeyEditPageBreadcrumbs();
 
   if (!user) return;
 
