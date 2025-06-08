@@ -7,6 +7,7 @@ import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUser
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
 import { useNavigate } from "react-router-dom";
 import type { UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
+import { useDeleteUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useDeleteUserApiKeyMutation";
 
 type UserApiKeyTableProps = object;
 
@@ -22,7 +23,7 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
     offset: pagination.pageIndex * pagination.pageSize,
   });
 
-  const { userApiKeys, meta } = useUserApiKeys(query);
+  const { userApiKeys, meta, mutate } = useUserApiKeys(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
@@ -35,14 +36,15 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
   }, [pagination]);
 
   const navigate = useNavigate();
+  const { trigger: deleteUserApiKey } = useDeleteUserApiKeyMutation();
 
   const handleEdit = (row: UserApiKeyRead) => {
     navigate(`/user-api-keys/${row.id}/edit`);
   };
 
-  const handleDelete = (row: UserApiKeyRead) => {
-    // TODO: Implement delete logic
-    console.log("Delete", row.id);
+  const handleDelete = async (row: UserApiKeyRead) => {
+    await deleteUserApiKey(row.id);
+    await mutate();
   };
 
   const columns = buildColumns({
