@@ -4,10 +4,13 @@ import { BalanceCard } from "@/components/molecules/BalanceCard";
 import { AddFundsButton } from "@/components/molecules/buttons/AddFundsButton";
 import { WalletHistoryButton } from "@/components/molecules/buttons/WalletHistoryButton";
 import { useNavigate } from "react-router-dom";
+import { useWalletPageBreadcrumbs } from "./breadcrumbs";
 
 export const WalletPage: FC = () => {
   const { user } = useVerifiedUser();
   const navigate = useNavigate();
+
+  useWalletPageBreadcrumbs();
 
   if (!user) return;
 

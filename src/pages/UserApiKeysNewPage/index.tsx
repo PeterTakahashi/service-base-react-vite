@@ -1,9 +1,12 @@
 import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { UserApiKeyNewForm } from "@/components/molecules/forms/UserApiKeyNewForm";
+import { useUserApiKeysNewPageBreadcrumbs } from "./breadcrumbs";
 
 export const UserApiKeysNewPage: FC = () => {
   const { user } = useVerifiedUser();
+
+  useUserApiKeysNewPageBreadcrumbs();
 
   if (!user) return;
 
