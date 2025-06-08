@@ -21,10 +21,7 @@ import { CheckboxColumnFilter } from "@/components/molecules/columnFilters/Check
 import * as React from "react";
 
 import { Button } from "@/components/atoms/Button";
-import type {
-  PaginationState,
-  OnChangeFn,
-} from "@tanstack/react-table";
+import type { PaginationState, OnChangeFn } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -37,6 +34,8 @@ import { Skeleton } from "@/components/atoms/Skeleton";
 
 import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
 import { useColumnVisibilityOnLocalStorage } from "./hooks/useColumnVisibilityOnLocalStorage";
+
+import { Eye } from "lucide-react";
 
 type QueryValueType = string | string[];
 
@@ -135,6 +134,7 @@ export function DataTable<TData, TValue>({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="ml-auto">
+                    <Eye className="h-4 w-4" />
                     Columns
                   </Button>
                 </DropdownMenuTrigger>
