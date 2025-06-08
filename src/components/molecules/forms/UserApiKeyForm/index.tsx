@@ -7,17 +7,24 @@ import {
 } from "@/features/zodSchemas/userApiKey/userApiKeyCreateSchema";
 import { Input } from "@/components/molecules/Input";
 import { Button } from "@/components/atoms/Button";
+import { type UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
 
-type UserApiKeyNewFormProps = {
+type UserApiKeyFormProps = {
   onSubmit: (data: UserApiKeyCreateValues) => void;
   errorMessage: string | null;
   isMutating: boolean;
+  userApiKey?: UserApiKeyRead;
+  isLoading?: boolean;
+  mutationType?: "create" | "update";
 };
 
-export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
+export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
   onSubmit,
   errorMessage,
   isMutating,
+  userApiKey,
+  isLoading = false,
+  mutationType = "create",
 }) => {
   const {
     register,
@@ -25,6 +32,14 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
     formState: { errors, isSubmitting },
   } = useForm<UserApiKeyCreateValues>({
     resolver: zodResolver(UserApiKeyCreateSchema),
+    defaultValues: {
+      name: userApiKey?.name || "",
+      expires_at: userApiKey?.expires_at
+        ? new Date(userApiKey.expires_at).toISOString().slice(0, 10)
+        : "",
+      allowed_origin: userApiKey?.allowed_origin || "",
+      allowed_ip: userApiKey?.allowed_ip || "",
+    },
   });
 
   return (
@@ -36,6 +51,7 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
           label="Name*"
           {...register("name")}
           errorMessage={errors.name?.message}
+          isLoading={isLoading}
         />
         <Input
           id="expires_at"
@@ -44,6 +60,7 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
           label="Expires At"
           {...register("expires_at")}
           errorMessage={errors.expires_at?.message}
+          isLoading={isLoading}
         />
         <Input
           id="allowed_origin"
@@ -51,6 +68,7 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
           label="Allowed Origin"
           {...register("allowed_origin")}
           errorMessage={errors.allowed_origin?.message}
+          isLoading={isLoading}
         />
         <Input
           id="allowed_ip"
@@ -58,6 +76,7 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
           label="Allowed IP"
           {...register("allowed_ip")}
           errorMessage={errors.allowed_ip?.message}
+          isLoading={isLoading}
         />
 
         {errorMessage && (
@@ -69,9 +88,9 @@ export const UserApiKeyNewForm: FC<UserApiKeyNewFormProps> = ({
         <Button
           className="w-full"
           type="submit"
-          disabled={isSubmitting || isMutating}
+          disabled={isSubmitting || isMutating || isLoading}
         >
-          Create API Key
+          {mutationType === "update" ? "Update API Key" : "Create API Key"}
         </Button>
       </form>
     </div>

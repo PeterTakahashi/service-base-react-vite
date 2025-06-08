@@ -1,4 +1,4 @@
-import { UserApiKeyNewForm } from "@/components/molecules/forms/UserApiKeyNewForm";
+import { UserApiKeyForm } from "@/components/molecules/forms/UserApiKeyForm";
 import { type FC } from "react";
 import { useCreateUserApiKeyForm } from "@/features/hooks/form/userApiKey/useCreateUserApiKeyForm";
 
@@ -10,7 +10,7 @@ export const UserApiKeyNewFormContainer: FC = () => {
   } = useCreateUserApiKeyForm();
 
   return (
-    <UserApiKeyNewForm
+    <UserApiKeyForm
       onSubmit={onSubmit}
       errorMessage={errorMessage}
       isMutating={isMutating}

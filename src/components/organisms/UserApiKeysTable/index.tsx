@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
-import { columns } from "./columns";
+import { buildColumns } from "./columns";
 import { sorts } from "./sorts";
 import type { PaginationState } from "@tanstack/react-table";
 import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKeys";
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
+import { useNavigate } from "react-router-dom";
+import type { UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
 
 type UserApiKeyTableProps = object;
 
@@ -31,6 +33,22 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
       offset: pagination.pageIndex * pagination.pageSize,
     }));
   }, [pagination]);
+
+  const navigate = useNavigate();
+
+  const handleEdit = (row: UserApiKeyRead) => {
+    navigate(`/user-api-keys/${row.id}/edit`);
+  };
+
+  const handleDelete = (row: UserApiKeyRead) => {
+    // TODO: Implement delete logic
+    console.log("Delete", row.id);
+  };
+
+  const columns = buildColumns({
+    onEdit: handleEdit,
+    onDelete: handleDelete,
+  });
 
   return (
     <DataTable
