@@ -7,6 +7,7 @@ import {
   PaymentIntentCreateForm,
   type PaymentIntentValues,
 } from "@/components/molecules/forms/PaymentIntentCreateForm";
+import { useAddFundsPageBreadcrumbs } from "./breadcrumbs";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 
@@ -14,6 +15,7 @@ export function AddFundsPage() {
   const { trigger: createPaymentIntent } = useCreatePaymentIntentMutation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null); // Amount in cents
+  useAddFundsPageBreadcrumbs();
 
   const handlePaymentIntentCreate = useCallback(
     async (data: PaymentIntentValues) => {

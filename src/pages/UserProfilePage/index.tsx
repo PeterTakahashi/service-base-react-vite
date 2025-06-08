@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,10 +8,12 @@ import {
   CardTitle,
 } from "@/components/atoms/Card";
 import { UserEditButton } from "@/components/molecules/buttons/UserEditButton";
+import { useUserProfileBreadcrumbs } from "./breadcrumbs";
 
 export const UserProfilePage: FC = () => {
   const { user } = useVerifiedUser();
   const navigate = useNavigate();
+  useUserProfileBreadcrumbs();
 
   if (!user) return;
 

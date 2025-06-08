@@ -4,10 +4,13 @@ import { UserApiKeysTable } from "@/components/organisms/UserApiKeysTable";
 import { Button } from "@/components/atoms/Button";
 import { SquarePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useUserApiKeysPageBreadcrumbs } from "./breadcrumbs";
 
 export const UserApiKeysPage: FC = () => {
   const { user } = useVerifiedUser();
   const navigate = useNavigate();
+
+  useUserApiKeysPageBreadcrumbs();
 
   if (!user) return;
 

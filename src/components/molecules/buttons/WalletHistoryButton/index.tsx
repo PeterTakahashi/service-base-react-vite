@@ -18,7 +18,7 @@ export const WalletHistoryButton: React.FC<WalletHistoryButtonProps> = ({
       onClick={onClick}
     >
       <LogsIcon className="size-4" />
-      View Wallet History
+      View Transaction History
     </Button>
   );
 };
