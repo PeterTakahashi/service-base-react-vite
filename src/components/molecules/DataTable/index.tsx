@@ -17,6 +17,7 @@ import {
 import { PageSizeSelect } from "@/components/molecules/PageSizeSelect";
 import { DateRangeColumnFilter } from "@/components/molecules/columnFilters/DateRangeColumnFilter";
 import { CheckboxColumnFilter } from "@/components/molecules/columnFilters/CheckboxColumnFilter";
+import { Eye } from "lucide-react";
 
 import * as React from "react";
 
@@ -34,8 +35,6 @@ import { Skeleton } from "@/components/atoms/Skeleton";
 
 import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
 import { useColumnVisibilityOnLocalStorage } from "./hooks/useColumnVisibilityOnLocalStorage";
-
-import { Eye } from "lucide-react";
 
 type QueryValueType = string | string[];
 

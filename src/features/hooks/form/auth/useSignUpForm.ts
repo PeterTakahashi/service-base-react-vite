@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useSignUpMutation } from "@/features/hooks/swr/mutation/useSignUpMutation";
-import { useSignInMutation } from "@/features/hooks/swr/mutation/useSignInMutation";
+import { useSignUpMutation } from "@/features/hooks/swr/mutation/auth/useSignUpMutation";
+import { useSignInMutation } from "@/features/hooks/swr/mutation/auth/useSignInMutation";
 import type { SignUpValues } from "@/components/molecules/forms/AuthForm";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 

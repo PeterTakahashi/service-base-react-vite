@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUser";
-import { UserApiKeyNewForm } from "@/components/molecules/forms/UserApiKeyNewForm";
+import { UserApiKeyNewFormContainer } from "@/components/organisms/UserApiKeyNewFormContainer";
 import { useUserApiKeysNewPageBreadcrumbs } from "./breadcrumbs";
 
-export const UserApiKeysNewPage: FC = () => {
+export const UserApiKeyNewPage: FC = () => {
   const { user } = useVerifiedUser();
 
   useUserApiKeysNewPageBreadcrumbs();
@@ -15,7 +15,7 @@ export const UserApiKeysNewPage: FC = () => {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl sm:text-2xl font-bold">Create API Key</h1>
       </div>
-      <UserApiKeyNewForm onSubmit={(data) => console.log(data)} />
+      <UserApiKeyNewFormContainer />
     </div>
   );
 };

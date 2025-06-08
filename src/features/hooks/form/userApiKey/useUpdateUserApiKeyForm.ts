@@ -1,34 +1,34 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useCreateUserApiKeyMutation";
+import { useUpdateUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useUpdateUserApiKeyMutation";
 import type { UserApiKeyCreateValues } from "@/features/zodSchemas/userApiKey/userApiKeyCreateSchema";
 import type { UserApiKeyCreateRequestBody } from "@/types/api/userApiKey/userApiKeyForm";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 
-export function useCreateUserApiKeyForm() {
+export function useUpdateUserApiKeyForm(id: string) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { trigger: createUserApiKeyTrigger, isMutating } =
-    useCreateUserApiKeyMutation();
+  const { trigger: updateUserApiKeyTrigger, isMutating } =
+    useUpdateUserApiKeyMutation(id);
   const navigate = useNavigate();
 
-  const onSubmitCreateUserApiKey = useCallback(
+  const onSubmitUpdateUserApiKey = useCallback(
     async (data: UserApiKeyCreateValues) => {
       try {
         const requestData: UserApiKeyCreateRequestBody =
           data as UserApiKeyCreateRequestBody;
-        await createUserApiKeyTrigger(requestData);
+        await updateUserApiKeyTrigger(requestData);
         navigate("/user-api-keys", {
-          state: { successMessage: "User API key created successfully" },
+          state: { successMessage: "User API key updated successfully" },
         });
       } catch (error) {
         setErrorMessage(parseAxiosErrorMessage(error));
       }
     },
-    [createUserApiKeyTrigger, navigate]
+    [updateUserApiKeyTrigger, navigate]
   );
 
   return {
-    onSubmitCreateUserApiKey,
+    onSubmitUpdateUserApiKey,
     errorMessage,
     isMutating,
   };

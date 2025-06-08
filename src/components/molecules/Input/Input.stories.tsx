@@ -33,3 +33,11 @@ export const WithLabel: Story = {
     label: "Input Label",
   },
 };
+
+export const WithLoading: Story = {
+  args: {
+    label: "Loading Input",
+    placeholder: "Loading...",
+    isLoading: true,
+  },
+};

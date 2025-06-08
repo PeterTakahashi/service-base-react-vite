@@ -1495,7 +1495,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^(id|amount|created_at|updated_at)$",
               "default": "created_at",
               "title": "Sorted By"
             }
@@ -1506,7 +1505,6 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^(asc|desc)$",
               "default": "desc",
               "title": "Sorted Order"
             }
@@ -2117,6 +2115,97 @@
       }
     },
     "/user-api-keys/{user_api_key_id}": {
+      "get": {
+        "tags": ["user_api_keys"],
+        "summary": "User Api Keys:Get User Api Keys",
+        "description": "Retrieve a user API key by its ID.",
+        "operationId": "user_api_keys_get_user_api_keys_user_api_keys__user_api_key_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "user_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "User Api Key Id" }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language preference (e.g., en, ja)",
+            "required": false,
+            "schema": { "type": "string", "example": "en" }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": false,
+            "schema": { "type": "string", "example": "Bearer <token>" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserApiKeyRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "422",
+                      "code": "validation_error",
+                      "title": "Validation Error",
+                      "detail": "The field 'title' is required.",
+                      "source": { "parameter": "title" }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "401",
+                      "code": "unauthorized",
+                      "title": "Unauthorized",
+                      "detail": "Authentication credentials were not provided or are invalid."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "errors": [
+                    {
+                      "status": "500",
+                      "code": "internal_server_error",
+                      "title": "Internal Server Error",
+                      "detail": "An unexpected error occurred. Please try again later."
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
       "patch": {
         "tags": ["user_api_keys"],
         "summary": "User Api Keys:Update User Api Key",

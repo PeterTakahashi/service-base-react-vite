@@ -2,7 +2,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCallback, useState } from "react";
 import { PaymentForm } from "@/components/molecules/forms/PaymentForm";
-import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/useCreatePaymentIntentMutation";
+import { useCreatePaymentIntentMutation } from "@/features/hooks/swr/mutation/paymentIntent/useCreatePaymentIntentMutation";
 import {
   PaymentIntentCreateForm,
   type PaymentIntentValues,
