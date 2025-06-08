@@ -270,36 +270,38 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center py-4">
-        <div className="flex-1">
-          <span className="text-sm text-muted-foreground">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center py-4 gap-4 sm:gap-0">
+        <div className="flex-1 flex items-center justify-between sm:justify-start">
+          <div className="text-sm text-muted-foreground">
             {totalCount !== undefined && `Total: ${totalCount} items`} |{" "}
             {pagination.pageIndex + 1} of {pageCount}
-          </span>
+          </div>
         </div>
-        <div className="justify-end space-x-2 flex items-center">
+        <div className="flex flex-col sm:flex-row justify-end items-end sm:items-center gap-2">
           <PageSizeSelect
             pageSize={pagination.pageSize}
             onPageSizeChange={(size) => {
               setPagination((prev) => ({ ...prev, pageSize: size }));
             }}
           />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
