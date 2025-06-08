@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useForgotPasswordMutation } from "@/features/hooks/swr/mutation/useForgotPasswordMutation";
+import { useForgotPasswordMutation } from "@/features/hooks/swr/mutation/auth/useForgotPasswordMutation";
 import { type ForgotPasswordValues } from "@/components/molecules/forms/ForgotPasswordForm";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 

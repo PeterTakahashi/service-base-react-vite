@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUpdateUserApiKeyMutation } from "@/features/hooks/swr/mutation/useUpdateUserApiKeyMutation";
+import { useUpdateUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useUpdateUserApiKeyMutation";
 import type { UserApiKeyCreateValues } from "@/features/zodSchemas/userApiKey/userApiKeyCreateSchema";
 import type { UserApiKeyCreateRequestBody } from "@/types/api/userApiKey/userApiKeyForm";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
