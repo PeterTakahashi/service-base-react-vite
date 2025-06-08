@@ -49,6 +49,7 @@ interface DataTableProps<TData, TValue> {
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
   sorts: Sort[];
+  defaultSort?: Sort;
   className?: string;
   query?: Record<string, QueryValueType>;
   setQuery?: (query: Record<string, QueryValueType>) => void;
@@ -64,6 +65,7 @@ export function DataTable<TData, TValue>({
   filterInput,
   enableColumnFilters = true,
   sorts,
+  defaultSort,
   className = "",
   query = {},
   setQuery = () => {},
@@ -98,6 +100,7 @@ export function DataTable<TData, TValue>({
             {sorts.length > 0 && (
               <SortSelect
                 sorts={sorts}
+                defaultSort={defaultSort}
                 onSortChange={(newSort) => {
                   const newQuery = { ...query };
                   if (newSort) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
-import { sorts } from "./sorts";
+import { sorts, defaultSort } from "./sorts";
 import type { PaginationState } from "@tanstack/react-table";
 import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKeys";
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
@@ -44,6 +44,7 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
       query={query as Record<string, string>}
       setQuery={setQuery}
       sorts={sorts}
+      defaultSort={defaultSort}
     />
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
 import { columns } from "./columns";
-import { sorts } from "./sorts";
+import { sorts, defaultSort } from "./sorts";
 import type { PaginationState } from "@tanstack/react-table";
 import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
 import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
@@ -46,6 +46,7 @@ export const WalletTransactionsTable: React.FC<
       query={query as Record<string, string>}
       setQuery={setQuery}
       sorts={sorts}
+      defaultSort={defaultSort}
     />
   );
 };
