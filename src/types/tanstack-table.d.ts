@@ -8,5 +8,6 @@ declare module "@tanstack/react-table" {
     filterOptions?: { label: string; value: string }[];
     filterStartDateKey?: string;
     filterEndDateKey?: string;
+    defaultVisible?: boolean;
   }
 }

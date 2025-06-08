@@ -1,5 +1,3 @@
-"use client";
-
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -23,11 +21,7 @@ import { CheckboxColumnFilter } from "@/components/molecules/columnFilters/Check
 import * as React from "react";
 
 import { Button } from "@/components/atoms/Button";
-import type {
-  PaginationState,
-  OnChangeFn,
-  VisibilityState,
-} from "@tanstack/react-table";
+import type { PaginationState, OnChangeFn } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -36,10 +30,17 @@ import {
 } from "@/components/atoms/DropdownMenu";
 import { type Sort } from "@/types/components/sort";
 import { SortSelect } from "@/components/molecules/SortSelect";
+import { Skeleton } from "@/components/atoms/Skeleton";
+
+import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
+import { useColumnVisibilityOnLocalStorage } from "./hooks/useColumnVisibilityOnLocalStorage";
+
+import { Eye } from "lucide-react";
 
 type QueryValueType = string | string[];
 
 interface DataTableProps<TData, TValue> {
+  tableName: string;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pagination: PaginationState;
@@ -49,12 +50,16 @@ interface DataTableProps<TData, TValue> {
   filterInput?: React.ReactNode;
   enableColumnFilters?: boolean;
   sorts: Sort[];
+  defaultSort?: Sort;
   className?: string;
   query?: Record<string, QueryValueType>;
   setQuery?: (query: Record<string, QueryValueType>) => void;
+  isLoading?: boolean;
+  setDefaultSortOnLocalStorage: (sort: Sort) => void;
 }
 
 export function DataTable<TData, TValue>({
+  tableName,
   columns,
   data,
   pagination,
@@ -64,15 +69,22 @@ export function DataTable<TData, TValue>({
   filterInput,
   enableColumnFilters = true,
   sorts,
+  defaultSort,
   className = "",
   query = {},
   setQuery = () => {},
+  isLoading = false,
+  setDefaultSortOnLocalStorage,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const defaultColumnVisibility = React.useMemo(
+    () => getDefaultColumnVisibility(columns),
+    [columns]
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    useColumnVisibilityOnLocalStorage(tableName, defaultColumnVisibility);
   const table = useReactTable({
     data,
     columns,
@@ -88,6 +100,22 @@ export function DataTable<TData, TValue>({
   const sorted_by = React.useMemo(() => query.sorted_by, [query]);
   const sorted_order = React.useMemo(() => query.sorted_order, [query]);
 
+  const handleSortChange = React.useCallback(
+    (newSort: Sort) => {
+      const newQuery = { ...query };
+      if (newSort) {
+        newQuery.sorted_by = newSort.sorted_by;
+        newQuery.sorted_order = newSort.sorted_order;
+      } else {
+        delete newQuery.sorted_by;
+        delete newQuery.sorted_order;
+      }
+      setQuery(newQuery);
+      setDefaultSortOnLocalStorage(newSort);
+    },
+    [query, setQuery, setDefaultSortOnLocalStorage]
+  );
+
   return (
     <div>
       {(filterInput || enableColumnFilters || sorts.length > 0) && (
@@ -98,23 +126,15 @@ export function DataTable<TData, TValue>({
             {sorts.length > 0 && (
               <SortSelect
                 sorts={sorts}
-                onSortChange={(newSort) => {
-                  const newQuery = { ...query };
-                  if (newSort) {
-                    newQuery.sorted_by = newSort.sorted_by;
-                    newQuery.sorted_order = newSort.sorted_order;
-                  } else {
-                    delete newQuery.sorted_by;
-                    delete newQuery.sorted_order;
-                  }
-                  setQuery(newQuery);
-                }}
+                defaultSort={defaultSort}
+                onSortChange={handleSortChange}
               />
             )}
             {enableColumnFilters && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="ml-auto">
+                    <Eye className="h-4 w-4" />
                     Columns
                   </Button>
                 </DropdownMenuTrigger>
@@ -146,7 +166,7 @@ export function DataTable<TData, TValue>({
         </div>
       )}
       <div className="rounded-md border">
-        <Table className={className}>
+        <Table className={className + " bg-white"}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -223,7 +243,17 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              Array.from({ length: pagination.pageSize }).map((_, rowIdx) => (
+                <TableRow key={`skeleton-row-${rowIdx}`}>
+                  {columns.map((_col, colIdx) => (
+                    <TableCell key={`skeleton-cell-${colIdx}`}>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -252,36 +282,38 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center py-4">
-        <div className="flex-1">
-          <span className="text-sm text-muted-foreground">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center py-4 gap-4 sm:gap-0">
+        <div className="flex-1 flex items-center justify-between sm:justify-start">
+          <div className="text-sm text-muted-foreground">
             {totalCount !== undefined && `Total: ${totalCount} items`} |{" "}
             {pagination.pageIndex + 1} of {pageCount}
-          </span>
+          </div>
         </div>
-        <div className="justify-end space-x-2 flex items-center">
+        <div className="flex flex-col sm:flex-row justify-end items-end sm:items-center gap-2">
           <PageSizeSelect
             pageSize={pagination.pageSize}
             onPageSizeChange={(size) => {
               setPagination((prev) => ({ ...prev, pageSize: size }));
             }}
           />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>

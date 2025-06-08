@@ -21,3 +21,13 @@ export const Default = {
     },
   },
 };
+
+export const WithInitialValue = {
+  args: {
+    sorts,
+    onSortChange: (sort: Sort) => {
+      console.log("Selected sort:", sort);
+    },
+    defaultSort: sorts[0],
+  },
+};

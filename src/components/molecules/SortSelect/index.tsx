@@ -12,11 +12,17 @@ import {
 type SortSelectProps = {
   sorts: Sort[];
   onSortChange: (sort: Sort) => void;
+  defaultSort?: Sort;
 };
 
-export function SortSelect({ sorts, onSortChange }: SortSelectProps) {
+export function SortSelect({
+  sorts,
+  onSortChange,
+  defaultSort,
+}: SortSelectProps) {
   return (
     <Select
+      defaultValue={defaultSort ? JSON.stringify(defaultSort) : undefined}
       onValueChange={(value) => {
         const selectedSort = JSON.parse(value) as Sort;
         onSortChange(selectedSort);

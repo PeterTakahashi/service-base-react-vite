@@ -17,6 +17,7 @@ import type {
   ColumnFiltersState,
 } from "@tanstack/react-table";
 import { Input } from "@/components/atoms/Input";
+import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/hooks/useDefaultSortOnLocalstorage";
 
 type Row = {
   id: string;
@@ -28,23 +29,28 @@ type Row = {
 
 const columns: ColumnDef<Row>[] = [
   {
+    id: "id",
     header: "Name",
     accessorKey: "name",
   },
   {
+    id: "age",
     header: "Age",
     accessorKey: "age",
   },
   {
+    id: "email",
     header: "Email",
     accessorKey: "email",
   },
   {
+    id: "balance",
     header: "Balance",
     accessorKey: "balance",
     cell: ({ row }) => `$${row.getValue("balance")}`,
   },
   {
+    id: "actions",
     header: "Actions",
     accessorKey: "actions",
     cell: ({ row }) => (
@@ -85,7 +91,16 @@ const sorts = [
   { sorted_by: "amount", sorted_order: "asc", name: "Lowest Amount" },
 ];
 
-const Wrapper = ({ enableColumnFilters = true }) => {
+const Wrapper = ({
+  tableName = "defaultTableName",
+  enableColumnFilters = true,
+  isLoading = false,
+}) => {
+  const [, setDefaultSortOnLocalStorage] = useDefaultSortOnLocalStorage(
+    tableName,
+    sorts,
+    sorts[0]
+  );
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5,
@@ -113,6 +128,7 @@ const Wrapper = ({ enableColumnFilters = true }) => {
 
   return (
     <DataTable
+      tableName={tableName}
       columns={columns}
       data={pageData}
       totalCount={allData.length}
@@ -122,6 +138,8 @@ const Wrapper = ({ enableColumnFilters = true }) => {
       filterInput={filterInput}
       enableColumnFilters={enableColumnFilters}
       sorts={sorts}
+      isLoading={isLoading}
+      setDefaultSortOnLocalStorage={setDefaultSortOnLocalStorage}
     />
   );
 };
@@ -137,9 +155,23 @@ const meta: Meta<typeof DataTable> = {
 export default meta;
 
 export const Default: StoryObj = {
-  render: () => <Wrapper enableColumnFilters={true} />,
+  render: () => (
+    <Wrapper tableName={"DataTableStory"} enableColumnFilters={true} />
+  ),
 };
 
 export const WithoutColumnFilters: StoryObj = {
-  render: () => <Wrapper enableColumnFilters={false} />,
+  render: () => (
+    <Wrapper tableName={"DataTableStory"} enableColumnFilters={false} />
+  ),
+};
+
+export const LoadingContent: StoryObj = {
+  render: () => (
+    <Wrapper
+      tableName={"DataTableStory"}
+      enableColumnFilters={true}
+      isLoading={true}
+    />
+  ),
 };

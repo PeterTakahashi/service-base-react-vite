@@ -16,10 +16,12 @@ type Row = WalletTransactionRead[number];
 
 export const columns: ColumnDef<Row>[] = [
   {
+    id: "id",
     header: "ID",
     accessorKey: "id",
   },
   {
+    id: "amount",
     header: "Amount",
     accessorKey: "amount",
     cell: ({ row }) => {
@@ -29,6 +31,7 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
+    id: "wallet_transaction_type",
     header: "Type",
     meta: {
       filterType: "checkbox",
@@ -47,6 +50,7 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
+    id: "wallet_transaction_status",
     header: "Status",
     meta: {
       filterType: "checkbox",
@@ -65,6 +69,7 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
+    id: "created_at",
     header: "Created At",
     meta: {
       filterType: "dateRange",
@@ -75,11 +80,13 @@ export const columns: ColumnDef<Row>[] = [
     cell: ({ row }) => new Date(row.getValue("created_at")).toLocaleString(),
   },
   {
+    id: "updated_at",
     header: "Updated At",
     meta: {
       filterType: "dateRange",
       filterStartDateKey: "updated_at__gte",
       filterEndDateKey: "updated_at__lte",
+      defaultVisible: false,
     },
     accessorKey: "updated_at",
     cell: ({ row }) => new Date(row.getValue("updated_at")).toLocaleString(),
