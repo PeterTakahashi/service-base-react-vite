@@ -3,10 +3,13 @@ import { useVerifiedUser } from "@/features/hooks/swr/fetcher/user/useVerifiedUs
 import { UserEditForm } from "@/components/molecules/forms/UserEditForm";
 import { useEditUserForm } from "@/features/hooks/form/user/useEditUserForm";
 import { UserRoundPenIcon } from "lucide-react";
+import { useEditUserPageBreadcrumbs } from "./breadcrumbs";
 
 export const EditUserPage: FC = () => {
   const { user } = useVerifiedUser();
   const { onSubmitEditUser, errorMessage } = useEditUserForm();
+
+  useEditUserPageBreadcrumbs();
 
   if (!user) return;
 
