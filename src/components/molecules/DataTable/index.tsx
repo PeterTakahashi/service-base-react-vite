@@ -37,6 +37,8 @@ import {
 import { type Sort } from "@/types/components/sort";
 import { SortSelect } from "@/components/molecules/SortSelect";
 
+import { getDefaultColumnVisibility } from "./getDefaultColumnVisibility";
+
 type QueryValueType = string | string[];
 
 interface DataTableProps<TData, TValue> {
@@ -74,7 +76,7 @@ export function DataTable<TData, TValue>({
     []
   );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    React.useState<VisibilityState>(() => getDefaultColumnVisibility(columns));
   const table = useReactTable({
     data,
     columns,

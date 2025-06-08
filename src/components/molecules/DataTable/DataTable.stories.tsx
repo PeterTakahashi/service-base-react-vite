@@ -28,23 +28,28 @@ type Row = {
 
 const columns: ColumnDef<Row>[] = [
   {
+    id: "id",
     header: "Name",
     accessorKey: "name",
   },
   {
+    id: "age",
     header: "Age",
     accessorKey: "age",
   },
   {
+    id: "email",
     header: "Email",
     accessorKey: "email",
   },
   {
+    id: "balance",
     header: "Balance",
     accessorKey: "balance",
     cell: ({ row }) => `$${row.getValue("balance")}`,
   },
   {
+    id: "actions",
     header: "Actions",
     accessorKey: "actions",
     cell: ({ row }) => (
