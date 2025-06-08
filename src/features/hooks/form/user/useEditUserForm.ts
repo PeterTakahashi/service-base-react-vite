@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEditUserMutation } from "@/features/hooks/swr/mutation/useEditUserMutation";
+import { useEditUserMutation } from "@/features/hooks/swr/mutation/user/useEditUserMutation";
 import type { UserEditValues } from "@/components/molecules/forms/UserEditForm";
 import { type UserUpdate } from "@/types/api/user/user";
 import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";

@@ -351,7 +351,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * User Api Keys:Get User Api Keys
+         * @description Retrieve a user API key by its ID.
+         */
+        get: operations["user_api_keys_get_user_api_keys_user_api_keys__user_api_key_id__get"];
         put?: never;
         post?: never;
         /**
@@ -2450,6 +2454,93 @@ export interface operations {
         responses: {
             /** @description Successful Response */
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "401",
+                     *           "code": "unauthorized",
+                     *           "title": "Unauthorized",
+                     *           "detail": "Authentication credentials were not provided or are invalid."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "422",
+                     *           "code": "validation_error",
+                     *           "title": "Validation Error",
+                     *           "detail": "The field 'title' is required.",
+                     *           "source": {
+                     *             "parameter": "title"
+                     *           }
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "errors": [
+                     *         {
+                     *           "status": "500",
+                     *           "code": "internal_server_error",
+                     *           "title": "Internal Server Error",
+                     *           "detail": "An unexpected error occurred. Please try again later."
+                     *         }
+                     *       ]
+                     *     } */
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    user_api_keys_get_user_api_keys_user_api_keys__user_api_key_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Language preference (e.g., en, ja) */
+                "Accept-Language"?: string;
+                /** @description Bearer token for authentication */
+                Authorization?: string;
+            };
+            path: {
+                user_api_key_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -1,0 +1,33 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { UserApiKeyForm } from "./index";
+
+const meta: Meta<typeof UserApiKeyForm> = {
+  title: "molecules/Forms/UserApiKeyForm",
+  component: UserApiKeyForm,
+  tags: ["autodocs"],
+  argTypes: {
+    onSubmit: { action: "submit" },
+  },
+};
+export default meta;
+
+type Story = StoryObj<typeof UserApiKeyForm>;
+
+export const Default: Story = {
+  args: {
+    onSubmit: (data) => console.log(data),
+    isMutating: false,
+    errorMessage: null,
+    isLoading: false,
+  },
+};
+
+export const WithLoading: Story = {
+  args: {
+    onSubmit: (data) => console.log(data),
+    isMutating: true,
+    errorMessage: null,
+    isLoading: true,
+    mutationType: "create",
+  },
+};

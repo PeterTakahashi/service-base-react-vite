@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "@/components/molecules/DataTable";
-import { columns } from "./columns";
+import { buildColumns } from "./columns";
 import { sorts } from "./sorts";
 import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/hooks/useDefaultSortOnLocalstorage";
 import type { PaginationState } from "@tanstack/react-table";
 import { useUserApiKeys } from "@/features/hooks/swr/fetcher/userApiKeys/useUserApiKeys";
 import type { UserApiKeyListRequestQuery } from "@/types/api/userApiKey/userApiKey";
+import { useNavigate } from "react-router-dom";
+import type { UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
+import { useDeleteUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useDeleteUserApiKeyMutation";
 
 const tableName = "userApiKeysTable";
 
@@ -23,7 +26,7 @@ export const UserApiKeysTable: React.FC = () => {
     offset: pagination.pageIndex * pagination.pageSize,
   });
 
-  const { isLoading, userApiKeys, meta } = useUserApiKeys(query);
+  const { userApiKeys, meta, mutate, isLoading } = useUserApiKeys(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
@@ -34,6 +37,23 @@ export const UserApiKeysTable: React.FC = () => {
       offset: pagination.pageIndex * pagination.pageSize,
     }));
   }, [pagination]);
+
+  const navigate = useNavigate();
+  const { trigger: deleteUserApiKey } = useDeleteUserApiKeyMutation();
+
+  const handleEdit = (row: UserApiKeyRead) => {
+    navigate(`/user-api-keys/${row.id}/edit`);
+  };
+
+  const handleDelete = async (row: UserApiKeyRead) => {
+    await deleteUserApiKey(row.id);
+    await mutate();
+  };
+
+  const columns = buildColumns({
+    onEdit: handleEdit,
+    onDelete: handleDelete,
+  });
 
   return (
     <DataTable

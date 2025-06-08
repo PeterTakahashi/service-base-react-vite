@@ -33,6 +33,7 @@ export function parseAxiosErrorMessage(error: unknown): string {
       );
 
     case 422:
+      console.error("Validation error details:", detail);
       return (
         (typeof detail === "string" && detail) ||
         "Validation Error. Please check your input."

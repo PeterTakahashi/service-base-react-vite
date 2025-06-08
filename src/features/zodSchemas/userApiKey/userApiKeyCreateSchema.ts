@@ -14,6 +14,7 @@ export const UserApiKeyCreateSchema = z.object({
     .string()
     .nullable()
     .optional()
+    .transform((value) => (value === "" ? null : value))
     .refine(
       (value) => {
         if (!value) return true; // Allow empty string / null / undefined
@@ -26,6 +27,7 @@ export const UserApiKeyCreateSchema = z.object({
     .string()
     .nullable()
     .optional()
+    .transform((value) => (value === "" ? null : value))
     .refine(
       (value) => {
         if (!value) return true;
@@ -41,6 +43,7 @@ export const UserApiKeyCreateSchema = z.object({
     .string()
     .nullable()
     .optional()
+    .transform((value) => (value === "" ? null : value))
     .refine(
       (value) => {
         if (!value) return true;

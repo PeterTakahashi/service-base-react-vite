@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useUser } from "@/features/hooks/swr/fetcher/user/useUser";
-import { useVerifyTokenMutation } from "@/features/hooks/swr/mutation/useVerifyTokenMutation";
+import { useVerifyTokenMutation } from "@/features/hooks/swr/mutation/auth/useVerifyTokenMutation";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
