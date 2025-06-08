@@ -20,7 +20,7 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
     offset: pagination.pageIndex * pagination.pageSize,
   });
 
-  const { userApiKeys, meta } = useUserApiKeys(query);
+  const { isLoading, userApiKeys, meta } = useUserApiKeys(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
@@ -45,6 +45,7 @@ export const UserApiKeysTable: React.FC<UserApiKeyTableProps> = () => {
       setQuery={setQuery}
       sorts={sorts}
       defaultSort={defaultSort}
+      isLoading={isLoading}
     />
   );
 };

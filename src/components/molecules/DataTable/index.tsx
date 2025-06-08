@@ -232,7 +232,7 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              Array.from({ length: 5 }).map((_, rowIdx) => (
+              Array.from({ length: pagination.pageSize }).map((_, rowIdx) => (
                 <TableRow key={`skeleton-row-${rowIdx}`}>
                   {columns.map((_col, colIdx) => (
                     <TableCell key={`skeleton-cell-${colIdx}`}>

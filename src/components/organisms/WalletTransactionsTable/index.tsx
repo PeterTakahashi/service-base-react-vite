@@ -22,7 +22,7 @@ export const WalletTransactionsTable: React.FC<
     offset: pagination.pageIndex * pagination.pageSize,
   });
 
-  const { walletTransactions, meta } = useWalletTransactions(query);
+  const { isLoading, walletTransactions, meta } = useWalletTransactions(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 
@@ -47,6 +47,7 @@ export const WalletTransactionsTable: React.FC<
       setQuery={setQuery}
       sorts={sorts}
       defaultSort={defaultSort}
+      isLoading={isLoading}
     />
   );
 };
