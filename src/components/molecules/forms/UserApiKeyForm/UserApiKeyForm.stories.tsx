@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { UserApiKeyForm } from "./index";
 
 const meta: Meta<typeof UserApiKeyForm> = {

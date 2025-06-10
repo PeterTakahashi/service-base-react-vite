@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PaymentIntentCreateForm } from "./index";
 const meta: Meta<typeof PaymentIntentCreateForm> = {
   title: "molecules/Forms/PaymentIntentCreateForm",
