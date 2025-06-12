@@ -1,6 +1,6 @@
 import { type WalletTransactionType } from "@/types/api/walletTransaction/walletTransaction";
 import { WalletTransactionTypeBadge } from "./index";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof WalletTransactionTypeBadge> = {
   title: "Molecules/Badges/WalletTransactionTypeBadge",
