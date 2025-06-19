@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/atoms/Breadcrumb";
 import { useBreadcrumb } from "@/features/hooks/context/useBreadcrumb";
+import { Fragment } from "react";
 
 export const BreadcrumbContainer = () => {
   const { breadcrumbs } = useBreadcrumb();
@@ -14,8 +15,8 @@ export const BreadcrumbContainer = () => {
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbs.map((b, i) => (
-          <>
-            <BreadcrumbItem key={i}>
+          <Fragment key={i}>
+            <BreadcrumbItem>
               {b.href ? (
                 <BreadcrumbLink href={b.href}>{b.label}</BreadcrumbLink>
               ) : (
@@ -23,7 +24,7 @@ export const BreadcrumbContainer = () => {
               )}
             </BreadcrumbItem>
             {i !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-          </>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>

@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { AuthForm } from "@/components/molecules/forms/AuthForm";
 import { useSignUpForm } from "@/features/hooks/form/auth/useSignUpForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import { Link } from "react-router-dom";
 
 export const SignupPage: FC = () => {
   const { onSubmitSignUp, errorDetails } = useSignUpForm();
@@ -16,12 +17,12 @@ export const SignupPage: FC = () => {
 
       <div className="mt-10 text-center text-sm/6 text-gray-500">
         If you already have an account,{" "}
-        <a
-          href="/signin"
+        <Link
+          to="/signin"
           className="font-semibold text-primary-600 hover:text-primary-500"
         >
           Sign in
-        </a>
+        </Link>
       </div>
     </AuthLayout>
   );

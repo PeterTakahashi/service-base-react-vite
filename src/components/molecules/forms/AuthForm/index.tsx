@@ -11,6 +11,7 @@ import { GoogleAuthButton } from "@/components/molecules/buttons/GoogleAuthButto
 import type { ErrorDetail } from "@/types/api/error";
 import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
 import { useServerErrors } from "@/features/hooks/form/useServerErrors";
+import { Link } from "react-router-dom";
 
 type AuthFormProps = {
   mode: "signup" | "signin";
@@ -81,12 +82,12 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
         {!isSignUp && (
           <div>
-            <a
-              href="/forgot-password"
+            <Link
+              to="/forgot-password"
               className="font-semibold text-sm text-right text-primary-600 hover:text-primary-500"
             >
               Forgot password?
-            </a>
+            </Link>
           </div>
         )}
 

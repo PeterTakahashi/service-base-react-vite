@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { ForgotPasswordForm } from "@/components/molecules/forms/ForgotPasswordForm";
 import { useForgotPasswordForm } from "@/features/hooks/form/auth/useForgotPasswordForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import { Link } from "react-router-dom";
 
 export const ForgotPasswordPage: FC = () => {
   const { onSubmitForgotPassword, errorDetails } = useForgotPasswordForm();
@@ -15,12 +16,12 @@ export const ForgotPasswordPage: FC = () => {
 
       <div className="mt-10 text-center text-sm/6 text-gray-500">
         Remembered your password?{" "}
-        <a
-          href="/signin"
+        <Link
+          to="/signin"
           className="font-semibold text-primary-600 hover:text-primary-500"
         >
           Sign in
-        </a>
+        </Link>
       </div>
     </AuthLayout>
   );

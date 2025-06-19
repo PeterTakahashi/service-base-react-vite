@@ -15,6 +15,9 @@ export function useLogout() {
     } finally {
       mutate(() => true, undefined, { revalidate: false });
       setIsLoggedIn(false);
+      // NOTE: Reset body pointerEvents to auto after logout because Sidebar may
+      // leave it set otherwise
+      document.body.style.pointerEvents = "auto";
       navigate("/signin", {
         state: { successMessage: "Logged out successfully" },
       });
