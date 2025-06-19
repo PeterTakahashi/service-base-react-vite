@@ -39,7 +39,12 @@ const routes = [
     element: <ResetPasswordPage />,
     isPrivate: false,
   },
-  { path: "/not-verified", element: <NotVerifiedPage />, isPrivate: true },
+  {
+    path: "/not-verified",
+    element: <NotVerifiedPage />,
+    isPrivate: true,
+    layout: "auth",
+  },
   {
     path: "/verify-token/:token",
     element: <VerifyTokenPage />,
@@ -95,7 +100,7 @@ function App() {
         {routes.map((route) => {
           // isPrivate is a boolean that indicates if the route is private or not
           const element = route.isPrivate ? (
-            <ProtectedRoute>{route.element}</ProtectedRoute>
+            <ProtectedRoute layout={route.layout}>{route.element}</ProtectedRoute>
           ) : (
             <PublicOnlyRoute>{route.element}</PublicOnlyRoute>
           );

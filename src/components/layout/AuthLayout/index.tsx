@@ -2,7 +2,7 @@ import React from "react";
 import { serviceName } from "@/config";
 
 type AuthLayoutProps = {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 };
 
@@ -17,9 +17,11 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ title, children }) => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
-          <h2 className="mb-12 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            {title}
-          </h2>
+          {title && (
+            <h2 className="mb-12 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+              {title}
+            </h2>
+          )}
           {children}
         </div>
       </div>

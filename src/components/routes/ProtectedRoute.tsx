@@ -3,12 +3,17 @@ import { useUser } from "@/features/hooks/swr/fetcher/user/useUser";
 import { Loading } from "@/components/atoms/Loading";
 import { ErrorDisplay } from "@/components/atoms/ErrorDisplay";
 import { SidebarLayout } from "@/components/layout/SideBarLayout";
+import { AuthLayout } from "@/components/layout/AuthLayout";
 
 type ProtectedRouteProps = {
   children: ReactNode;
+  layout?: string; // "auth" for AuthLayout, "sidebar" for SidebarLayout, or any other string for default layout
 };
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
+export const ProtectedRoute: FC<ProtectedRouteProps> = ({
+  children,
+  layout = "sidebar",
+}) => {
   const { user, isLoading, isError } = useUser();
 
   if (isLoading) {
@@ -18,5 +23,11 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }) => {
   } else if (!user) {
     return;
   }
-  return <SidebarLayout>{children}</SidebarLayout>;
+
+  if (layout === "auth") {
+    return <AuthLayout>{children}</AuthLayout>;
+  } else if (layout === "sidebar") {
+    return <SidebarLayout>{children}</SidebarLayout>;
+  }
+  return <>{children}</>;
 };
