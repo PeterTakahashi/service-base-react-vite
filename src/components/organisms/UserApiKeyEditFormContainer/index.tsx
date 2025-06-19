@@ -14,13 +14,13 @@ export const UserApiKeyEditFormContainer: FC<
   const {
     onSubmitUpdateUserApiKey: onSubmit,
     isMutating,
-    errorMessage,
+    errorDetails,
   } = useUpdateUserApiKeyForm(userApiKey.id);
 
   return (
     <UserApiKeyForm
       onSubmit={onSubmit}
-      errorMessage={errorMessage}
+      errorDetails={errorDetails}
       isMutating={isMutating}
       userApiKey={userApiKey}
       mutationType="update"

@@ -6,13 +6,13 @@ export const UserApiKeyNewFormContainer: FC = () => {
   const {
     onSubmitCreateUserApiKey: onSubmit,
     isMutating,
-    errorMessage,
+    errorDetails,
   } = useCreateUserApiKeyForm();
 
   return (
     <UserApiKeyForm
       onSubmit={onSubmit}
-      errorMessage={errorMessage}
+      errorDetails={errorDetails}
       isMutating={isMutating}
     />
   );

@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { useForgotPasswordMutation } from "@/features/hooks/swr/mutation/auth/useForgotPasswordMutation";
 import { type ForgotPasswordValues } from "@/components/molecules/forms/ForgotPasswordForm";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
 
 export const useForgotPasswordForm = () => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
   const { trigger: forgotPasswordTrigger, isMutating } =
     useForgotPasswordMutation();
   const navigate = useNavigate();
@@ -17,14 +18,14 @@ export const useForgotPasswordForm = () => {
         await forgotPasswordTrigger(data);
         navigate("/sent-reset-password-mail");
       } catch (error) {
-        setErrorMessage(parseAxiosErrorMessage(error));
+        setErrorDetails(parseAxiosErrorDetails(error));
       }
     },
     [forgotPasswordTrigger, navigate]
   );
 
   return {
-    errorMessage,
+    errorDetails,
     onSubmitForgotPassword,
     isMutating,
   };

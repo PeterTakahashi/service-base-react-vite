@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ErrorDisplay } from "./index";
 
 const meta: Meta<typeof ErrorDisplay> = {
-  title: "atomms/ErrorDisplay",
+  title: "atoms/ErrorDisplay",
   component: ErrorDisplay,
   tags: ["autodocs"],
   argTypes: {

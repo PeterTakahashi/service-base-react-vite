@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Loading } from "./index";
 
 const meta: Meta<typeof Loading> = {
-  title: "atomms/Loading",
+  title: "atoms/Loading",
   component: Loading,
   tags: ["autodocs"],
 };

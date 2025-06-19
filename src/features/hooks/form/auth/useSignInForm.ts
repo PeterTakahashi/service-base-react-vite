@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import { useSignInMutation } from "@/features/hooks/swr/mutation/auth/useSignInMutation";
 import type { SignInValues } from "@/components/molecules/forms/AuthForm";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
 import { useAuth } from "@/features/hooks/context/useAuth";
 
 export function useSignInForm() {
   const navigate = useNavigate();
   const { trigger, isMutating } = useSignInMutation();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
   const { setIsLoggedIn } = useAuth();
 
   const onSubmitSignIn = async (data: SignInValues) => {
@@ -25,13 +26,13 @@ export function useSignInForm() {
         state: { successMessage: "Logged in successfully" },
       });
     } catch (error) {
-      setErrorMessage(parseAxiosErrorMessage(error));
+      setErrorDetails(parseAxiosErrorDetails(error));
     }
   };
 
   return {
     onSubmitSignIn,
-    errorMessage,
+    errorDetails,
     isMutating,
   };
 }

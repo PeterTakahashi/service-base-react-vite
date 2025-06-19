@@ -8,10 +8,13 @@ import {
 import { Input } from "@/components/molecules/Input";
 import { Button } from "@/components/atoms/Button";
 import { type UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
+import type { ErrorDetail } from "@/types/api/error";
+import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
+import { useServerErrors } from "@/features/hooks/form/useServerErrors";
 
 type UserApiKeyFormProps = {
   onSubmit: (data: UserApiKeyCreateValues) => void;
-  errorMessage: string | null;
+  errorDetails: ErrorDetail[] | null;
   isMutating: boolean;
   userApiKey?: UserApiKeyRead;
   isLoading?: boolean;
@@ -20,7 +23,7 @@ type UserApiKeyFormProps = {
 
 export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
   onSubmit,
-  errorMessage,
+  errorDetails,
   isMutating,
   userApiKey,
   isLoading = false,
@@ -30,6 +33,8 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
   } = useForm<UserApiKeyCreateValues>({
     resolver: zodResolver(UserApiKeyCreateSchema),
     defaultValues: {
@@ -41,6 +46,12 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
       allowed_ip: userApiKey?.allowed_ip || "",
     },
   });
+
+  const globalMessages = useServerErrors<UserApiKeyCreateValues>(
+    errorDetails,
+    setError,
+    clearErrors
+  );
 
   return (
     <div>
@@ -55,7 +66,7 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
         />
         <Input
           id="expires_at"
-          type="date"
+          type="datetime"
           placeholder="YYYY-MM-DD"
           label="Expires At"
           {...register("expires_at")}
@@ -79,11 +90,7 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
           isLoading={isLoading}
         />
 
-        {errorMessage && (
-          <div className="h-10">
-            <p className="text-sm text-red-600">{errorMessage}</p>
-          </div>
-        )}
+        <ErrorMessagesDisplay errorMessages={globalMessages} />
 
         <Button
           className="w-full"

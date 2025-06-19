@@ -3,11 +3,15 @@ import { useCallback, useState } from "react";
 
 import type { ResetPasswordValues } from "@/components/molecules/forms/ResetPasswordForm";
 import { useResetPasswordMutation } from "@/features/hooks/swr/mutation/auth/useResetPasswordMutation";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
+import { errorDetails } from "@/lib/errorDetails";
+
+const tokenMissingErrorDetail = errorDetails.token_missing;
 
 export const useResetPasswordForm = () => {
   const { token } = useParams<{ token: string }>();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
   const navigate = useNavigate();
 
   const { trigger, isMutating } = useResetPasswordMutation();
@@ -17,18 +21,18 @@ export const useResetPasswordForm = () => {
       const { password } = values;
 
       if (!token) {
-        setErrorMessage("Token is missing");
+        setErrorDetails([tokenMissingErrorDetail]);
         return;
       }
 
       try {
         await trigger({ password, token });
-        setErrorMessage(null);
+        setErrorDetails(null);
         navigate("/signin", {
           state: { successMessage: "Password reset successfully" },
         });
       } catch (error) {
-        setErrorMessage(parseAxiosErrorMessage(error));
+        setErrorDetails(parseAxiosErrorDetails(error));
       }
     },
     [token, navigate, trigger]
@@ -36,7 +40,7 @@ export const useResetPasswordForm = () => {
 
   return {
     onSubmitResetPassword,
-    errorMessage,
+    errorDetails,
     isMutating,
   };
 };

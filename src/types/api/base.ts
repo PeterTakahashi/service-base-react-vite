@@ -406,7 +406,10 @@ export interface components {
             grant_type?: string | null;
             /** Username */
             username: string;
-            /** Password */
+            /**
+             * Password
+             * Format: password
+             */
             password: string;
             /**
              * Scope
@@ -415,7 +418,10 @@ export interface components {
             scope: string;
             /** Client Id */
             client_id?: string | null;
-            /** Client Secret */
+            /**
+             * Client Secret
+             * Format: password
+             */
             client_secret?: string | null;
         };
         /** Body_auth_jwt_login_auth_jwt_login_post */
@@ -424,7 +430,10 @@ export interface components {
             grant_type?: string | null;
             /** Username */
             username: string;
-            /** Password */
+            /**
+             * Password
+             * Format: password
+             */
             password: string;
             /**
              * Scope
@@ -433,7 +442,10 @@ export interface components {
             scope: string;
             /** Client Id */
             client_id?: string | null;
-            /** Client Secret */
+            /**
+             * Client Secret
+             * Format: password
+             */
             client_secret?: string | null;
         };
         /** Body_reset_forgot_password_auth_forgot_password_post */
@@ -464,17 +476,38 @@ export interface components {
             /** Token */
             token: string;
         };
-        /** ErrorModel */
-        ErrorModel: {
+        /** ErrorDetail */
+        ErrorDetail: {
+            /** Status */
+            status: string;
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
             /** Detail */
-            detail: string | {
-                [key: string]: string;
-            };
+            detail: string;
+            source?: components["schemas"]["ErrorSource"] | null;
         };
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
+        /** ErrorResponse */
+        ErrorResponse: {
+            /**
+             * Type
+             * @default about:blank
+             */
+            type: string;
+            /** Title */
+            title: string;
+            /** Status */
+            status: number;
+            /** Instance */
+            instance: string;
+            /** Errors */
+            errors: components["schemas"]["ErrorDetail"][];
+        };
+        /** ErrorSource */
+        ErrorSource: {
+            /** Pointer */
+            pointer?: string | null;
         };
         /** ListResponseMeta */
         ListResponseMeta: {
@@ -744,15 +777,6 @@ export interface components {
             /** @description The wallet associated with the user. */
             wallet: components["schemas"]["WalletRead"];
         };
-        /** ValidationError */
-        ValidationError: {
-            /** Location */
-            loc: (string | number)[];
-            /** Message */
-            msg: string;
-            /** Error Type */
-            type: string;
-        };
         /**
          * WalletRead
          * @description Schema for reading wallet information.
@@ -849,10 +873,7 @@ export interface operations {
     auth_jwt_login_auth_jwt_login_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -875,54 +896,22 @@ export interface operations {
                     "application/json": components["schemas"]["BearerResponse"];
                 };
             };
-            /** @description Bad Request */
-            400: {
+            /** @description Missing token or inactive user. */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -930,12 +919,7 @@ export interface operations {
     auth_jwt_logout_auth_jwt_logout_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -957,23 +941,13 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Internal Server Error */
-            500: {
+            /** @description Validation error. */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -981,10 +955,7 @@ export interface operations {
     auth_cookie_login_auth_cookie_login_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1010,54 +981,22 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Bad Request */
-            400: {
+            /** @description Missing token or inactive user. */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1065,10 +1004,7 @@ export interface operations {
     auth_cookie_logout_auth_cookie_logout_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1097,23 +1033,13 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Internal Server Error */
-            500: {
+            /** @description Validation error. */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1121,10 +1047,7 @@ export interface operations {
     register_register_auth_register_register_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1143,54 +1066,13 @@ export interface operations {
                     "application/json": components["schemas"]["UserRead"];
                 };
             };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorModel"];
-                };
-            };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1198,10 +1080,7 @@ export interface operations {
     reset_forgot_password_auth_forgot_password_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1220,45 +1099,13 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1266,10 +1113,7 @@ export interface operations {
     reset_reset_password_auth_reset_password_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1288,54 +1132,22 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Bad Request */
+            /** @description Bad token. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1343,12 +1155,7 @@ export interface operations {
     verify_request_token_auth_request_verify_token_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1367,64 +1174,13 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1432,12 +1188,7 @@ export interface operations {
     verify_verify_auth_verify_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1456,73 +1207,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserRead"];
                 };
             };
-            /** @description Bad Request */
+            /** @description Bad token. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1532,10 +1232,7 @@ export interface operations {
             query?: {
                 scopes?: string[];
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1550,45 +1247,13 @@ export interface operations {
                     "application/json": components["schemas"]["OAuth2AuthorizeResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1601,10 +1266,7 @@ export interface operations {
                 state?: string | null;
                 error?: string | null;
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1619,54 +1281,31 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Bad Request */
+            /** @description Invalid state token or missing email. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Missing token or inactive user. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description User already exists. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1676,10 +1315,7 @@ export interface operations {
             query?: {
                 scopes?: string[];
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1694,45 +1330,13 @@ export interface operations {
                     "application/json": components["schemas"]["OAuth2AuthorizeResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1745,12 +1349,7 @@ export interface operations {
                 state?: string | null;
                 error?: string | null;
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1765,73 +1364,31 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Bad Request */
+            /** @description Invalid state token or missing email. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorModel"];
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Missing token or inactive user. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description User already exists. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1839,12 +1396,7 @@ export interface operations {
     users_get_current_user_users_me_get: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1859,42 +1411,13 @@ export interface operations {
                     "application/json": components["schemas"]["UserWithWalletRead"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
+            /** @description Validation error. */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -1902,12 +1425,7 @@ export interface operations {
     users_patch_current_user_users_me_patch: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -1926,73 +1444,13 @@ export interface operations {
                     "application/json": components["schemas"]["UserRead"];
                 };
             };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorModel"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
+            /** @description Unprocessable Entity */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2000,12 +1458,7 @@ export interface operations {
     payment_intents_create_payment_intent_payment_intents_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -2024,64 +1477,22 @@ export interface operations {
                     "application/json": components["schemas"]["PaymentIntentCreateResponse"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2089,12 +1500,7 @@ export interface operations {
     payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -2109,42 +1515,22 @@ export interface operations {
                     "application/json": unknown;
                 };
             };
-            /** @description Unauthorized */
+            /** @description Invalid payload or signature. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Internal Server Error */
-            500: {
+            /** @description Validation error. */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2165,12 +1551,7 @@ export interface operations {
                 updated_at__gte?: string | null;
                 updated_at__lte?: string | null;
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -2185,64 +1566,22 @@ export interface operations {
                     "application/json": components["schemas"]["WalletTransactionListResponse"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2250,12 +1589,7 @@ export interface operations {
     wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path: {
                 wallet_transaction_id: string;
             };
@@ -2272,64 +1606,22 @@ export interface operations {
                     "application/json": components["schemas"]["WalletTransactionRead"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2352,12 +1644,7 @@ export interface operations {
                 updated_at__gte?: string | null;
                 updated_at__lte?: string | null;
             };
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -2372,64 +1659,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserApiKeyListRead"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2437,12 +1682,7 @@ export interface operations {
     user_api_keys_create_user_api_key_user_api_keys_post: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path?: never;
             cookie?: never;
         };
@@ -2461,64 +1701,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserApiKeyRead"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2526,12 +1724,7 @@ export interface operations {
     user_api_keys_get_user_api_keys_user_api_keys__user_api_key_id__get: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path: {
                 user_api_key_id: string;
             };
@@ -2548,64 +1741,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserApiKeyRead"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2613,12 +1764,7 @@ export interface operations {
     user_api_keys_delete_user_api_key_user_api_keys__user_api_key_id__delete: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path: {
                 user_api_key_id: string;
             };
@@ -2633,64 +1779,22 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2698,12 +1802,7 @@ export interface operations {
     user_api_keys_update_user_api_key_user_api_keys__user_api_key_id__patch: {
         parameters: {
             query?: never;
-            header?: {
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
-            };
+            header?: never;
             path: {
                 user_api_key_id: string;
             };
@@ -2724,64 +1823,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserApiKeyRead"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -2791,10 +1848,6 @@ export interface operations {
             query?: never;
             header?: {
                 "X-API-KEY"?: string | null;
-                /** @description Language preference (e.g., en, ja) */
-                "Accept-Language"?: string;
-                /** @description Bearer token for authentication */
-                Authorization?: string;
             };
             path?: never;
             cookie?: never;
@@ -2810,64 +1863,22 @@ export interface operations {
                     "application/json": components["schemas"]["UserApiKeyVerifyResponse"];
                 };
             };
-            /** @description Unauthorized */
+            /** @description Unauthorized access. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "401",
-                     *           "code": "unauthorized",
-                     *           "title": "Unauthorized",
-                     *           "detail": "Authentication credentials were not provided or are invalid."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Validation Error */
+            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "422",
-                     *           "code": "validation_error",
-                     *           "title": "Validation Error",
-                     *           "detail": "The field 'title' is required.",
-                     *           "source": {
-                     *             "parameter": "title"
-                     *           }
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
-                };
-            };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /** @example {
-                     *       "errors": [
-                     *         {
-                     *           "status": "500",
-                     *           "code": "internal_server_error",
-                     *           "title": "Internal Server Error",
-                     *           "detail": "An unexpected error occurred. Please try again later."
-                     *         }
-                     *       ]
-                     *     } */
-                    "application/json": unknown;
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };

@@ -4,7 +4,7 @@ import { useLogout } from "@/features/hooks/auth/useLogout";
 
 export const NotVerifiedPage: FC = () => {
   const { onLogout } = useLogout();
-  const { user, errorMessage } = useRequestVerificationForm();
+  const { user, errorDetails } = useRequestVerificationForm();
   if (!user) return null;
 
   return (
@@ -15,7 +15,12 @@ export const NotVerifiedPage: FC = () => {
       <p className="text-green-600">
         Verification email sent. Please check your inbox.
       </p>
-      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+      {errorDetails &&
+        errorDetails.map((errorDetail, index) => (
+          <p key={index} className="text-red-500 mt-2">
+            {errorDetail.detail}
+          </p>
+        ))}
       <div className="mt-16 text-center text-sm/6 text-gray-500">
         <div>
           Did you receive the email?{" "}

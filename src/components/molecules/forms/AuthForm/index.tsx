@@ -4,15 +4,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { signUpSchema } from "@/features/zodSchemas/auth/signUpSchema";
 import { signInSchema } from "@/features/zodSchemas/auth/signInSchema";
-import { Input } from "@/components/atoms/Input";
-import { Label } from "@/components/atoms/Label";
+import { Input } from "@/components/molecules/Input";
 import { Button } from "@/components/atoms/Button";
 import { GithubAuthButton } from "@/components/molecules/buttons/GithubAuthButton";
 import { GoogleAuthButton } from "@/components/molecules/buttons/GoogleAuthButton";
+import type { ErrorDetail } from "@/types/api/error";
+import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
+import { useServerErrors } from "@/features/hooks/form/useServerErrors";
 
 type AuthFormProps = {
   mode: "signup" | "signin";
-  errorMessage: string;
+  errorDetails: ErrorDetail[] | null;
   onSubmit: (data: SignUpValues | SignInValues) => void;
 };
 
@@ -21,7 +23,7 @@ export type SignInValues = z.infer<typeof signInSchema>;
 
 export const AuthForm: React.FC<AuthFormProps> = ({
   mode,
-  errorMessage,
+  errorDetails,
   onSubmit,
 }) => {
   const isSignUp = mode === "signup";
@@ -30,6 +32,8 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
   } = useForm<SignUpValues & SignInValues>({
     resolver: zodResolver(isSignUp ? signUpSchema : signInSchema),
   });
@@ -38,12 +42,18 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     onSubmit(data);
   };
 
+  const globalMessages = useServerErrors<SignUpValues & SignInValues>(
+    errorDetails,
+    setError,
+    clearErrors
+  );
+
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
-      <div className="w-full max-w-sm mx-auto">
-        <div className="grid items-center gap-1.5">
-          <Label htmlFor="email">Email</Label>
+      <div className="w-full max-w-sm mx-auto grid items-center gap-4">
+        <div className="grid items-center gap-1">
           <Input
+            label="Email"
             type="email"
             id="email"
             placeholder="Email"
@@ -54,9 +64,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           />
         </div>
 
-        <div className="grid items-center gap-1.5 mt-2">
-          <Label htmlFor="password">Password</Label>
+        <div className="grid items-center gap-1">
           <Input
+            label="Password"
             type="password"
             id="password"
             placeholder="Password"
@@ -67,11 +77,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           />
         </div>
 
-        {errorMessage && (
-          <p className="mt-4 text-center text-sm text-red-600">
-            {errorMessage}
-          </p>
-        )}
+        <ErrorMessagesDisplay errorMessages={globalMessages} />
 
         {!isSignUp && (
           <div>
@@ -87,13 +93,13 @@ export const AuthForm: React.FC<AuthFormProps> = ({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="flex w-full justify-center mt-8"
+          className="flex w-full justify-center mt-4"
         >
           {isSubmitting ? "Sending..." : isSignUp ? "Sign up" : "Sign in"}
         </Button>
 
         <div>
-          <div className="relative mt-10">
+          <div className="relative mt-2">
             <div
               aria-hidden="true"
               className="absolute inset-0 flex items-center"

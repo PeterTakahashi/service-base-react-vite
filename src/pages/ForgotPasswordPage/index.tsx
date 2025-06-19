@@ -4,15 +4,14 @@ import { useForgotPasswordForm } from "@/features/hooks/form/auth/useForgotPassw
 import { AuthLayout } from "@/components/layout/AuthLayout";
 
 export const ForgotPasswordPage: FC = () => {
-  const { onSubmitForgotPassword, errorMessage } = useForgotPasswordForm();
+  const { onSubmitForgotPassword, errorDetails } = useForgotPasswordForm();
 
   return (
     <AuthLayout title="Forgot your password?">
-      <ForgotPasswordForm onSubmit={onSubmitForgotPassword} />
-
-      {errorMessage && (
-        <p className="mt-4 text-center text-sm text-red-600">{errorMessage}</p>
-      )}
+      <ForgotPasswordForm
+        onSubmit={onSubmitForgotPassword}
+        errorDetails={errorDetails}
+      />
 
       <div className="mt-10 text-center text-sm/6 text-gray-500">
         Remembered your password?{" "}

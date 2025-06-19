@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "@/features/hooks/swr/mutation/auth/useSignUpMutation";
 import { useSignInMutation } from "@/features/hooks/swr/mutation/auth/useSignInMutation";
 import type { SignUpValues } from "@/components/molecules/forms/AuthForm";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
 
 export function useSignUpForm() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export function useSignUpForm() {
   const { trigger: signInTrigger, isMutating: isSignInMutating } =
     useSignInMutation();
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
 
   const onSubmitSignUp = async (data: SignUpValues) => {
     try {
@@ -30,13 +31,13 @@ export function useSignUpForm() {
 
       navigate("/not-verified");
     } catch (error) {
-      setErrorMessage(parseAxiosErrorMessage(error));
+      setErrorDetails(parseAxiosErrorDetails(error));
     }
   };
 
   return {
     onSubmitSignUp,
-    errorMessage,
+    errorDetails,
     isMutating: isSignUpMutating || isSignInMutating,
   };
 }

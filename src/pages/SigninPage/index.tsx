@@ -4,13 +4,13 @@ import { useSignInForm } from "@/features/hooks/form/auth/useSignInForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 
 export const SigninPage: FC = () => {
-  const { onSubmitSignIn, errorMessage } = useSignInForm();
+  const { onSubmitSignIn, errorDetails } = useSignInForm();
 
   return (
     <AuthLayout title="Sign in to your account">
       <AuthForm
         mode="signin"
-        errorMessage={errorMessage}
+        errorDetails={errorDetails}
         onSubmit={onSubmitSignIn}
       />
 

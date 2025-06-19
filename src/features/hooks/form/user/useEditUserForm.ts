@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useEditUserMutation } from "@/features/hooks/swr/mutation/user/useEditUserMutation";
 import type { UserEditValues } from "@/components/molecules/forms/UserEditForm";
 import { type UserUpdate } from "@/types/api/user/user";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
 
 export function useEditUserForm() {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
   const { trigger: editUserTrigger, isMutating } = useEditUserMutation();
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ export function useEditUserForm() {
           state: { successMessage: "User updated successfully" },
         });
       } catch (error) {
-        setErrorMessage(parseAxiosErrorMessage(error));
+        setErrorDetails(parseAxiosErrorDetails(error));
       }
     },
     [editUserTrigger, navigate]
@@ -30,7 +31,7 @@ export function useEditUserForm() {
 
   return {
     onSubmitEditUser,
-    errorMessage,
+    errorDetails,
     isMutating,
   };
 }

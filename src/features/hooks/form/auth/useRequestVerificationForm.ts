@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/features/hooks/swr/fetcher/user/useUser";
 import { useRequestVerifyTokenMutation } from "@/features/hooks/swr/mutation/auth/useRequestVerifyTokenMutation";
 import { useNavigate } from "react-router-dom";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
+import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
+import type { ErrorDetail } from "@/types/api/error";
 
 export function useRequestVerificationForm() {
   const { trigger: requestVerifyToken } = useRequestVerifyTokenMutation();
   const navigate = useNavigate();
   const [isMailSent, setIsMailSent] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
   const { user, isLoading, isError } = useUser();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function useRequestVerificationForm() {
           await requestVerifyToken({ email: user.email });
           setIsMailSent(true);
         } catch (error) {
-          setErrorMessage(parseAxiosErrorMessage(error));
+          setErrorDetails(parseAxiosErrorDetails(error));
         }
       })();
     }
@@ -32,6 +33,6 @@ export function useRequestVerificationForm() {
     user,
     isLoading,
     isError,
-    errorMessage,
+    errorDetails,
   };
 }
