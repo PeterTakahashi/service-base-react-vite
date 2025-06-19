@@ -21,7 +21,25 @@ const DatePickerStory = (args: React.ComponentProps<typeof DatePicker>) => {
 export const Default: Story = {
   render: (args) => <DatePickerStory {...args} />,
   args: {
-    key: "date",
+    id: "date",
     label: "Date of birth",
+  },
+};
+
+export const Loading: Story = {
+  render: (args) => <DatePickerStory {...args} />,
+  args: {
+    id: "date",
+    label: "Date of birth",
+    isLoading: true,
+  },
+};
+
+export const WithError: Story = {
+  render: (args) => <DatePickerStory {...args} />,
+  args: {
+    id: "date",
+    label: "Date of birth",
+    errorMessage: "Invalid date",
   },
 };

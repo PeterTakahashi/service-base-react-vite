@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   UserApiKeyCreateSchema,
@@ -11,6 +11,7 @@ import { type UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
 import type { ErrorDetail } from "@/types/api/error";
 import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
 import { useServerErrors } from "@/features/hooks/form/useServerErrors";
+import { DatePicker } from "@/components/organisms/DatePicker";
 
 type UserApiKeyFormProps = {
   onSubmit: (data: UserApiKeyCreateValues) => void;
@@ -29,13 +30,7 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
   isLoading = false,
   mutationType = "create",
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-    clearErrors,
-  } = useForm<UserApiKeyCreateValues>({
+  const method = useForm<UserApiKeyCreateValues>({
     resolver: zodResolver(UserApiKeyCreateSchema),
     defaultValues: {
       name: userApiKey?.name || "",
@@ -46,6 +41,13 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
       allowed_ip: userApiKey?.allowed_ip || "",
     },
   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
+  } = method;
 
   const globalMessages = useServerErrors<UserApiKeyCreateValues>(
     errorDetails,
@@ -54,7 +56,7 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
   );
 
   return (
-    <div>
+    <FormProvider {...method}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Input
           id="name"
@@ -64,13 +66,9 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
           errorMessage={errors.name?.message}
           isLoading={isLoading}
         />
-        <Input
-          id="expires_at"
-          type="datetime"
-          placeholder="YYYY-MM-DD"
+        <DatePicker<UserApiKeyCreateValues>
           label="Expires At"
           {...register("expires_at")}
-          errorMessage={errors.expires_at?.message}
           isLoading={isLoading}
         />
         <Input
@@ -100,6 +98,6 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
           {mutationType === "update" ? "Update API Key" : "Create API Key"}
         </Button>
       </form>
-    </div>
+    </FormProvider>
   );
 };

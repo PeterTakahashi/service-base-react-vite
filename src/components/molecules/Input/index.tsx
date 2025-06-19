@@ -35,11 +35,7 @@ function Input({
               errorMessage={errorMessage}
               {...props}
             />
-            {hasError && (
-              <div className="h-10">
-                <p className="text-sm text-red-600">{errorMessage}</p>
-              </div>
-            )}
+            {hasError && <p className="text-sm text-red-600">{errorMessage}</p>}
           </>
         )}
       </div>
