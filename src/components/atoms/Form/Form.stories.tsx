@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof Form> = {
-  title: "atomms/Form",
+  title: "atoms/Form",
   component: Form,
   tags: ["autodocs"],
   argTypes: {},

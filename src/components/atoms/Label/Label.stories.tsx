@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Label } from "./index";
 
 const meta: Meta<typeof Label> = {
-  title: "atomms/Label",
+  title: "atoms/Label",
   component: Label,
   tags: ["autodocs"],
 };

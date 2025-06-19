@@ -1,4 +1,4 @@
-import useSWRMutation from "swr/mutation";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 import { client } from "@/lib/client";
 import type { UserUpdate, UserRead } from "@/types/api/user/user";
 
@@ -11,7 +11,7 @@ async function patchUser(
 }
 
 export function useEditUserMutation() {
-  const { trigger, isMutating, data, error } = useSWRMutation(
+  const { trigger, isMutating, data, error, errorDetails } = useCustomSWRMutation(
     "/users/me",
     patchUser
   );
@@ -21,5 +21,6 @@ export function useEditUserMutation() {
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }

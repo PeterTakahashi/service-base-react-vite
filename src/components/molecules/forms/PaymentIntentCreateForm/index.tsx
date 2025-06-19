@@ -3,29 +3,42 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 
-import { Input } from "@/components/atoms/Input";
+import { Input } from "@/components/molecules/Input";
 import { Button } from "@/components/atoms/Button";
 import { createPaymentIntentSchema } from "@/features/zodSchemas/paymentIntent/createPaymentIntentSchema";
+
+import type { ErrorDetail } from "@/types/api/error";
+import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
+import { useServerErrors } from "@/features/hooks/form/useServerErrors";
 
 export type PaymentIntentValues = z.infer<typeof createPaymentIntentSchema>;
 
 type PaymentIntentCreateFormProps = {
   onSubmit: (data: PaymentIntentValues) => void;
+  errorDetails?: ErrorDetail[] | null;
 };
 
 const quickAmounts = [10, 50, 100];
 
 export const PaymentIntentCreateForm: React.FC<
   PaymentIntentCreateFormProps
-> = ({ onSubmit }) => {
+> = ({ onSubmit, errorDetails }) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
   } = useForm<PaymentIntentValues>({
     resolver: zodResolver(createPaymentIntentSchema),
   });
+
+  const globalMessages = useServerErrors<PaymentIntentValues>(
+    errorDetails,
+    setError,
+    clearErrors
+  );
 
   return (
     <form
@@ -70,6 +83,8 @@ export const PaymentIntentCreateForm: React.FC<
           ))}
         </div>
       </div>
+
+      <ErrorMessagesDisplay errorMessages={globalMessages} />
 
       <Button
         type="submit"

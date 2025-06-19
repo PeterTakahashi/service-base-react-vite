@@ -13,7 +13,7 @@ import { Input } from "@/components/atoms/Input";
 import { Label } from "@/components/atoms/Label";
 
 const meta: Meta<typeof Card> = {
-  title: "atomms/Card",
+  title: "atoms/Card",
   component: Card,
   tags: ["autodocs"],
   argTypes: {

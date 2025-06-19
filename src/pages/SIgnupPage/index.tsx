@@ -4,13 +4,13 @@ import { useSignUpForm } from "@/features/hooks/form/auth/useSignUpForm";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 
 export const SignupPage: FC = () => {
-  const { onSubmitSignUp, errorMessage } = useSignUpForm();
+  const { onSubmitSignUp, errorDetails } = useSignUpForm();
 
   return (
     <AuthLayout title="Create an account">
       <AuthForm
         mode="signup"
-        errorMessage={errorMessage}
+        errorDetails={errorDetails}
         onSubmit={onSubmitSignUp}
       />
 

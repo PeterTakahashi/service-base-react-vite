@@ -12,7 +12,8 @@ import { useAddFundsPageBreadcrumbs } from "./breadcrumbs";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 
 export function AddFundsPage() {
-  const { trigger: createPaymentIntent } = useCreatePaymentIntentMutation();
+  const { trigger: createPaymentIntent, errorDetails } =
+    useCreatePaymentIntentMutation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null); // Amount in cents
   useAddFundsPageBreadcrumbs();
@@ -37,7 +38,10 @@ export function AddFundsPage() {
             Add Funds
           </h2>
           {amount == null && (
-            <PaymentIntentCreateForm onSubmit={handlePaymentIntentCreate} />
+            <PaymentIntentCreateForm
+              onSubmit={handlePaymentIntentCreate}
+              errorDetails={errorDetails}
+            />
           )}
           {clientSecret && amount && (
             <Elements stripe={stripePromise} options={{ clientSecret }}>

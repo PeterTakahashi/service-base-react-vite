@@ -1,4 +1,4 @@
-import useSWRMutation from "swr/mutation";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 import { client } from "@/lib/client";
 import type { UserApiKeyUpdateRequestBody } from "@/types/api/userApiKey/userApiKeyForm";
 import type { UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
@@ -12,15 +12,14 @@ async function patchUserApiKey(
 }
 
 export function useUpdateUserApiKeyMutation(id: string) {
-  const { trigger, isMutating, data, error } = useSWRMutation(
-    `/user-api-keys/${id}`,
-    patchUserApiKey
-  );
+  const { trigger, isMutating, data, error, errorDetails } =
+    useCustomSWRMutation(`/user-api-keys/${id}`, patchUserApiKey);
 
   return {
     trigger,
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }

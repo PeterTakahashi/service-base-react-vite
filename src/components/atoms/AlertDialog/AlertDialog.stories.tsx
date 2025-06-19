@@ -14,7 +14,7 @@ import { Button } from "@/components/atoms/Button";
 import { AlertTriangle } from "lucide-react";
 
 const meta: Meta<typeof AlertDialog> = {
-  title: "atomms/AlertDialog",
+  title: "atoms/AlertDialog",
   component: AlertDialog,
 };
 

@@ -2,13 +2,14 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Service Base FastAPI",
-    "description": "Version 1 of the  FastAPI Applicatoin",
+    "description": "Version 1 of the FastAPI Applicatoin",
     "version": "1.0.0"
   },
+  "servers": [{ "url": "/app/v1" }],
   "paths": {
     "/auth/jwt/login": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Auth:Jwt.Login",
         "operationId": "auth_jwt_login_auth_jwt_login_post",
         "requestBody": {
@@ -34,74 +35,67 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "LOGIN_BAD_CREDENTIALS": {
-                    "summary": "Bad credentials or the user is inactive.",
-                    "value": { "detail": "LOGIN_BAD_CREDENTIALS" }
-                  },
-                  "LOGIN_USER_NOT_VERIFIED": {
-                    "summary": "The user is not verified.",
-                    "value": { "detail": "LOGIN_USER_NOT_VERIFIED" }
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/jwt/login",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
                   }
                 }
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "401": {
+            "description": "Missing token or inactive user.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "login_bad_credentials": {
+                    "summary": "Login failed due to incorrect credentials.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/jwt/login",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "login_bad_credentials",
+                          "title": "Login Failed",
+                          "detail": "The provided credentials are invalid. Please check your username and password."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+        }
       }
     },
     "/auth/jwt/logout": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Auth:Jwt.Logout",
         "operationId": "auth_jwt_logout_auth_jwt_logout_post",
         "responses": {
@@ -109,47 +103,42 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "401": { "description": "Missing token or inactive user." },
-          "500": {
-            "description": "Internal Server Error",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/jwt/logout",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
-          }
-        },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
           },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+          "401": { "description": "Missing token or inactive user." }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       }
     },
     "/auth/cookie/login": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Auth:Cookie.Login",
         "operationId": "auth_cookie_login_auth_cookie_login_post",
         "requestBody": {
@@ -167,75 +156,68 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "LOGIN_BAD_CREDENTIALS": {
-                    "summary": "Bad credentials or the user is inactive.",
-                    "value": { "detail": "LOGIN_BAD_CREDENTIALS" }
-                  },
-                  "LOGIN_USER_NOT_VERIFIED": {
-                    "summary": "The user is not verified.",
-                    "value": { "detail": "LOGIN_USER_NOT_VERIFIED" }
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/login",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
                   }
                 }
               }
             }
           },
-          "204": { "description": "No Content" },
-          "422": {
-            "description": "Validation Error",
+          "401": {
+            "description": "Missing token or inactive user.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "login_bad_credentials": {
+                    "summary": "Login failed due to incorrect credentials.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/login",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "login_bad_credentials",
+                          "title": "Login Failed",
+                          "detail": "The provided credentials are invalid. Please check your username and password."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
           },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+          "204": { "description": "No Content" }
+        }
       }
     },
     "/auth/cookie/logout": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Auth:Cookie.Logout",
         "operationId": "auth_cookie_logout_auth_cookie_logout_post",
         "responses": {
@@ -243,41 +225,43 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "401": { "description": "Missing token or inactive user." },
-          "204": { "description": "No Content" },
-          "500": {
-            "description": "Internal Server Error",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/logout",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
-          }
+          },
+          "401": { "description": "Missing token or inactive user." },
+          "204": { "description": "No Content" }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       }
     },
     "/auth/register/register": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Register:Register",
         "operationId": "register_register_auth_register_register_post",
         "requestBody": {
@@ -297,79 +281,58 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Unprocessable Entity",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "REGISTER_USER_ALREADY_EXISTS": {
-                    "summary": "A user with this email already exists.",
-                    "value": { "detail": "REGISTER_USER_ALREADY_EXISTS" }
-                  },
-                  "REGISTER_INVALID_PASSWORD": {
-                    "summary": "Password validation failed.",
+                  "register_user_already_exists": {
+                    "summary": "User already exists with this email.",
                     "value": {
-                      "detail": {
-                        "code": "REGISTER_INVALID_PASSWORD",
-                        "reason": "Password should beat least 3 characters"
-                      }
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/app/v1/auth/register/register",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "register_user_already_exists",
+                          "title": "User Already Exists",
+                          "detail": "An account with this email already exists. Please log in or use a different email.",
+                          "source": { "pointer": "#/email" }
+                        }
+                      ]
+                    }
+                  },
+                  "register_invalid_password": {
+                    "summary": "Password does not meet criteria.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/app/v1/auth/register/register",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "register_invalid_password",
+                          "title": "Invalid Password",
+                          "detail": "The provided password does not meet the required criteria. Please ensure it is at least 8 characters long and contains a mix of letters, numbers, and special characters.",
+                          "source": { "pointer": "#/password" }
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
-              }
-            }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+        }
       }
     },
     "/auth/forgot-password": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Reset:Forgot Password",
         "operationId": "reset_forgot_password_auth_forgot_password_post",
         "requestBody": {
@@ -388,55 +351,39 @@
             "content": { "application/json": { "schema": {} } }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/forgot-password",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+        }
       }
     },
     "/auth/reset-password": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Reset:Reset Password",
         "operationId": "reset_reset_password_auth_reset_password_post",
         "requestBody": {
@@ -454,79 +401,67 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Unprocessable Entity",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "RESET_PASSWORD_BAD_TOKEN": {
-                    "summary": "Bad or expired token.",
-                    "value": { "detail": "RESET_PASSWORD_BAD_TOKEN" }
-                  },
-                  "RESET_PASSWORD_INVALID_PASSWORD": {
-                    "summary": "Password validation failed.",
+                  "reset_password_invalid_password": {
+                    "summary": "Reset password does not meet criteria.",
                     "value": {
-                      "detail": {
-                        "code": "RESET_PASSWORD_INVALID_PASSWORD",
-                        "reason": "Password should be at least 3 characters"
-                      }
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/reset-password",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "reset_password_invalid_password",
+                          "title": "Invalid Password",
+                          "detail": "The provided password does not meet the required criteria. Please ensure it is at least 8 characters long and contains a mix of letters, numbers, and special characters.",
+                          "source": { "pointer": "#/password" }
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "400": {
+            "description": "Bad token.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "reset_password_bad_token": {
+                    "summary": "Invalid or expired reset token.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/reset-password",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "reset_password_bad_token",
+                          "title": "Invalid Reset Token",
+                          "detail": "The reset token is invalid or has expired. Please request a new password reset."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          }
-        ]
+        }
       }
     },
     "/auth/request-verify-token": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Verify:Request-Token",
         "operationId": "verify_request_token_auth_request_verify_token_post",
         "requestBody": {
@@ -545,79 +480,39 @@
             "content": { "application/json": { "schema": {} } }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/request-verify-token",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        }
       }
     },
     "/auth/verify": {
       "post": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Verify:Verify",
         "operationId": "verify_verify_auth_verify_post",
         "requestBody": {
@@ -639,98 +534,84 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "VERIFY_USER_BAD_TOKEN": {
-                    "summary": "Bad token, not existing user ornot the e-mail currently set for the user.",
-                    "value": { "detail": "VERIFY_USER_BAD_TOKEN" }
-                  },
-                  "VERIFY_USER_ALREADY_VERIFIED": {
-                    "summary": "The user is already verified.",
-                    "value": { "detail": "VERIFY_USER_ALREADY_VERIFIED" }
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/verify",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
                   }
                 }
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "400": {
+            "description": "Bad token.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "verify_user_bad_token": {
+                    "summary": "Bad token, not existing user or not the e-mail currently set for the user.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/verify",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "verify_user_bad_token",
+                          "title": "Invalid Verification Token",
+                          "detail": "The verification token is invalid or has expired. Please request a new verification email."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                  },
+                  "verify_user_already_verified": {
+                    "summary": "The user is already verified.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/verify",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "verify_user_already_verified",
+                          "title": "User Already Verified",
+                          "detail": "Your account is already verified. You can log in now."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        }
       }
     },
     "/auth/cookie/google/authorize": {
       "get": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Oauth:Google.Cookie Oauth.Authorize",
         "operationId": "oauth_google_cookie_oauth_authorize_auth_cookie_google_authorize_get",
         "parameters": [
@@ -743,13 +624,6 @@
               "items": { "type": "string" },
               "title": "Scopes"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
           }
         ],
         "responses": {
@@ -764,37 +638,30 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/google/authorize",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -803,7 +670,7 @@
     },
     "/auth/cookie/google/callback": {
       "get": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Oauth:Google.Cookie Oauth.Callback",
         "description": "The response varies based on the authentication backend used.",
         "operationId": "oauth_google_cookie_oauth_callback_auth_cookie_google_callback_get",
@@ -843,13 +710,6 @@
               "anyOf": [{ "type": "string" }, { "type": "null" }],
               "title": "Error"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
           }
         ],
         "responses": {
@@ -857,53 +717,84 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "400": {
+          "422": {
+            "description": "User already exists.",
             "content": {
               "application/json": {
                 "examples": {
-                  "INVALID_STATE_TOKEN": { "summary": "Invalid state token." },
-                  "LOGIN_BAD_CREDENTIALS": {
-                    "summary": "User is inactive.",
-                    "value": { "detail": "LOGIN_BAD_CREDENTIALS" }
+                  "oauth_user_already_exists": {
+                    "summary": "OAuth user already exists.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/google/callback",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "oauth_user_already_exists",
+                          "title": "User Already Exists",
+                          "detail": "An account with this email already exists. Please log in or use a different email."
+                        }
+                      ]
+                    }
                   }
                 },
-                "schema": { "$ref": "#/components/schemas/ErrorModel" }
-              }
-            },
-            "description": "Bad Request"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
-                    }
-                  ]
-                }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
-          "500": {
-            "description": "Internal Server Error",
+          "400": {
+            "description": "Invalid state token or missing email.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
+                "examples": {
+                  "invalid_state_token": {
+                    "summary": "State token is invalid or expired.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/google/callback",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "invalid_state_token",
+                          "title": "Invalid State Token",
+                          "detail": "The state token is invalid or has expired. Please try again."
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing token or inactive user.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "login_bad_credentials": {
+                    "summary": "Login failed due to incorrect credentials.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/google/callback",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "login_bad_credentials",
+                          "title": "Login Failed",
+                          "detail": "The provided credentials are invalid. Please check your username and password."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -912,7 +803,7 @@
     },
     "/auth/cookie/github/authorize": {
       "get": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Oauth:Github.Cookie Oauth.Authorize",
         "operationId": "oauth_github_cookie_oauth_authorize_auth_cookie_github_authorize_get",
         "parameters": [
@@ -925,13 +816,6 @@
               "items": { "type": "string" },
               "title": "Scopes"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
           }
         ],
         "responses": {
@@ -946,37 +830,30 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/github/authorize",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -985,7 +862,7 @@
     },
     "/auth/cookie/github/callback": {
       "get": {
-        "tags": ["auth", "auth"],
+        "tags": ["Auth"],
         "summary": "Oauth:Github.Cookie Oauth.Callback",
         "description": "The response varies based on the authentication backend used.",
         "operationId": "oauth_github_cookie_oauth_callback_auth_cookie_github_callback_get",
@@ -1025,20 +902,6 @@
               "anyOf": [{ "type": "string" }, { "type": "null" }],
               "title": "Error"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -1046,70 +909,84 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
-          "400": {
+          "422": {
+            "description": "User already exists.",
             "content": {
               "application/json": {
                 "examples": {
-                  "INVALID_STATE_TOKEN": { "summary": "Invalid state token." },
-                  "LOGIN_BAD_CREDENTIALS": {
-                    "summary": "User is inactive.",
-                    "value": { "detail": "LOGIN_BAD_CREDENTIALS" }
+                  "oauth_user_already_exists": {
+                    "summary": "OAuth user already exists.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/github/callback",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "oauth_user_already_exists",
+                          "title": "User Already Exists",
+                          "detail": "An account with this email already exists. Please log in or use a different email."
+                        }
+                      ]
+                    }
                   }
                 },
-                "schema": { "$ref": "#/components/schemas/ErrorModel" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
-            },
-            "description": "Bad Request"
+            }
           },
-          "422": {
-            "description": "Validation Error",
+          "400": {
+            "description": "Invalid state token or missing email.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "invalid_state_token": {
+                    "summary": "State token is invalid or expired.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/github/callback",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "invalid_state_token",
+                          "title": "Invalid State Token",
+                          "detail": "The state token is invalid or has expired. Please try again."
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Missing token or inactive user.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "login_bad_credentials": {
+                    "summary": "Login failed due to incorrect credentials.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/auth/cookie/github/callback",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "login_bad_credentials",
+                          "title": "Login Failed",
+                          "detail": "The provided credentials are invalid. Please check your username and password."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1118,7 +995,7 @@
     },
     "/users/me": {
       "get": {
-        "tags": ["users"],
+        "tags": ["Users"],
         "summary": "Users:Get Current User",
         "operationId": "users_get_current_user_users_me_get",
         "responses": {
@@ -1130,61 +1007,39 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized",
+          "422": {
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/users/me",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       },
       "patch": {
-        "tags": ["users"],
+        "tags": ["Users"],
         "summary": "Users:Patch Current User",
         "operationId": "users_patch_current_user_users_me_patch",
         "requestBody": {
@@ -1204,104 +1059,59 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
+          "422": {
+            "description": "Unprocessable Entity",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorModel" },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
                 "examples": {
-                  "UPDATE_USER_EMAIL_ALREADY_EXISTS": {
-                    "summary": "A user with this email already exists.",
-                    "value": { "detail": "UPDATE_USER_EMAIL_ALREADY_EXISTS" }
-                  },
-                  "UPDATE_USER_INVALID_PASSWORD": {
-                    "summary": "Password validation failed.",
+                  "update_user_email_already_exists": {
+                    "summary": "Email already in use.",
                     "value": {
-                      "detail": {
-                        "code": "UPDATE_USER_INVALID_PASSWORD",
-                        "reason": "Password should beat least 3 characters"
-                      }
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/app/v1/users/me",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "update_user_email_already_exists",
+                          "title": "User Email Already Exists",
+                          "detail": "The email address you are trying to use is already associated with another account. Please use a different email address.",
+                          "source": { "pointer": "#/email" }
+                        }
+                      ]
+                    }
+                  },
+                  "update_user_invalid_password": {
+                    "summary": "New password is invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/app/v1/users/me",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "update_user_invalid_password",
+                          "title": "Invalid Password",
+                          "detail": "Password must be at least 8 characters long.",
+                          "source": { "pointer": "#/password" }
+                        }
+                      ]
                     }
                   }
                 }
               }
             }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
-                      "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
-              }
-            }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       }
     },
     "/payment-intents": {
       "post": {
-        "tags": ["payment_intents"],
+        "tags": ["Payment Intents"],
         "summary": "Payment Intents:Create Payment Intent",
         "operationId": "payment_intents_create_payment_intent_payment_intents_post",
         "requestBody": {
@@ -1324,80 +1134,67 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
         },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       }
     },
     "/payment-intents/webhook": {
       "post": {
-        "tags": ["payment_intents"],
+        "tags": ["Payment Intents"],
         "summary": "Payment Intents:Update Payment Intent By Webhook",
         "operationId": "payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post",
         "responses": {
@@ -1405,62 +1202,67 @@
             "description": "Successful Response",
             "content": { "application/json": { "schema": {} } }
           },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents/webhook",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
-            "description": "Unauthorized",
+            "description": "Invalid payload or signature.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "invalid_payload": {
+                    "summary": "Payload is invalid or malformed.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents/webhook",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "invalid_payload",
+                          "title": "Invalid Payload",
+                          "detail": "The request payload is invalid or malformed."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        }
       }
     },
     "/wallet-transactions": {
       "get": {
-        "tags": ["wallet_transactions"],
+        "tags": ["Wallet Transactions"],
         "summary": "Wallet Transactions:List Wallet Transactions",
         "description": "Retrieve a list of wallet transactions with filtering, sorting, and pagination.",
         "operationId": "wallet_transactions_list_wallet_transactions_wallet_transactions_get",
@@ -1608,20 +1410,6 @@
               ],
               "title": "Updated At  Lte"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -1636,54 +1424,57 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/wallet-transactions",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/wallet-transactions",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1692,7 +1483,7 @@
     },
     "/wallet-transactions/{wallet_transaction_id}": {
       "get": {
-        "tags": ["wallet_transactions"],
+        "tags": ["Wallet Transactions"],
         "summary": "Wallet Transactions:Get Wallet Transaction",
         "operationId": "wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get",
         "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
@@ -1702,20 +1493,6 @@
             "in": "path",
             "required": true,
             "schema": { "type": "string", "title": "Wallet Transaction Id" }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -1730,54 +1507,57 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/wallet-transactions/{wallet_transaction_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/wallet-transactions/{wallet_transaction_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -1786,7 +1566,7 @@
     },
     "/user-api-keys": {
       "get": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:List User Api Keys",
         "description": "Retrieve a list of user API keys with filtering, sorting, and pagination.",
         "operationId": "user_api_keys_list_user_api_keys_user_api_keys_get",
@@ -1941,20 +1721,6 @@
               ],
               "title": "Updated At  Lte"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -1967,61 +1733,64 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:Create User Api Key",
         "description": "Create a new user API key.",
         "operationId": "user_api_keys_create_user_api_key_user_api_keys_post",
@@ -2044,79 +1813,66 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
-          }
-        ]
+        }
       }
     },
     "/user-api-keys/{user_api_key_id}": {
       "get": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:Get User Api Keys",
         "description": "Retrieve a user API key by its ID.",
         "operationId": "user_api_keys_get_user_api_keys_user_api_keys__user_api_key_id__get",
@@ -2127,20 +1883,6 @@
             "in": "path",
             "required": true,
             "schema": { "type": "string", "title": "User Api Key Id" }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -2153,61 +1895,64 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
         }
       },
       "patch": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:Update User Api Key",
         "description": "Update an existing user API key.",
         "operationId": "user_api_keys_update_user_api_key_user_api_keys__user_api_key_id__patch",
@@ -2218,20 +1963,6 @@
             "in": "path",
             "required": true,
             "schema": { "type": "string", "title": "User Api Key Id" }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "requestBody": {
@@ -2252,61 +1983,64 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:Delete User Api Key",
         "description": "Delete a user API key.",
         "operationId": "user_api_keys_delete_user_api_key_user_api_keys__user_api_key_id__delete",
@@ -2317,73 +2051,62 @@
             "in": "path",
             "required": true,
             "schema": { "type": "string", "title": "User Api Key Id" }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
           "204": { "description": "Successful Response" },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/{user_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
-                    }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -2392,7 +2115,7 @@
     },
     "/user-api-keys/verify": {
       "post": {
-        "tags": ["user_api_keys"],
+        "tags": ["User API Keys"],
         "summary": "User Api Keys:Verify User Api Key",
         "operationId": "user_api_keys_verify_user_api_key_user_api_keys_verify_post",
         "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
@@ -2405,20 +2128,6 @@
               "anyOf": [{ "type": "string" }, { "type": "null" }],
               "title": "X-Api-Key"
             }
-          },
-          {
-            "name": "Accept-Language",
-            "in": "header",
-            "description": "Language preference (e.g., en, ja)",
-            "required": false,
-            "schema": { "type": "string", "example": "en" }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": false,
-            "schema": { "type": "string", "example": "Bearer <token>" }
           }
         ],
         "responses": {
@@ -2433,54 +2142,125 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "Validation error.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "422",
-                      "code": "validation_error",
-                      "title": "Validation Error",
-                      "detail": "The field 'title' is required.",
-                      "source": { "parameter": "title" }
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Unauthorized access.",
             "content": {
               "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "401",
-                      "code": "unauthorized",
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
                       "title": "Unauthorized",
-                      "detail": "Authentication credentials were not provided or are invalid."
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
                     }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "example": {
-                  "errors": [
-                    {
-                      "status": "500",
-                      "code": "internal_server_error",
-                      "title": "Internal Server Error",
-                      "detail": "An unexpected error occurred. Please try again later."
+                  },
+                  "invalid_api_key": {
+                    "summary": "API key is invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "invalid_api_key",
+                          "title": "Invalid API Key",
+                          "detail": "The provided API key is invalid. Please check your API key and try again."
+                        }
+                      ]
                     }
-                  ]
-                }
+                  },
+                  "invalid_ip": {
+                    "summary": "Request IP address not allowed.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "invalid_ip",
+                          "title": "Invalid IP Address",
+                          "detail": "The request IP address is not allowed. Please check your request IP address."
+                        }
+                      ]
+                    }
+                  },
+                  "invalid_origin": {
+                    "summary": "Request origin not allowed.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "invalid_origin",
+                          "title": "Invalid Origin",
+                          "detail": "The request origin is not allowed. Please check your request origin."
+                        }
+                      ]
+                    }
+                  },
+                  "expired_api_key": {
+                    "summary": "API key has expired.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/user-api-keys/verify",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "expired_api_key",
+                          "title": "Expired API Key",
+                          "detail": "The provided API key has expired. Please obtain a new API key."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
               }
             }
           }
@@ -2509,7 +2289,11 @@
             "title": "Grant Type"
           },
           "username": { "type": "string", "title": "Username" },
-          "password": { "type": "string", "title": "Password" },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "title": "Password"
+          },
           "scope": { "type": "string", "title": "Scope", "default": "" },
           "client_id": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
@@ -2517,6 +2301,7 @@
           },
           "client_secret": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "format": "password",
             "title": "Client Secret"
           }
         },
@@ -2534,7 +2319,11 @@
             "title": "Grant Type"
           },
           "username": { "type": "string", "title": "Username" },
-          "password": { "type": "string", "title": "Password" },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "title": "Password"
+          },
           "scope": { "type": "string", "title": "Scope", "default": "" },
           "client_id": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
@@ -2542,6 +2331,7 @@
           },
           "client_secret": {
             "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "format": "password",
             "title": "Client Secret"
           }
         },
@@ -2580,30 +2370,52 @@
         "required": ["token"],
         "title": "Body_verify_verify_auth_verify_post"
       },
-      "ErrorModel": {
+      "ErrorDetail": {
         "properties": {
-          "detail": {
+          "status": { "type": "string", "title": "Status" },
+          "code": { "type": "string", "title": "Code" },
+          "title": { "type": "string", "title": "Title" },
+          "detail": { "type": "string", "title": "Detail" },
+          "source": {
             "anyOf": [
-              { "type": "string" },
-              { "additionalProperties": { "type": "string" }, "type": "object" }
-            ],
-            "title": "Detail"
+              { "$ref": "#/components/schemas/ErrorSource" },
+              { "type": "null" }
+            ]
           }
         },
         "type": "object",
-        "required": ["detail"],
-        "title": "ErrorModel"
+        "required": ["status", "code", "title", "detail"],
+        "title": "ErrorDetail"
       },
-      "HTTPValidationError": {
+      "ErrorResponse": {
         "properties": {
-          "detail": {
-            "items": { "$ref": "#/components/schemas/ValidationError" },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "default": "about:blank"
+          },
+          "title": { "type": "string", "title": "Title" },
+          "status": { "type": "integer", "title": "Status" },
+          "instance": { "type": "string", "title": "Instance" },
+          "errors": {
+            "items": { "$ref": "#/components/schemas/ErrorDetail" },
             "type": "array",
-            "title": "Detail"
+            "title": "Errors"
           }
         },
         "type": "object",
-        "title": "HTTPValidationError"
+        "required": ["title", "status", "instance", "errors"],
+        "title": "ErrorResponse"
+      },
+      "ErrorSource": {
+        "properties": {
+          "pointer": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pointer"
+          }
+        },
+        "type": "object",
+        "title": "ErrorSource"
       },
       "ListResponseMeta": {
         "properties": {
@@ -2879,8 +2691,6 @@
           },
           "password": {
             "type": "string",
-            "maxLength": 100,
-            "minLength": 8,
             "title": "Password",
             "description": "The password of the user.",
             "example": "password123%"
@@ -2945,20 +2755,6 @@
         "type": "object",
         "required": ["id", "email", "wallet"],
         "title": "UserWithWalletRead"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": { "type": "string", "title": "Message" },
-          "type": { "type": "string", "title": "Error Type" }
-        },
-        "type": "object",
-        "required": ["loc", "msg", "type"],
-        "title": "ValidationError"
       },
       "WalletRead": {
         "properties": {
@@ -3074,6 +2870,5 @@
         "name": "access_token"
       }
     }
-  },
-  "servers": [{ "url": "/app/v1" }]
+  }
 }

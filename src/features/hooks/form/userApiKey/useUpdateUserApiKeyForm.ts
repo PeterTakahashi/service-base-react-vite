@@ -1,14 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateUserApiKeyMutation } from "@/features/hooks/swr/mutation/userApiKey/useUpdateUserApiKeyMutation";
 import type { UserApiKeyCreateValues } from "@/features/zodSchemas/userApiKey/userApiKeyCreateSchema";
 import type { UserApiKeyCreateRequestBody } from "@/types/api/userApiKey/userApiKeyForm";
-import { parseAxiosErrorMessage } from "@/lib/parseAxiosErrorMessage";
 
 export function useUpdateUserApiKeyForm(id: string) {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { trigger: updateUserApiKeyTrigger, isMutating } =
-    useUpdateUserApiKeyMutation(id);
+  const {
+    trigger: updateUserApiKeyTrigger,
+    isMutating,
+    errorDetails,
+  } = useUpdateUserApiKeyMutation(id);
   const navigate = useNavigate();
 
   const onSubmitUpdateUserApiKey = useCallback(
@@ -21,7 +22,7 @@ export function useUpdateUserApiKeyForm(id: string) {
           state: { successMessage: "User API key updated successfully" },
         });
       } catch (error) {
-        setErrorMessage(parseAxiosErrorMessage(error));
+        console.error(error);
       }
     },
     [updateUserApiKeyTrigger, navigate]
@@ -29,7 +30,7 @@ export function useUpdateUserApiKeyForm(id: string) {
 
   return {
     onSubmitUpdateUserApiKey,
-    errorMessage,
     isMutating,
+    errorDetails,
   };
 }

@@ -9,7 +9,7 @@ import {
 } from "@/components/atoms/Select";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 const meta: Meta<typeof Select> = {
-  title: "atomms/Select",
+  title: "atoms/Select",
   component: Select,
   tags: ["autodocs"],
 };

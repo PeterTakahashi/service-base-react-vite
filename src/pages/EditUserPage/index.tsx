@@ -7,7 +7,7 @@ import { useEditUserPageBreadcrumbs } from "./breadcrumbs";
 
 export const EditUserPage: FC = () => {
   const { user } = useVerifiedUser();
-  const { onSubmitEditUser, errorMessage } = useEditUserForm();
+  const { onSubmitEditUser, errorDetails } = useEditUserForm();
 
   useEditUserPageBreadcrumbs();
 
@@ -23,11 +23,8 @@ export const EditUserPage: FC = () => {
       <UserEditForm
         defaultValues={{ email: user.email }}
         onSubmit={onSubmitEditUser}
+        errorDetails={errorDetails}
       />
-
-      {errorMessage && (
-        <p className="mt-4 text-center text-sm text-red-600">{errorMessage}</p>
-      )}
     </div>
   );
 };

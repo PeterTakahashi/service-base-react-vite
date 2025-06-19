@@ -17,7 +17,6 @@ export const Default: Story = {
   args: {
     onSubmit: (data) => console.log(data),
     isMutating: false,
-    errorMessage: null,
     isLoading: false,
   },
 };
@@ -26,7 +25,6 @@ export const WithLoading: Story = {
   args: {
     onSubmit: (data) => console.log(data),
     isMutating: true,
-    errorMessage: null,
     isLoading: true,
     mutationType: "create",
   },

@@ -1,4 +1,4 @@
-import useSWRMutation from "swr/mutation";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 import { client } from "@/lib/client";
 import type {
   SignInRequestBody,
@@ -28,7 +28,7 @@ async function signInRequest(
 }
 
 export function useSignInMutation() {
-  const { trigger, isMutating, data, error } = useSWRMutation(
+  const { trigger, isMutating, data, error, errorDetails } = useCustomSWRMutation(
     "/auth/cookie/login",
     signInRequest
   );
@@ -38,5 +38,6 @@ export function useSignInMutation() {
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }

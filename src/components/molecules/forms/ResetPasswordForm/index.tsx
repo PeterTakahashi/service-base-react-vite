@@ -3,33 +3,45 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { resetPasswordSchema } from "@/features/zodSchemas/auth/resetPasswordSchema";
-import { Input } from "@/components/atoms/Input";
-import { Label } from "@/components/atoms/Label";
+import { Input } from "@/components/molecules/Input";
 import { Button } from "@/components/atoms/Button";
+import type { ErrorDetail } from "@/types/api/error";
+import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
+import { useServerErrors } from "@/features/hooks/form/useServerErrors";
 
 export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 
 type ResetPasswordProps = {
   onSubmit: (data: ResetPasswordValues) => void;
+  errorDetails?: ErrorDetail[] | null;
 };
 
 export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
   onSubmit,
+  errorDetails,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
   } = useForm<ResetPasswordValues>({
     resolver: zodResolver(resetPasswordSchema),
   });
+
+  const globalMessages = useServerErrors<ResetPasswordValues>(
+    errorDetails,
+    setError,
+    clearErrors
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="w-full max-w-sm mx-auto">
         <div className="grid items-center gap-1.5">
-          <Label htmlFor="password">New Password</Label>
           <Input
+            label="Password"
             type="password"
             id="password"
             placeholder="Password"
@@ -41,8 +53,8 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
         </div>
 
         <div className="grid items-center gap-1.5">
-          <Label htmlFor="confirmPassword"> Confirm Password</Label>
           <Input
+            label="Confirm Password"
             type="password"
             id="confirmPassword"
             placeholder="Confirm Password"
@@ -54,6 +66,8 @@ export const ResetPasswordForm: React.FC<ResetPasswordProps> = ({
             }
           />
         </div>
+
+        <ErrorMessagesDisplay errorMessages={globalMessages} />
 
         <Button
           type="submit"
