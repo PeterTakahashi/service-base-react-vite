@@ -19,6 +19,8 @@ import {
   SidebarMenuButton,
 } from "@/components/atoms/Sidebar";
 
+import { Link } from "react-router-dom";
+
 const data = {
   navMain: [
     {
@@ -113,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <a href="/">
+        <Link to="/">
           <SidebarMenuButton
             size="lg"
             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
@@ -125,7 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <span className="truncate font-medium">{serviceName}</span>
             </div>
           </SidebarMenuButton>
-        </a>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

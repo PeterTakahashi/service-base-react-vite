@@ -2,10 +2,13 @@ import { type FC } from "react";
 import { useRequestVerificationForm } from "@/features/hooks/form/auth/useRequestVerificationForm";
 import { useLogout } from "@/features/hooks/auth/useLogout";
 import { Button } from "@/components/atoms/Button";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const NotVerifiedPage: FC = () => {
   const { onLogout } = useLogout();
-  const { user, errorDetails } = useRequestVerificationForm();
+  const { user, errorDetails, handleRequestVerifyToken } =
+    useRequestVerificationForm();
   if (!user) return null;
 
   return (
@@ -23,12 +26,16 @@ export const NotVerifiedPage: FC = () => {
       <div className="text-center text-sm/6 text-gray-500">
         <div>
           Did you receive the email?{" "}
-          <a
-            href=""
+          <Link
+            to=""
+            onClick={() => {
+              handleRequestVerifyToken(user.email);
+              toast.success("Verification email sent successfully!");
+            }}
             className="font-semibold text-primary-600 hover:text-primary-500"
           >
             Resend verification email
-          </a>
+          </Link>
         </div>
       </div>
       <Button className="mt-10" onClick={onLogout}>

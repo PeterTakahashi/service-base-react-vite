@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/atoms/Button";
+import { Link } from "react-router-dom";
 
 type ErrorDisplayProps = {
   status: number;
@@ -21,9 +22,9 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
           Sorry, we couldn’t find the page you’re looking for.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <a href="/">
+          <Link to="/">
             <Button>Go back home</Button>
-          </a>
+          </Link>
         </div>
       </div>
     </main>

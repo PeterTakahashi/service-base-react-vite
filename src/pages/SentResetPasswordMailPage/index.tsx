@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import { Link } from "react-router-dom";
 
 export const SentResetPasswordMailPage: FC = () => {
   return (
@@ -11,12 +12,12 @@ export const SentResetPasswordMailPage: FC = () => {
       <div className="mt-10 text-center text-sm/6 text-gray-500">
         <div>
           Remembered your password?{" "}
-          <a
-            href="/signin"
+          <Link
+            to="/signin"
             className="font-semibold text-primary-600 hover:text-primary-500"
           >
             Sign in
-          </a>
+          </Link>
         </div>
       </div>
     </AuthLayout>
