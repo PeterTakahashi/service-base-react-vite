@@ -1,4 +1,4 @@
-import useSWRMutation from "swr/mutation";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 import { client } from "@/lib/client";
 import type { SignUpRequestBody } from "@/types/api/auth/signup";
 import type { UserRead } from "@/types/api/user/user";
@@ -16,7 +16,7 @@ async function signUpRequest(
 }
 
 export function useSignUpMutation() {
-  const { trigger, isMutating, data, error } = useSWRMutation(
+  const { trigger, isMutating, data, error, errorDetails } = useCustomSWRMutation(
     "/auth/register/register",
     signUpRequest
   );
@@ -26,5 +26,6 @@ export function useSignUpMutation() {
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }

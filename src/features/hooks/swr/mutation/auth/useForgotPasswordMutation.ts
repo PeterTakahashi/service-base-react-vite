@@ -1,6 +1,6 @@
-import useSWRMutation from "swr/mutation";
 import { client } from "@/lib/client";
 import type { ForgotPasswordRequestBody } from "@/types/api/auth/forgotPassword";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 
 async function forgotPasswordRequest(
   url: string,
@@ -10,14 +10,13 @@ async function forgotPasswordRequest(
 }
 
 export function useForgotPasswordMutation() {
-  const { trigger, isMutating, data, error } = useSWRMutation(
-    "/auth/forgot-password",
-    forgotPasswordRequest
-  );
+  const { trigger, isMutating, data, error, errorDetails } =
+    useCustomSWRMutation("/auth/forgot-password", forgotPasswordRequest);
   return {
     trigger,
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }

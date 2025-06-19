@@ -1,15 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useForgotPasswordMutation } from "@/features/hooks/swr/mutation/auth/useForgotPasswordMutation";
 import { type ForgotPasswordValues } from "@/components/molecules/forms/ForgotPasswordForm";
-import { parseAxiosErrorDetails } from "@/lib/parseAxiosErrorDetails";
-import type { ErrorDetail } from "@/types/api/error";
 
 export const useForgotPasswordForm = () => {
-  const [errorDetails, setErrorDetails] = useState<ErrorDetail[] | null>(null);
-  const { trigger: forgotPasswordTrigger, isMutating } =
-    useForgotPasswordMutation();
+  const {
+    trigger: forgotPasswordTrigger,
+    isMutating,
+    errorDetails,
+  } = useForgotPasswordMutation();
   const navigate = useNavigate();
 
   const onSubmitForgotPassword = useCallback(
@@ -18,7 +18,7 @@ export const useForgotPasswordForm = () => {
         await forgotPasswordTrigger(data);
         navigate("/sent-reset-password-mail");
       } catch (error) {
-        setErrorDetails(parseAxiosErrorDetails(error));
+        console.error(error);
       }
     },
     [forgotPasswordTrigger, navigate]

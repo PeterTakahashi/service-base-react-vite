@@ -1,4 +1,4 @@
-import useSWRMutation from "swr/mutation";
+import { useCustomSWRMutation } from "@/features/hooks/swr/mutation/useCustomSWRMutation";
 import { client } from "@/lib/client";
 
 import type {
@@ -15,7 +15,7 @@ async function postPaymentIntent(
 }
 
 export function useCreatePaymentIntentMutation() {
-  const { trigger, isMutating, data, error } = useSWRMutation(
+  const { trigger, isMutating, data, error, errorDetails } = useCustomSWRMutation(
     "/payment-intents",
     postPaymentIntent
   );
@@ -25,5 +25,6 @@ export function useCreatePaymentIntentMutation() {
     isMutating,
     data,
     error,
+    errorDetails,
   };
 }
