@@ -8,7 +8,6 @@ import {
   WALLET_TRANSACTION_TYPES,
   WALLET_TRANSACTION_STATUSES,
 } from "@/types/api/userWalletTransaction/userWalletTransaction";
-import { toUsdFloat } from "@/lib/toUsdFloat";
 import { WalletTransactionStatusBadge } from "@/components/molecules/badges/WalletTransactionStatusBadge";
 import { WalletTransactionTypeBadge } from "@/components/molecules/badges/WalletTransactionTypeBadge";
 
@@ -26,8 +25,7 @@ export const columns: ColumnDef<Row>[] = [
     accessorKey: "amount",
     cell: ({ row }) => {
       const amount: number = row.getValue("amount");
-      const formattedAmount = toUsdFloat(amount);
-      return `$${formattedAmount}`;
+      return `${amount < 0 ? "- " : ""}$${Math.abs(amount).toLocaleString()}`;
     },
   },
   {

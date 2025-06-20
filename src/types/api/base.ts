@@ -551,7 +551,7 @@ export interface components {
         PaymentIntentCreate: {
             /**
              * Amount
-             * @description The amount to be charged in the smallest currency unit (e.g., cents for USD).
+             * @description The amount to be charged in the smallest currency unit (USD).
              * @example 1000
              */
             amount: number;
@@ -567,9 +567,9 @@ export interface components {
             /**
              * Amount
              * @description The amount to be charged in the smallest currency unit (e.g., cents for USD).
-             * @example 1000
+             * @example 10
              */
-            amount: number;
+            amount: string;
             /**
              * Currency
              * @description The currency in which the payment intent is created.
@@ -768,9 +768,9 @@ export interface components {
             /**
              * Balance
              * @description The current balance of the user_wallet.
-             * @example 1000
+             * @example 10.00
              */
-            balance: number;
+            balance: string;
             /**
              * Created At
              * Format: date-time
@@ -806,9 +806,9 @@ export interface components {
             /**
              * Amount
              * @description The amount of the transaction in cents.
-             * @example 1000
+             * @example 10.00
              */
-            amount: number;
+            amount: string;
             /**
              * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
              * @example deposit
