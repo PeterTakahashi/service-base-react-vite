@@ -5,9 +5,12 @@ function Input({
   className,
   type,
   errorMessage,
+  hasError,
   ...props
-}: React.ComponentProps<"input"> & { errorMessage?: string | undefined }) {
-  const hasError = Boolean(errorMessage);
+}: React.ComponentProps<"input"> & {
+  errorMessage?: string | undefined;
+  hasError?: boolean;
+}) {
   return (
     <input
       type={type}
@@ -17,7 +20,7 @@ function Input({
         "focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[3px]",
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100",
-        hasError &&
+        (Boolean(errorMessage) || hasError) &&
           "border-red-600 focus-visible:border-red-600 focus-visible:ring-red-600/10 focus-visible:ring-[3px] placeholder:text-red-300 dark:placeholder:text-red-200",
         className
       )}
