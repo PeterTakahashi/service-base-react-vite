@@ -1,18 +1,18 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type {
-  WalletTransactionRead,
+  UserWalletTransactionRead,
   WalletTransactionStatus,
   WalletTransactionType,
-} from "@/types/api/walletTransaction/walletTransaction";
+} from "@/types/api/userWalletTransaction/userWalletTransaction";
 import {
   WALLET_TRANSACTION_TYPES,
   WALLET_TRANSACTION_STATUSES,
-} from "@/types/api/walletTransaction/walletTransaction";
+} from "@/types/api/userWalletTransaction/userWalletTransaction";
 import { toUsdFloat } from "@/lib/toUsdFloat";
 import { WalletTransactionStatusBadge } from "@/components/molecules/badges/WalletTransactionStatusBadge";
 import { WalletTransactionTypeBadge } from "@/components/molecules/badges/WalletTransactionTypeBadge";
 
-type Row = WalletTransactionRead[number];
+type Row = UserWalletTransactionRead[number];
 
 export const columns: ColumnDef<Row>[] = [
   {
@@ -31,39 +31,39 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
-    id: "wallet_transaction_type",
+    id: "user_wallet_transaction_type",
     header: "Type",
     meta: {
       filterType: "checkbox",
-      filterKey: "wallet_transaction_type__in",
+      filterKey: "user_wallet_transaction_type__in",
       filterOptions: WALLET_TRANSACTION_TYPES.map((type) => ({
         label: type,
         value: type,
       })),
     },
-    accessorKey: "wallet_transaction_type",
+    accessorKey: "user_wallet_transaction_type",
     cell: ({ row }) => {
       const type: WalletTransactionType = row.getValue(
-        "wallet_transaction_type"
+        "user_wallet_transaction_type"
       );
       return <WalletTransactionTypeBadge type={type} />;
     },
   },
   {
-    id: "wallet_transaction_status",
+    id: "user_wallet_transaction_status",
     header: "Status",
     meta: {
       filterType: "checkbox",
-      filterKey: "wallet_transaction_status__in",
+      filterKey: "user_wallet_transaction_status__in",
       filterOptions: WALLET_TRANSACTION_STATUSES.map((status) => ({
         label: status,
         value: status,
       })),
     },
-    accessorKey: "wallet_transaction_status",
+    accessorKey: "user_wallet_transaction_status",
     cell: ({ row }) => {
       const status: WalletTransactionStatus = row.getValue(
-        "wallet_transaction_status"
+        "user_wallet_transaction_status"
       );
       return <WalletTransactionStatusBadge status={status} />;
     },

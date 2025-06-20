@@ -6,7 +6,7 @@ export function useAddFundsPageBreadcrumbs() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Wallet", href: "/wallet" },
+      { label: "Wallet", href: "/user-wallet" },
       { label: "Add Funds" },
     ]);
     return () => setBreadcrumbs([]);

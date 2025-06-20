@@ -13,9 +13,9 @@ import { ProtectedRoute } from "@/components/routes/ProtectedRoute";
 import { PublicOnlyRoute } from "@/components/routes/PublicOnlyRoute";
 import { ToastMessageHandler } from "@/components/common/ToastMessageHandler";
 import { AddFundsPage } from "@/pages/AddFundsPage";
-import { WalletPage } from "@/pages/WalletPage";
+import { UserWalletPage } from "@/pages/UserWalletPage";
 import { UserProfilePage } from "@/pages/UserProfilePage";
-import { WalletTransactionsPage } from "@/pages/WalletTransactionsPage";
+import { UserWalletTransactionsPage } from "@/pages/UserWalletTransactionsPage";
 import { UserApiKeysPage } from "@/pages/UserApiKeysPage";
 import { UserApiKeyNewPage } from "@/pages/UserApiKeyNewPage";
 import { UserApiKeyEditPage } from "@/pages/UserApiKeyEditPage";
@@ -61,8 +61,8 @@ const routes = [
     isPrivate: true,
   },
   {
-    path: "/wallet",
-    element: <WalletPage />,
+    path: "/user-wallet",
+    element: <UserWalletPage />,
     isPrivate: true,
   },
   {
@@ -71,8 +71,8 @@ const routes = [
     isPrivate: true,
   },
   {
-    path: "/wallet-transactions",
-    element: <WalletTransactionsPage />,
+    path: "/user-wallet-transactions",
+    element: <UserWalletTransactionsPage />,
     isPrivate: true,
   },
   {
@@ -100,7 +100,9 @@ function App() {
         {routes.map((route) => {
           // isPrivate is a boolean that indicates if the route is private or not
           const element = route.isPrivate ? (
-            <ProtectedRoute layout={route.layout}>{route.element}</ProtectedRoute>
+            <ProtectedRoute layout={route.layout}>
+              {route.element}
+            </ProtectedRoute>
           ) : (
             <PublicOnlyRoute>{route.element}</PublicOnlyRoute>
           );

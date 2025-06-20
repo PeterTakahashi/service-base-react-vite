@@ -283,7 +283,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/wallet-transactions": {
+    "/user-wallet-transactions": {
         parameters: {
             query?: never;
             header?: never;
@@ -291,10 +291,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Wallet Transactions:List Wallet Transactions
-         * @description Retrieve a list of wallet transactions with filtering, sorting, and pagination.
+         * User Wallet Transactions:List User Wallet Transactions
+         * @description Retrieve a list of user_wallet transactions with filtering, sorting, and pagination.
          */
-        get: operations["wallet_transactions_list_wallet_transactions_wallet_transactions_get"];
+        get: operations["user_wallet_transactions_list_user_wallet_transactions_user_wallet_transactions_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -303,15 +303,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/wallet-transactions/{wallet_transaction_id}": {
+    "/user-wallet-transactions/{user_wallet_transaction_id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Wallet Transactions:Get Wallet Transaction */
-        get: operations["wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get"];
+        /** User Wallet Transactions:Get User Wallet Transaction */
+        get: operations["user_wallet_transactions_get_user_wallet_transaction_user_wallet_transactions__user_wallet_transaction_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -760,60 +760,43 @@ export interface components {
              */
             password?: string | null;
         };
-        /** UserWithWalletRead */
-        UserWithWalletRead: {
-            /** Id */
-            id: unknown;
-            /**
-             * Email
-             * Format: email
-             */
-            email: string;
-            /**
-             * Is Verified
-             * @default false
-             */
-            is_verified: boolean;
-            /** @description The wallet associated with the user. */
-            wallet: components["schemas"]["WalletRead"];
-        };
         /**
-         * WalletRead
-         * @description Schema for reading wallet information.
+         * UserWalletRead
+         * @description Schema for reading user_wallet information.
          */
-        WalletRead: {
+        UserWalletRead: {
             /**
              * Balance
-             * @description The current balance of the wallet.
+             * @description The current balance of the user_wallet.
              * @example 1000
              */
             balance: number;
             /**
              * Created At
              * Format: date-time
-             * @description The date and time when the wallet was created.
+             * @description The date and time when the user_wallet was created.
              * @example 2023-10-01T12:00:00Z
              */
             created_at: string;
             /**
              * Updated At
              * Format: date-time
-             * @description The date and time when the wallet was last updated.
+             * @description The date and time when the user_wallet was last updated.
              * @example 2023-10-01T12:00:00Z
              */
             updated_at: string;
         };
-        /** WalletTransactionListResponse */
-        WalletTransactionListResponse: {
+        /** UserWalletTransactionListResponse */
+        UserWalletTransactionListResponse: {
             meta: components["schemas"]["ListResponseMeta"];
             /** Data */
-            data: components["schemas"]["WalletTransactionRead"][];
+            data: components["schemas"]["UserWalletTransactionRead"][];
         };
         /**
-         * WalletTransactionRead
-         * @description Schema for reading wallet transaction information.
+         * UserWalletTransactionRead
+         * @description Schema for reading user_wallet transaction information.
          */
-        WalletTransactionRead: {
+        UserWalletTransactionRead: {
             /**
              * Id
              * @description The ID of the object
@@ -827,15 +810,15 @@ export interface components {
              */
             amount: number;
             /**
-             * @description The type of the wallet transaction (e.g., 'deposit', 'spend').
+             * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
              * @example deposit
              */
-            wallet_transaction_type: components["schemas"]["WalletTransactionType"];
+            user_wallet_transaction_type: components["schemas"]["WalletTransactionType"];
             /**
-             * @description The status of the wallet transaction (e.g., 'pending', 'completed').
+             * @description The status of the user_wallet transaction (e.g., 'pending', 'completed').
              * @example completed
              */
-            wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
+            user_wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
             /**
              * Created At
              * Format: date-time
@@ -850,6 +833,23 @@ export interface components {
              * @example 2023-10-01T12:00:00Z
              */
             updated_at: string;
+        };
+        /** UserWithUserWalletRead */
+        UserWithUserWalletRead: {
+            /** Id */
+            id: unknown;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is Verified
+             * @default false
+             */
+            is_verified: boolean;
+            /** @description The user_wallet associated with the user. */
+            user_wallet: components["schemas"]["UserWalletRead"];
         };
         /**
          * WalletTransactionStatus
@@ -1408,7 +1408,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserWithWalletRead"];
+                    "application/json": components["schemas"]["UserWithUserWalletRead"];
                 };
             };
             /** @description Validation error. */
@@ -1535,7 +1535,7 @@ export interface operations {
             };
         };
     };
-    wallet_transactions_list_wallet_transactions_wallet_transactions_get: {
+    user_wallet_transactions_list_user_wallet_transactions_user_wallet_transactions_get: {
         parameters: {
             query?: {
                 limit?: number;
@@ -1544,8 +1544,8 @@ export interface operations {
                 sorted_order?: string;
                 amount__gte?: number | null;
                 amount__lte?: number | null;
-                wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
-                wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
+                user_wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
+                user_wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
                 created_at__gte?: string | null;
                 created_at__lte?: string | null;
                 updated_at__gte?: string | null;
@@ -1563,7 +1563,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WalletTransactionListResponse"];
+                    "application/json": components["schemas"]["UserWalletTransactionListResponse"];
                 };
             };
             /** @description Unauthorized access. */
@@ -1586,12 +1586,12 @@ export interface operations {
             };
         };
     };
-    wallet_transactions_get_wallet_transaction_wallet_transactions__wallet_transaction_id__get: {
+    user_wallet_transactions_get_user_wallet_transaction_user_wallet_transactions__user_wallet_transaction_id__get: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                wallet_transaction_id: string;
+                user_wallet_transaction_id: string;
             };
             cookie?: never;
         };
@@ -1603,7 +1603,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WalletTransactionRead"];
+                    "application/json": components["schemas"]["UserWalletTransactionRead"];
                 };
             };
             /** @description Unauthorized access. */

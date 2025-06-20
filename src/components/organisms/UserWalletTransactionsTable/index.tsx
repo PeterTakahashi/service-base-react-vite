@@ -4,29 +4,30 @@ import { columns } from "./columns";
 import { sorts } from "./sorts";
 import { useDefaultSortOnLocalStorage } from "@/components/molecules/DataTable/hooks/useDefaultSortOnLocalstorage";
 import type { PaginationState } from "@tanstack/react-table";
-import { useWalletTransactions } from "@/features/hooks/swr/fetcher/walletTransactions/useWalletTransactions";
-import type { WalletTransactionListRequestQuery } from "@/types/api/walletTransaction/walletTransaction";
+import { useUserWalletTransactions } from "@/features/hooks/swr/fetcher/userWalletTransactions/useUserWalletTransactions";
+import type { UserWalletTransactionListRequestQuery } from "@/types/api/userWalletTransaction/userWalletTransaction";
 
-type WalletTransactionTableProps = object;
-const tableName = "walletTransactionsTable";
+type UserWalletTransactionTableProps = object;
+const tableName = "userWalletTransactionsTable";
 
-export const WalletTransactionsTable: React.FC<
-  WalletTransactionTableProps
+export const UserWalletTransactionsTable: React.FC<
+  UserWalletTransactionTableProps
 > = () => {
   const [defaultSort, setDefaultSortOnLocalStorage] =
-    useDefaultSortOnLocalStorage("walletTransactionsTable", sorts, sorts[0]);
+    useDefaultSortOnLocalStorage(tableName, sorts, sorts[0]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-  const [query, setQuery] = useState<WalletTransactionListRequestQuery>({
+  const [query, setQuery] = useState<UserWalletTransactionListRequestQuery>({
     sorted_by: "created_at",
     sorted_order: "asc",
     limit: pagination.pageSize,
     offset: pagination.pageIndex * pagination.pageSize,
   });
 
-  const { isLoading, walletTransactions, meta } = useWalletTransactions(query);
+  const { isLoading, walletTransactions, meta } =
+    useUserWalletTransactions(query);
   const totalCount = meta?.total_count || 0;
   const pageCount = Math.ceil(totalCount / pagination.pageSize);
 

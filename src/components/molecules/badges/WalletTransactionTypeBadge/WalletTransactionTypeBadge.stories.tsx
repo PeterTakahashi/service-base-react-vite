@@ -1,4 +1,4 @@
-import { type WalletTransactionType } from "@/types/api/walletTransaction/walletTransaction";
+import { type WalletTransactionType } from "@/types/api/userWalletTransaction/userWalletTransaction";
 import { WalletTransactionTypeBadge } from "./index";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
