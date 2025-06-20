@@ -2476,9 +2476,9 @@
         "properties": {
           "amount": {
             "type": "integer",
-            "minimum": 100.0,
+            "minimum": 1.0,
             "title": "Amount",
-            "description": "The amount to be charged in the smallest currency unit (e.g., cents for USD).",
+            "description": "The amount to be charged in the smallest currency unit (USD).",
             "example": 1000
           }
         },
@@ -2495,10 +2495,10 @@
             "example": "pi_1F8Y2e2eZvKYlo2C0d3f4g5h6"
           },
           "amount": {
-            "type": "integer",
+            "type": "string",
             "title": "Amount",
             "description": "The amount to be charged in the smallest currency unit (e.g., cents for USD).",
-            "example": 1000
+            "example": "10"
           },
           "currency": {
             "type": "string",
@@ -2746,10 +2746,10 @@
       "UserWalletRead": {
         "properties": {
           "balance": {
-            "type": "integer",
+            "type": "string",
             "title": "Balance",
             "description": "The current balance of the user_wallet.",
-            "example": 1000
+            "example": "10.00"
           },
           "created_at": {
             "type": "string",
@@ -2795,10 +2795,10 @@
             "example": "abcd1234xyzc"
           },
           "amount": {
-            "type": "integer",
+            "type": "string",
             "title": "Amount",
             "description": "The amount of the transaction in cents.",
-            "example": 1000
+            "example": "10.00"
           },
           "user_wallet_transaction_type": {
             "$ref": "#/components/schemas/WalletTransactionType",

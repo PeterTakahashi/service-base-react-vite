@@ -20,11 +20,10 @@ export function AddFundsPage() {
 
   const handlePaymentIntentCreate = useCallback(
     async (data: PaymentIntentValues) => {
-      const centAmount = data.amount * 100; // Convert to cents
       const paymentIntent = await createPaymentIntent({
-        amount: centAmount,
+        amount: data.amount,
       });
-      setAmount(centAmount);
+      setAmount(data.amount);
       setClientSecret(paymentIntent.client_secret);
     },
     [createPaymentIntent]

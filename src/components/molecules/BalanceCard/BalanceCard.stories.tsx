@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof BalanceCard>;
 export const Default: Story = {
   args: {
-    balance: 123400,
+    balance: "1234.56",
     className: "w-full max-w-sm",
   },
   render: (args) => <BalanceCard {...args} />,

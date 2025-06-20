@@ -34,7 +34,7 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
   return (
     <>
       <p className="text-center mb-4">
-        <strong>${(amount / 100).toFixed(2)}</strong>
+        <strong>${amount}</strong>
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <PaymentElement options={{ layout: "tabs" }} />
