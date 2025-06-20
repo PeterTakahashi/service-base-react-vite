@@ -8,6 +8,7 @@ import {
 } from "@/components/atoms/Breadcrumb";
 import { useBreadcrumb } from "@/features/hooks/context/useBreadcrumb";
 import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 export const BreadcrumbContainer = () => {
   const { breadcrumbs } = useBreadcrumb();
@@ -18,7 +19,9 @@ export const BreadcrumbContainer = () => {
           <Fragment key={i}>
             <BreadcrumbItem>
               {b.href ? (
-                <BreadcrumbLink href={b.href}>{b.label}</BreadcrumbLink>
+                <BreadcrumbLink asChild>
+                  <Link to={b.href}>{b.label}</Link>
+                </BreadcrumbLink>
               ) : (
                 <BreadcrumbPage>{b.label}</BreadcrumbPage>
               )}

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useBreadcrumb } from "@/features/hooks/context/useBreadcrumb";
 
-export function useWalletTransactionsPageBreadcrumbs() {
+export function useUserWalletTransactionsPageBreadcrumbs() {
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Wallet", href: "/wallet" },
+      { label: "Wallet", href: "/user-wallet" },
       { label: "Transaction History" },
     ]);
     return () => setBreadcrumbs([]);

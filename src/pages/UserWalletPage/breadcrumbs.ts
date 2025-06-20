@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useBreadcrumb } from "@/features/hooks/context/useBreadcrumb";
 
-export function useWalletPageBreadcrumbs() {
+export function useUserWalletPageBreadcrumbs() {
   const { setBreadcrumbs } = useBreadcrumb();
 
   useEffect(() => {

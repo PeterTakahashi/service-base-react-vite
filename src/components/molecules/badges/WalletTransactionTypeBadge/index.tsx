@@ -1,7 +1,7 @@
 import { Badge } from "@/components/atoms/Badge";
 import { type FC } from "react";
 import { CircleArrowUp, CircleArrowDown } from "lucide-react";
-import { type WalletTransactionType } from "@/types/api/walletTransaction/walletTransaction";
+import { type WalletTransactionType } from "@/types/api/userWalletTransaction/userWalletTransaction";
 
 type WalletTransactionTypeBadgeProps = {
   type: WalletTransactionType;
