@@ -64,23 +64,25 @@ export const TimezoneSelect: React.FC<TimezoneSelectProps> = ({
       {isLoading ? (
         <div className="w-[280px] h-10 bg-gray-200 rounded animate-pulse" />
       ) : (
-        <Select value={value} onValueChange={setValue}>
-          <SelectTrigger className={className ?? "w-[280px]"}>
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent>
-            {grouped.map((group) => (
-              <SelectGroup key={group.label}>
-                <SelectLabel>{group.label}</SelectLabel>
-                {group.zones.map((tz) => (
-                  <SelectItem key={tz} value={tz}>
-                    {tz}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="bg-white">
+          <Select value={value} onValueChange={setValue}>
+            <SelectTrigger className={className ?? "w-[280px]"}>
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+              {grouped.map((group) => (
+                <SelectGroup key={group.label}>
+                  <SelectLabel>{group.label}</SelectLabel>
+                  {group.zones.map((tz) => (
+                    <SelectItem key={tz} value={tz}>
+                      {tz}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       )}
     </>
   );

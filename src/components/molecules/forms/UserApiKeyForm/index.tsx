@@ -11,7 +11,7 @@ import { type UserApiKeyRead } from "@/types/api/userApiKey/userApiKey";
 import type { ErrorDetail } from "@/types/api/error";
 import { ErrorMessagesDisplay } from "@/components/atoms/ErrorMessagesDisplay";
 import { useServerErrors } from "@/features/hooks/form/useServerErrors";
-import { DatePicker } from "@/components/organisms/DatePicker";
+import { DateTimePicker } from "@/components/organisms/DateTimePicker";
 
 type UserApiKeyFormProps = {
   onSubmit: (data: UserApiKeyCreateValues) => void;
@@ -66,8 +66,8 @@ export const UserApiKeyForm: FC<UserApiKeyFormProps> = ({
           errorMessage={errors.name?.message}
           isLoading={isLoading}
         />
-        <DatePicker<UserApiKeyCreateValues>
-          label="Expires At"
+        <DateTimePicker<UserApiKeyCreateValues>
+          dateLabel="Expires At"
           {...register("expires_at")}
           isLoading={isLoading}
         />

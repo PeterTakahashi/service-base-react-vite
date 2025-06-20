@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import React from "react";
 import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/components/atoms/Button";
@@ -10,55 +10,56 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/atoms/Popover";
-import { TimezoneSelect } from "@/components/molecules/TimezoneSelect";
 
 import { cn } from "@/lib/utils/cn";
 
-type DateTimeWithTimezonePickerProps = {
+type DateTimePickerProps = {
   dateId: string;
   timeId: string;
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
-  defaultTime?: string;
   time: string | undefined;
   setTime: (time: string | undefined) => void;
   className?: string;
   errorMessage?: string | undefined;
   dateLabel?: string | React.ReactNode;
   timeLabel?: string | React.ReactNode;
-  timezoneLabel?: string | React.ReactNode;
   isLoading?: boolean;
+  inputRef?: React.Ref<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 };
 
-export function DateTimeWithTimezonePicker({
+export function DateTimePicker({
   dateId,
   timeId,
   date,
   setDate,
   time,
   setTime,
-  defaultTime = "00:00:00",
   className,
   errorMessage,
   dateLabel,
   timeLabel,
-  timezoneLabel,
   isLoading = false,
-}: DateTimeWithTimezonePickerProps) {
+  inputRef,
+  onBlur,
+}: DateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
   const hasError = Boolean(errorMessage);
 
   return (
     <div className={`flex flex-col gap-3 ${className}`}>
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row md:gap-4 gap-2">
         <div className="flex flex-col gap-3">
-          {dateLabel && (
+          {dateLabel ? (
             <Label
               htmlFor={dateId}
               className={isLoading ? "opacity-50 px-1" : "px-1"}
             >
               {dateLabel}
             </Label>
+          ) : (
+            <div className="pt-0 md:pt-3" />
           )}
           {isLoading ? (
             <div className="w-48 h-10 bg-gray-200 rounded animate-pulse" />
@@ -70,6 +71,7 @@ export function DateTimeWithTimezonePicker({
                   id="date-picker"
                   className={cn(
                     "w-48 justify-between font-normal",
+                    hasError && "border-red-600",
                     !date && "text-gray-400 hover:text-gray-500"
                   )}
                 >
@@ -109,13 +111,15 @@ export function DateTimeWithTimezonePicker({
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {timeLabel && (
+          {timeLabel ? (
             <Label
               htmlFor={timeId}
               className={isLoading ? "opacity-50 px-1" : "px-1"}
             >
               {timeLabel}
             </Label>
+          ) : (
+            <div className="pt-0 md:pt-3" />
           )}
           {isLoading ? (
             <div className="w-48 h-10 bg-gray-200 rounded animate-pulse" />
@@ -123,30 +127,14 @@ export function DateTimeWithTimezonePicker({
             <Input
               type="time"
               id={timeId}
-              step="1"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              defaultValue={defaultTime}
+              ref={inputRef as React.Ref<HTMLInputElement>}
+              onBlur={onBlur}
+              hasError={hasError}
               className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
             />
           )}
-        </div>
-        <div className="flex flex-col gap-3">
-          <Label
-            htmlFor="timezone"
-            className={isLoading ? "opacity-50 px-1" : "px-1"}
-          >
-            {timezoneLabel}
-          </Label>
-          <TimezoneSelect
-            value={Intl.DateTimeFormat().resolvedOptions().timeZone}
-            setValue={(value) => {
-              console.log("Selected timezone:", value);
-            }}
-            className="w-48"
-            placeholder="Select timezone"
-            isLoading={isLoading}
-          />
         </div>
       </div>
       {hasError && <p className="text-sm text-red-600">{errorMessage}</p>}

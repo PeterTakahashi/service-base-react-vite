@@ -18,9 +18,10 @@ export const UserApiKeyCreateSchema = z.object({
     .refine(
       (value) => {
         if (!value) return true; // Allow empty string / null / undefined
-        return /^\d{4}-\d{2}-\d{2}$/.test(value);
+        // ISO 8601 date strings like 2025-06-27T00:00:00Z
+        return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z?$/.test(value);
       },
-      { message: "Invalid date format. Use YYYY-MM-DD." }
+      { message: "Invalid date format. Use YYYY-MM-DDTHH:mm:ssZ." }
     ),
 
   allowed_origin: z
