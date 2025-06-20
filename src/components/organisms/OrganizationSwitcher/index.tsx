@@ -1,9 +1,13 @@
 import { OrganizationSwitcher as MoleculeOrganizationSwitcher } from "@/components/molecules/OrganizationSwitcher";
 import { type FC, useState } from "react";
 import type { Organization } from "@/components/molecules/OrganizationSwitcher";
-import { AudioWaveform, Command, GalleryVerticalEnd } from "lucide-react";
+import { AudioWaveform, Command, GalleryVerticalEnd, User } from "lucide-react";
 
 const organizations: Organization[] = [
+  {
+    name: "Personal",
+    logo: User,
+  },
   {
     name: "Acme Inc",
     logo: GalleryVerticalEnd,
