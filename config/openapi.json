@@ -1332,6 +1332,24 @@
             }
           },
           {
+            "name": "balance_after_transaction__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Balance After Transaction  Gte"
+            }
+          },
+          {
+            "name": "balance_after_transaction__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Balance After Transaction  Lte"
+            }
+          },
+          {
             "name": "user_wallet_transaction_type__in",
             "in": "query",
             "required": false,
@@ -2797,8 +2815,14 @@
           "amount": {
             "type": "string",
             "title": "Amount",
-            "description": "The amount of the transaction in cents.",
+            "description": "The amount of the transaction in USD",
             "example": "10.00"
+          },
+          "balance_after_transaction": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Balance After Transaction",
+            "description": "The balance after the transaction in USD",
+            "example": "100.00"
           },
           "user_wallet_transaction_type": {
             "$ref": "#/components/schemas/WalletTransactionType",

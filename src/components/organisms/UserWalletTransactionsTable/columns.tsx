@@ -29,6 +29,18 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
+    id: "balance_after_transaction",
+    header: "Balance After Transaction",
+    accessorKey: "balance_after_transaction",
+    cell: ({ row }) => {
+      const balance: number = row.getValue("balance_after_transaction");
+      if (balance === null || balance === undefined) {
+        return "N/A";
+      }
+      return `${balance < 0 ? "- " : ""}$${Math.abs(balance).toLocaleString()}`;
+    },
+  },
+  {
     id: "user_wallet_transaction_type",
     header: "Type",
     meta: {

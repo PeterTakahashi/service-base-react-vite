@@ -805,10 +805,16 @@ export interface components {
             id: string;
             /**
              * Amount
-             * @description The amount of the transaction in cents.
+             * @description The amount of the transaction in USD
              * @example 10.00
              */
             amount: string;
+            /**
+             * Balance After Transaction
+             * @description The balance after the transaction in USD
+             * @example 100.00
+             */
+            balance_after_transaction?: string | null;
             /**
              * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
              * @example deposit
@@ -1544,6 +1550,8 @@ export interface operations {
                 sorted_order?: string;
                 amount__gte?: number | null;
                 amount__lte?: number | null;
+                balance_after_transaction__gte?: number | null;
+                balance_after_transaction__lte?: number | null;
                 user_wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
                 user_wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
                 created_at__gte?: string | null;
