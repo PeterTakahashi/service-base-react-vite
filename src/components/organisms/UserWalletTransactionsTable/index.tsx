@@ -20,8 +20,8 @@ export const UserWalletTransactionsTable: React.FC<
     pageSize: 10,
   });
   const [query, setQuery] = useState<UserWalletTransactionListRequestQuery>({
-    sorted_by: "created_at",
-    sorted_order: "asc",
+    sorted_by: sorts[0].sorted_by,
+    sorted_order: sorts[0].sorted_order,
     limit: pagination.pageSize,
     offset: pagination.pageIndex * pagination.pageSize,
   });
