@@ -1,15 +1,29 @@
-# 🚀 FastAPI Auth Starter Kit — Google & GitHub OAuth + React
+# 🚀 Service Base for Generative AI APIs — FastAPI & React
 
-This is a starter project for building an AI web service with FastAPI and React.
+This project provides a robust and comprehensive foundation for building generative AI APIs, similar to those offered by OpenAI or Gemini. It combines essential features often found in separate services, such as API Gateway functionalities (like Kong) and wallet/metering capabilities (like OpenMeter), into a single, integrated open-source solution.
 
-If you're using the [fastapi-users](https://github.com/fastapi-users/fastapi-users) library for authentication, you'll find there's a lot to set up: configuring APIs, setting up Google and GitHub OAuth, adding tests with pytest, setting up a code linter, and more. It can take a lot of time.
+## Key Features
 
-And if you rely too much on LLM-generated code, the result is often insecure and messy.
+This project is designed to accelerate your development of AI-powered web services by offering out-of-the-box support for:
 
-So I created this project to save you time and give you a clean starting point.
+- **OAuth2.0 Authentication**: Secure user authentication and authorization.
+- **API Key Management**: Robust system for generating, managing, and revoking API keys for your users.
+- **API Gateway Functionality**: Core features for routing and managing API requests.
+- **Stripe Payment Integration**: Seamless handling of payments and subscriptions.
+- **User Wallet System**: Integrated wallet for managing user balances.
+- **Wallet Transaction Tracking**: Detailed logging and display of all wallet transactions.
+- **Organization Management**: Support for managing users within organizations.
 
-- Backend (FastAPI): [service-base-auth-fastapi](https://github.com/PeterTakahashi/service-base-auth-fastapi)
-- Frontend (React + Vite): [service-base-auth-react-vite](https://github.com/PeterTakahashi/service-base-auth-react-vite)
+## Why This Project?
+
+Building a secure and scalable AI web service from scratch involves significant effort, especially when dealing with authentication, API management, and billing. While libraries like `fastapi-users` simplify authentication, integrating various components like OAuth, API key management, and payment systems can be time-consuming and prone to security vulnerabilities if not handled correctly.
+
+This project aims to save you time and provide a clean, secure, and well-structured starting point. It addresses common challenges by offering a pre-configured, integrated solution that combines the best practices for:
+
+- **API Docs (OpenAPI):** [https://raw.githubusercontent.com/PeterTakahashi/service-base-fastapi/refs/heads/main/docs/openapi.json](https://raw.githubusercontent.com/PeterTakahashi/service-base-fastapi/refs/heads/main/docs/openapi.json)
+- **Frontend Storybook:** [https://service-base-react-vite-storybook.vercel.app/?path=/docs/configure-your-project--docs](https://service-base-react-vite-storybook.vercel.app/?path=/docs/configure-your-project--docs)
+- **Backend Repository:** [https://github.com/PeterTakahashi/service-base-fastapi.git](https://github.com/PeterTakahashi/service-base-fastapi.git)
+- **Frontend Repository:** [https://github.com/PeterTakahashi/service-base-react-vite.git](https://github.com/PeterTakahashi/service-base-react-vite.git)
 
 ## Backend Repository
 
