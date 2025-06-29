@@ -42,28 +42,48 @@ npx openapi-typescript config/openapi.json --output src/types/api/base.ts
 
 ### SignIn
 
-<img src="docs/img/auth/SignIn.png" width="600" />
+<img src="docs/img/front/signin.png" width="700" />
 
-### SignUp
+### Account
 
-<img src="docs/img/auth/SignUp.png" width="600" />
+<img src="docs/img/front/account.png" width="700" />
+
+### Add Funds
+
+<img src="docs/img/front/addfunds.png" width="700" />
+
+### API Key List
+
+<img src="docs/img/front/apikeylist.png" width="700" />
+
+### Create API Key
+
+<img src="docs/img/front/createapikey.png" width="700" />
+
+### Edit Email
+
+<img src="docs/img/front/editemail.png" width="700" />
 
 ### Forgot Password
 
-<img src="docs/img/auth/ForgotPassword.png" width="600" />
+<img src="docs/img/front/forgotpassword.png" width="700" />
 
-### Check Your Email
+### Home
 
-<img src="docs/img/auth/CheckYourEmail.png" width="600" />
+<img src="docs/img/front/home.png" width="700" />
 
-### Not Verified
+### Input Card
 
-<img src="docs/img/auth/NotVerified.png" width="600" />
+<img src="docs/img/front/inputcard.png" width="700" />
 
-### Home Page
+### Sign Up
 
-<img src="docs/img/auth/HomePage.png" width="600" />
+<img src="docs/img/front/signup.png" width="700" />
 
-### Storybook
+### Transactions
 
-<img src="docs/img/storyboard/AuthForm.png" width="600" />
+<img src="docs/img/front/transactions.png" width="700" />
+
+### Wallet
+
+<img src="docs/img/front/wallet.png" width="700" />
