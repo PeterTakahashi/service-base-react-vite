@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { fetcher } from "@/features/hooks/swr/fetcher/fetcher";
-import type { UserWithUserWalletRead } from "@/types/api/user/user";
+import type { UserWithRelationRead } from "@/types/api/user/user";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/features/hooks/context/useAuth";
 
@@ -10,7 +10,7 @@ export function useUser() {
     error,
     isLoading,
     mutate,
-  } = useSWR<UserWithUserWalletRead>("/users/me", fetcher);
+  } = useSWR<UserWithRelationRead>("/users/me", fetcher);
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuth();
 

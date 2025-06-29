@@ -1,7 +1,7 @@
 import type { components, operations } from "@/types/api/base";
 
-export type UserWalletTransactionListResponse =
-  components["schemas"]["UserWalletTransactionListResponse"];
+export type UserWalletTransactionListRead =
+  components["schemas"]["UserWalletTransactionListRead"];
 
 export type UserWalletTransactionRead =
   components["schemas"]["UserWalletTransactionRead"][];

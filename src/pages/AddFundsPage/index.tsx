@@ -23,7 +23,10 @@ export function AddFundsPage() {
       const paymentIntent = await createPaymentIntent({
         amount: data.amount,
       });
-      setAmount(data.amount);
+      const amount: number = Math.abs(
+        Number(paymentIntent.amount_inclusive_tax)
+      );
+      setAmount(amount);
       setClientSecret(paymentIntent.client_secret);
     },
     [createPaymentIntent]

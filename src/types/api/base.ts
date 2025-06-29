@@ -249,23 +249,6 @@ export interface paths {
         patch: operations["users_patch_current_user_users_me_patch"];
         trace?: never;
     };
-    "/payment-intents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Payment Intents:Create Payment Intent */
-        post: operations["payment_intents_create_payment_intent_payment_intents_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/payment-intents/webhook": {
         parameters: {
             query?: never;
@@ -277,6 +260,23 @@ export interface paths {
         put?: never;
         /** Payment Intents:Update Payment Intent By Webhook */
         post: operations["payment_intents_update_payment_intent_by_webhook_payment_intents_webhook_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/payment-intents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Payment Intents:Create Payment Intent */
+        post: operations["payment_intents_create_payment_intent_users_payment_intents_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -389,10 +389,356 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/organizations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Organizations:List Organizations
+         * @description Retrieve a list of organizations with filtering, sorting, and pagination.
+         */
+        get: operations["organizations_list_organizations_organizations_get"];
+        put?: never;
+        /**
+         * Organizations:Create Organization
+         * @description Create a new organization.
+         */
+        post: operations["organizations_create_organization_organizations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Organizations:Get Organization
+         * @description Retrieve an organization by its ID.
+         */
+        get: operations["organizations_get_organization_organizations__organization_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Organizations:Delete Organization
+         * @description Delete an organization.
+         */
+        delete: operations["organizations_delete_organization_organizations__organization_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Organizations:Update Organization
+         * @description Update an existing organization.
+         */
+        patch: operations["organizations_update_organization_organizations__organization_id__patch"];
+        trace?: never;
+    };
+    "/organizations/{organization_id}/invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Organizations:Users:Invite */
+        post: operations["organizations_users_invite_organizations__organization_id__invite_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/invite/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Organizations:Users:Invite:Accept */
+        patch: operations["organizations_users_invite_accept_organizations__organization_id__invite_accept_patch"];
+        trace?: never;
+    };
+    "/organizations/{organization_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Organizations:Users */
+        get: operations["organizations_users_organizations__organization_id__users_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/users/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Organizations:User */
+        get: operations["organizations_user_organizations__organization_id__users__user_id__get"];
+        put?: never;
+        post?: never;
+        /** Organizations:User:Delete */
+        delete: operations["organizations_user_delete_organizations__organization_id__users__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/wallet-transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Organization Wallet Transactions:List Organization Wallet Transactions
+         * @description Retrieve a list of organization_wallet transactions with filtering, sorting, and pagination.
+         */
+        get: operations["organization_wallet_transactions_list_organization_wallet_transactions_organizations__organization_id__wallet_transactions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/wallet-transactions/{organization_wallet_transaction_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Organization Wallet Transactions:Get Organization Wallet Transaction */
+        get: operations["organization_wallet_transactions_get_organization_wallet_transaction_organizations__organization_id__wallet_transactions__organization_wallet_transaction_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/api-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Organization Api Keys:List Organization Api Keys
+         * @description Retrieve a list of organization API keys with filtering, sorting, and pagination.
+         */
+        get: operations["organization_api_keys_list_organization_api_keys_organizations__organization_id__api_keys_get"];
+        put?: never;
+        /**
+         * Organization Api Keys:Create Organization Api Key
+         * @description Create a new organization API key.
+         */
+        post: operations["organization_api_keys_create_organization_api_key_organizations__organization_id__api_keys_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/organizations/{organization_id}/api-keys/{organization_api_key_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Organization Api Keys:Get Organization Api Keys
+         * @description Retrieve a organization API key by its ID.
+         */
+        get: operations["organization_api_keys_get_organization_api_keys_organizations__organization_id__api_keys__organization_api_key_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Organization Api Keys:Delete Organization Api Key
+         * @description Delete a organization API key.
+         */
+        delete: operations["organization_api_keys_delete_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Organization Api Keys:Update Organization Api Key
+         * @description Update an existing organization API key.
+         */
+        patch: operations["organization_api_keys_update_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__patch"];
+        trace?: never;
+    };
+    "/organizations/{organization_id}/payment-intents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Organization::Payment Intents:Create Payment Intent */
+        post: operations["organization__payment_intents_create_payment_intent_organizations__organization_id__payment_intents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AddressRead */
+        AddressRead: {
+            /**
+             * City
+             * @description City, district, suburb, town, or village.
+             */
+            city: string;
+            /**
+             * Country
+             * @description ISO-3166-1 alpha-2 country code.
+             */
+            country: string;
+            /**
+             * Line1
+             * @description Address line 1 (street, PO Box, company name).
+             */
+            line1: string;
+            /**
+             * Line2
+             * @description Address line 2 (apartment, suite etc.).
+             */
+            line2?: string | null;
+            /**
+             * Postal Code
+             * @description ZIP or postal code.
+             */
+            postal_code: string;
+            /**
+             * State
+             * @description ISO-3166-2 subdivision code (e.g. 'NY' or 'TX', *without* country prefix).
+             */
+            state: string;
+        };
+        /** AddressWrite */
+        AddressWrite: {
+            /**
+             * City
+             * @description City, district, suburb, town, or village.
+             */
+            city: string;
+            /**
+             * Country
+             * @description ISO-3166-1 alpha-2 country code.
+             */
+            country: string;
+            /**
+             * Line1
+             * @description Address line 1 (street, PO Box, company name).
+             */
+            line1: string;
+            /**
+             * Line2
+             * @description Address line 2 (apartment, suite etc.).
+             */
+            line2?: string | null;
+            /**
+             * Postal Code
+             * @description ZIP or postal code.
+             */
+            postal_code: string;
+            /**
+             * State
+             * @description ISO-3166-2 subdivision code (e.g. 'NY' or 'TX', *without* country prefix).
+             */
+            state: string;
+        };
+        /** ApiKeyRead */
+        ApiKeyRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Api Key
+             * @description The actual API key
+             * @example 1234567890abcdef
+             */
+            api_key: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             * @description Creation datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description Last updated datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
+        };
         /** BearerResponse */
         BearerResponse: {
             /** Access Token */
@@ -547,6 +893,345 @@ export interface components {
             /** Authorization Url */
             authorization_url: string;
         };
+        /** OrganizationApiKeyCreate */
+        OrganizationApiKeyCreate: {
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+        };
+        /** OrganizationApiKeyListRead */
+        OrganizationApiKeyListRead: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["ApiKeyRead"][];
+        };
+        /** OrganizationApiKeyRead */
+        OrganizationApiKeyRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Api Key
+             * @description The actual API key
+             * @example 1234567890abcdef
+             */
+            api_key: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             * @description Creation datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description Last updated datetime of the API key
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
+            /** @description User who created the organization API key. */
+            created_by_user: components["schemas"]["UserRead"];
+        };
+        /** OrganizationApiKeyUpdate */
+        OrganizationApiKeyUpdate: {
+            /**
+             * Name
+             * @description Name of the API key
+             * @example My API Key
+             */
+            name: string;
+            /**
+             * Expires At
+             * @description Expiration datetime of the API key
+             * @example 2024-12-31T23:59:59Z
+             */
+            expires_at?: string | null;
+            /**
+             * Allowed Origin
+             * @description CORS allowed origin
+             * @example https://example.com
+             */
+            allowed_origin?: string | null;
+            /**
+             * Allowed Ip
+             * @description Allowed IP address
+             * @example 192.168.1.1
+             */
+            allowed_ip?: string | null;
+        };
+        /** OrganizationCreate */
+        OrganizationCreate: {
+            /**
+             * Name
+             * @description Organization name.
+             * @example Acme Inc.
+             */
+            name: string;
+            /**
+             * Description
+             * @description Organization description.
+             * @example A leading provider of innovative solutions.
+             */
+            description?: string | null;
+            /**
+             * Profile Image Key
+             * @description Key (e.g. S3/MinIO object key) of the profile image.
+             * @example org/1/profile.png
+             */
+            profile_image_key?: string | null;
+            /**
+             * Billing Email
+             * @description Billing contact e-mail address.
+             * @example billing@acme.com
+             */
+            billing_email?: string | null;
+            /**
+             * @description Registered address of the organization.
+             * @example {
+             *       "city": "Metropolis",
+             *       "country": "US",
+             *       "line1": "123 Main St",
+             *       "line2": "Suite 100",
+             *       "postal_code": "12345",
+             *       "state": "NY"
+             *     }
+             */
+            address: components["schemas"]["AddressWrite"];
+            /**
+             * Tax Type
+             * @description Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object
+             * @example VAT
+             */
+            tax_type?: string | null;
+            /**
+             * Tax Id
+             * @description Tax ID (e.g., VAT number).
+             * @example VAT123456789
+             */
+            tax_id?: string | null;
+        };
+        /** OrganizationListRead */
+        OrganizationListRead: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["OrganizationRead"][];
+        };
+        /** OrganizationRead */
+        OrganizationRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Name
+             * @description Organization name.
+             */
+            name: string;
+            /**
+             * Description
+             * @description Organization description.
+             */
+            description?: string | null;
+            /**
+             * Profile Image Key
+             * @description Profile image object key.
+             */
+            profile_image_key?: string | null;
+            /**
+             * Billing Email
+             * @description Billing contact e-mail.
+             */
+            billing_email?: string | null;
+            /**
+             * Tax Type
+             * @description Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object
+             */
+            tax_type?: string | null;
+            /**
+             * Tax Id
+             * @description Tax ID (e.g., VAT number).
+             */
+            tax_id?: string | null;
+            /** @description User who created the organization. */
+            created_by_user: components["schemas"]["UserRead"];
+            /** @description Registered address of the organization. */
+            address?: components["schemas"]["AddressRead"] | null;
+            /**
+             * Created At
+             * Format: date-time
+             * @description Record creation timestamp.
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description Record update timestamp.
+             */
+            updated_at: string;
+        };
+        /** OrganizationUpdate */
+        OrganizationUpdate: {
+            /**
+             * Name
+             * @description Organization name.
+             * @example Acme Inc.
+             */
+            name: string;
+            /**
+             * Description
+             * @description Organization description.
+             * @example A leading provider of innovative solutions.
+             */
+            description?: string | null;
+            /**
+             * Profile Image Key
+             * @description Key (e.g. S3/MinIO object key) of the profile image.
+             * @example org/1/profile.png
+             */
+            profile_image_key?: string | null;
+            /**
+             * Billing Email
+             * @description Billing contact e-mail address.
+             * @example billing@acme.com
+             */
+            billing_email?: string | null;
+            /**
+             * @description Registered address of the organization.
+             * @example {
+             *       "city": "Metropolis",
+             *       "country": "US",
+             *       "line1": "123 Main St",
+             *       "line2": "Suite 100",
+             *       "postal_code": "12345",
+             *       "state": "NY"
+             *     }
+             */
+            address: components["schemas"]["AddressWrite"];
+            /**
+             * Tax Type
+             * @description Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object
+             * @example VAT
+             */
+            tax_type?: string | null;
+            /**
+             * Tax Id
+             * @description Tax ID (e.g., VAT number).
+             * @example VAT123456789
+             */
+            tax_id?: string | null;
+        };
+        /** OrganizationUserInvite */
+        OrganizationUserInvite: {
+            /**
+             * Email
+             * Format: email
+             * @description The email address of the user to invite.
+             * @example user@example.com
+             */
+            email: string;
+        };
+        /** OrganizationWalletTransactionListRead */
+        OrganizationWalletTransactionListRead: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["WalletTransactionRead"][];
+        };
+        /** OrganizationWalletTransactionRead */
+        OrganizationWalletTransactionRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Amount
+             * @description The amount of the transaction in USD
+             * @example 10.00
+             */
+            amount: string;
+            /**
+             * Balance After Transaction
+             * @description The balance after the transaction in USD
+             * @example 100.00
+             */
+            balance_after_transaction?: string | null;
+            /**
+             * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
+             * @example deposit
+             */
+            wallet_transaction_type: components["schemas"]["WalletTransactionType"];
+            /**
+             * @description The status of the user_wallet transaction (e.g., 'pending', 'completed').
+             * @example completed
+             */
+            wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
+            /**
+             * Created At
+             * Format: date-time
+             * @description The date and time when the transaction was created.
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description The date and time when the transaction was last updated.
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
+        };
         /** PaymentIntentCreate */
         PaymentIntentCreate: {
             /**
@@ -570,6 +1255,12 @@ export interface components {
              * @example 10
              */
             amount: string;
+            /**
+             * Amount Inclusive Tax
+             * @description The amount to be charged inclusive of tax in the smallest currency unit.
+             * @example 11
+             */
+            amount_inclusive_tax: string;
             /**
              * Currency
              * @description The currency in which the payment intent is created.
@@ -620,7 +1311,7 @@ export interface components {
         UserApiKeyListRead: {
             meta: components["schemas"]["ListResponseMeta"];
             /** Data */
-            data: components["schemas"]["UserApiKeyRead"][];
+            data: components["schemas"]["ApiKeyRead"][];
         };
         /** UserApiKeyRead */
         UserApiKeyRead: {
@@ -702,10 +1393,7 @@ export interface components {
              */
             allowed_ip?: string | null;
         };
-        /**
-         * UserApiKeyVerifyResponse
-         * @description Response model for verifying an API key.
-         */
+        /** UserApiKeyVerifyResponse */
         UserApiKeyVerifyResponse: {
             /**
              * Is Valid
@@ -729,6 +1417,12 @@ export interface components {
              * @example password123%
              */
             password: string;
+        };
+        /** UserListRead */
+        UserListRead: {
+            meta: components["schemas"]["ListResponseMeta"];
+            /** Data */
+            data: components["schemas"]["UserRead"][];
         };
         /** UserRead */
         UserRead: {
@@ -759,11 +1453,20 @@ export interface components {
              * @example password123%
              */
             password?: string | null;
+            /**
+             * @description Registered address of the user.
+             * @example {
+             *       "city": "Metropolis",
+             *       "country": "US",
+             *       "line1": "123 Main St",
+             *       "line2": "Suite 100",
+             *       "postal_code": "12345",
+             *       "state": "NY"
+             *     }
+             */
+            address?: components["schemas"]["AddressWrite"] | null;
         };
-        /**
-         * UserWalletRead
-         * @description Schema for reading user_wallet information.
-         */
+        /** UserWalletRead */
         UserWalletRead: {
             /**
              * Balance
@@ -786,16 +1489,13 @@ export interface components {
              */
             updated_at: string;
         };
-        /** UserWalletTransactionListResponse */
-        UserWalletTransactionListResponse: {
+        /** UserWalletTransactionListRead */
+        UserWalletTransactionListRead: {
             meta: components["schemas"]["ListResponseMeta"];
             /** Data */
-            data: components["schemas"]["UserWalletTransactionRead"][];
+            data: components["schemas"]["WalletTransactionRead"][];
         };
-        /**
-         * UserWalletTransactionRead
-         * @description Schema for reading user_wallet transaction information.
-         */
+        /** UserWalletTransactionRead */
         UserWalletTransactionRead: {
             /**
              * Id
@@ -819,12 +1519,12 @@ export interface components {
              * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
              * @example deposit
              */
-            user_wallet_transaction_type: components["schemas"]["WalletTransactionType"];
+            wallet_transaction_type: components["schemas"]["WalletTransactionType"];
             /**
              * @description The status of the user_wallet transaction (e.g., 'pending', 'completed').
              * @example completed
              */
-            user_wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
+            wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
             /**
              * Created At
              * Format: date-time
@@ -840,8 +1540,8 @@ export interface components {
              */
             updated_at: string;
         };
-        /** UserWithUserWalletRead */
-        UserWithUserWalletRead: {
+        /** UserWithRelationRead */
+        UserWithRelationRead: {
             /** Id */
             id: unknown;
             /**
@@ -856,6 +1556,56 @@ export interface components {
             is_verified: boolean;
             /** @description The user_wallet associated with the user. */
             user_wallet: components["schemas"]["UserWalletRead"];
+            /** @description Address associated with the user. */
+            address?: components["schemas"]["AddressRead"] | null;
+        };
+        /**
+         * WalletTransactionRead
+         * @description Schema for reading user_wallet transaction information.
+         */
+        WalletTransactionRead: {
+            /**
+             * Id
+             * @description The ID of the object
+             * @example abcd1234xyzc
+             */
+            id: string;
+            /**
+             * Amount
+             * @description The amount of the transaction in USD
+             * @example 10.00
+             */
+            amount: string;
+            /**
+             * Balance After Transaction
+             * @description The balance after the transaction in USD
+             * @example 100.00
+             */
+            balance_after_transaction?: string | null;
+            /**
+             * @description The type of the user_wallet transaction (e.g., 'deposit', 'spend').
+             * @example deposit
+             */
+            wallet_transaction_type: components["schemas"]["WalletTransactionType"];
+            /**
+             * @description The status of the user_wallet transaction (e.g., 'pending', 'completed').
+             * @example completed
+             */
+            wallet_transaction_status: components["schemas"]["WalletTransactionStatus"];
+            /**
+             * Created At
+             * Format: date-time
+             * @description The date and time when the transaction was created.
+             * @example 2023-10-01T12:00:00Z
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             * @description The date and time when the transaction was last updated.
+             * @example 2023-10-01T12:00:00Z
+             */
+            updated_at: string;
         };
         /**
          * WalletTransactionStatus
@@ -1414,7 +2164,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserWithUserWalletRead"];
+                    "application/json": components["schemas"]["UserWithRelationRead"];
                 };
             };
             /** @description Validation error. */
@@ -1447,52 +2197,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserRead"];
+                    "application/json": components["schemas"]["UserWithRelationRead"];
                 };
             };
             /** @description Unprocessable Entity */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    payment_intents_create_payment_intent_payment_intents_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PaymentIntentCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaymentIntentCreateResponse"];
-                };
-            };
-            /** @description Unauthorized access. */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Validation error. */
             422: {
                 headers: {
                     [name: string]: unknown;
@@ -1541,6 +2249,48 @@ export interface operations {
             };
         };
     };
+    payment_intents_create_payment_intent_users_payment_intents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentIntentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentIntentCreateResponse"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     user_wallet_transactions_list_user_wallet_transactions_user_wallet_transactions_get: {
         parameters: {
             query?: {
@@ -1552,8 +2302,8 @@ export interface operations {
                 amount__lte?: number | null;
                 balance_after_transaction__gte?: number | null;
                 balance_after_transaction__lte?: number | null;
-                user_wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
-                user_wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
+                wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
+                wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
                 created_at__gte?: string | null;
                 created_at__lte?: string | null;
                 updated_at__gte?: string | null;
@@ -1571,7 +2321,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserWalletTransactionListResponse"];
+                    "application/json": components["schemas"]["UserWalletTransactionListRead"];
                 };
             };
             /** @description Unauthorized access. */
@@ -1869,6 +2619,809 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserApiKeyVerifyResponse"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_list_organizations_organizations_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string | null;
+                sorted_order?: string;
+                name__icontains?: string | null;
+                description__icontains?: string | null;
+                billing_email__icontains?: string | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationListRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_create_organization_organizations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_get_organization_organizations__organization_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_delete_organization_organizations__organization_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_update_organization_organizations__organization_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_users_invite_organizations__organization_id__invite_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationUserInvite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_users_invite_accept_organizations__organization_id__invite_accept_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_users_organizations__organization_id__users_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string | null;
+                sorted_order?: string;
+                email__icontains?: string | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserListRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_user_organizations__organization_id__users__user_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organizations_user_delete_organizations__organization_id__users__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_wallet_transactions_list_organization_wallet_transactions_organizations__organization_id__wallet_transactions_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string;
+                sorted_order?: string;
+                amount__gte?: number | null;
+                amount__lte?: number | null;
+                balance_after_transaction__gte?: number | null;
+                balance_after_transaction__lte?: number | null;
+                wallet_transaction_type__in?: components["schemas"]["WalletTransactionType"][] | null;
+                wallet_transaction_status__in?: components["schemas"]["WalletTransactionStatus"][] | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationWalletTransactionListRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_wallet_transactions_get_organization_wallet_transaction_organizations__organization_id__wallet_transactions__organization_wallet_transaction_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_wallet_transaction_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationWalletTransactionRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_api_keys_list_organization_api_keys_organizations__organization_id__api_keys_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                sorted_by?: string | null;
+                sorted_order?: string;
+                name__icontains?: string | null;
+                api_key__icontains?: string | null;
+                expires_at__gte?: string | null;
+                expires_at__lte?: string | null;
+                allowed_origin__icontains?: string | null;
+                allowed_ip__icontains?: string | null;
+                created_at__gte?: string | null;
+                created_at__lte?: string | null;
+                updated_at__gte?: string | null;
+                updated_at__lte?: string | null;
+            };
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationApiKeyListRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_api_keys_create_organization_api_key_organizations__organization_id__api_keys_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationApiKeyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_api_keys_get_organization_api_keys_organizations__organization_id__api_keys__organization_api_key_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_api_key_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_api_keys_delete_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_api_key_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization_api_keys_update_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_api_key_id: string;
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganizationApiKeyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganizationApiKeyRead"];
+                };
+            };
+            /** @description Unauthorized access. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Validation error. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    organization__payment_intents_create_payment_intent_organizations__organization_id__payment_intents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organization_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentIntentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentIntentCreateResponse"];
                 };
             };
             /** @description Unauthorized access. */

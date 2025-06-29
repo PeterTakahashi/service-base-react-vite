@@ -41,39 +41,39 @@ export const columns: ColumnDef<Row>[] = [
     },
   },
   {
-    id: "user_wallet_transaction_type",
+    id: "wallet_transaction_type",
     header: "Type",
     meta: {
       filterType: "checkbox",
-      filterKey: "user_wallet_transaction_type__in",
+      filterKey: "wallet_transaction_type__in",
       filterOptions: WALLET_TRANSACTION_TYPES.map((type) => ({
         label: type,
         value: type,
       })),
     },
-    accessorKey: "user_wallet_transaction_type",
+    accessorKey: "wallet_transaction_type",
     cell: ({ row }) => {
       const type: WalletTransactionType = row.getValue(
-        "user_wallet_transaction_type"
+        "wallet_transaction_type"
       );
       return <WalletTransactionTypeBadge type={type} />;
     },
   },
   {
-    id: "user_wallet_transaction_status",
+    id: "wallet_transaction_status",
     header: "Status",
     meta: {
       filterType: "checkbox",
-      filterKey: "user_wallet_transaction_status__in",
+      filterKey: "wallet_transaction_status__in",
       filterOptions: WALLET_TRANSACTION_STATUSES.map((status) => ({
         label: status,
         value: status,
       })),
     },
-    accessorKey: "user_wallet_transaction_status",
+    accessorKey: "wallet_transaction_status",
     cell: ({ row }) => {
       const status: WalletTransactionStatus = row.getValue(
-        "user_wallet_transaction_status"
+        "wallet_transaction_status"
       );
       return <WalletTransactionStatusBadge status={status} />;
     },

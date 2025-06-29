@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Service Base FastAPI",
-    "description": "Version 1 of the FastAPI Applicatoin",
+    "description": "Version 1 of the FastAPI Application",
     "version": "1.0.0"
   },
   "servers": [{ "url": "/app/v1" }],
@@ -1004,7 +1004,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserWithUserWalletRead"
+                  "$ref": "#/components/schemas/UserWithRelationRead"
                 }
               }
             }
@@ -1057,7 +1057,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserRead" }
+                "schema": {
+                  "$ref": "#/components/schemas/UserWithRelationRead"
+                }
               }
             }
           },
@@ -1099,89 +1101,6 @@
                           "title": "Invalid Password",
                           "detail": "Password must be at least 8 characters long.",
                           "source": { "pointer": "#/password" }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
-      }
-    },
-    "/payment-intents": {
-      "post": {
-        "tags": ["Payment Intents"],
-        "summary": "Payment Intents:Create Payment Intent",
-        "operationId": "payment_intents_create_payment_intent_payment_intents_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/PaymentIntentCreate" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaymentIntentCreateResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation error.",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
-                "examples": {
-                  "validation_error": {
-                    "summary": "Validation failed on input data.",
-                    "value": {
-                      "type": "about:blank",
-                      "title": "Unprocessable Entity",
-                      "status": 422,
-                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents",
-                      "errors": [
-                        {
-                          "status": "422",
-                          "code": "validation_error",
-                          "title": "Validation Error",
-                          "detail": "The input data did not pass validation checks.",
-                          "source": { "pointer": "#/body" }
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access.",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
-                "examples": {
-                  "unauthorized": {
-                    "summary": "Authentication credentials missing or invalid.",
-                    "value": {
-                      "type": "about:blank",
-                      "title": "Unauthorized",
-                      "status": 401,
-                      "instance": "http://127.0.0.1:8000/app/v1/payment-intents",
-                      "errors": [
-                        {
-                          "status": "401",
-                          "code": "unauthorized",
-                          "title": "Unauthorized",
-                          "detail": "Authentication credentials were not provided or are invalid."
                         }
                       ]
                     }
@@ -1260,6 +1179,89 @@
             }
           }
         }
+      }
+    },
+    "/users/payment-intents": {
+      "post": {
+        "tags": ["Payment Intents"],
+        "summary": "Payment Intents:Create Payment Intent",
+        "operationId": "payment_intents_create_payment_intent_users_payment_intents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentIntentCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentIntentCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/users/payment-intents",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/users/payment-intents",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }]
       }
     },
     "/user-wallet-transactions": {
@@ -1350,7 +1352,7 @@
             }
           },
           {
-            "name": "user_wallet_transaction_type__in",
+            "name": "wallet_transaction_type__in",
             "in": "query",
             "required": false,
             "schema": {
@@ -1363,11 +1365,11 @@
                 },
                 { "type": "null" }
               ],
-              "title": "User Wallet Transaction Type  In"
+              "title": "Wallet Transaction Type  In"
             }
           },
           {
-            "name": "user_wallet_transaction_status__in",
+            "name": "wallet_transaction_status__in",
             "in": "query",
             "required": false,
             "schema": {
@@ -1380,7 +1382,7 @@
                 },
                 { "type": "null" }
               ],
-              "title": "User Wallet Transaction Status  In"
+              "title": "Wallet Transaction Status  In"
             }
           },
           {
@@ -1438,7 +1440,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserWalletTransactionListResponse"
+                  "$ref": "#/components/schemas/UserWalletTransactionListRead"
                 }
               }
             }
@@ -2289,10 +2291,2262 @@
           }
         }
       }
+    },
+    "/organizations": {
+      "get": {
+        "tags": ["Organizations"],
+        "summary": "Organizations:List Organizations",
+        "description": "Retrieve a list of organizations with filtering, sorting, and pagination.",
+        "operationId": "organizations_list_organizations_organizations_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "default": "id",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "name__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Name  Icontains"
+            }
+          },
+          {
+            "name": "description__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Description  Icontains"
+            }
+          },
+          {
+            "name": "billing_email__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Billing Email  Icontains"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Gte"
+            }
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Lte"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationListRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Organizations"],
+        "summary": "Organizations:Create Organization",
+        "description": "Create a new organization.",
+        "operationId": "organizations_create_organization_organizations_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/OrganizationCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrganizationRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}": {
+      "get": {
+        "tags": ["Organizations"],
+        "summary": "Organizations:Get Organization",
+        "description": "Retrieve an organization by its ID.",
+        "operationId": "organizations_get_organization_organizations__organization_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrganizationRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Organizations"],
+        "summary": "Organizations:Update Organization",
+        "description": "Update an existing organization.",
+        "operationId": "organizations_update_organization_organizations__organization_id__patch",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/OrganizationUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrganizationRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Organizations"],
+        "summary": "Organizations:Delete Organization",
+        "description": "Delete an organization.",
+        "operationId": "organizations_delete_organization_organizations__organization_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invite": {
+      "post": {
+        "tags": ["Organization User Invitation"],
+        "summary": "Organizations:Users:Invite",
+        "operationId": "organizations_users_invite_organizations__organization_id__invite_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationUserInvite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "user_organization_invitation_not_found": {
+                    "summary": "Organization invitation not found.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "user_organization_invitation_not_found",
+                          "title": "Invitation Not Found",
+                          "detail": "The organization invitation could not be found. Please check the invitation link or contact support."
+                        }
+                      ]
+                    }
+                  },
+                  "user_organization_invitation_expired": {
+                    "summary": "Organization invitation has expired.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "user_organization_invitation_expired",
+                          "title": "Invitation Expired",
+                          "detail": "The organization invitation has expired. Please request a new invitation."
+                        }
+                      ]
+                    }
+                  },
+                  "user_organization_invitation_already_assigned": {
+                    "summary": "Organization invitation already assigned",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite",
+                      "errors": [
+                        {
+                          "status": "400",
+                          "code": "user_organization_invitation_already_assigned",
+                          "title": "Invitation Already Assigned",
+                          "detail": "The organization invitation has already been assigned. You can log in to your account."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/invite/accept": {
+      "patch": {
+        "tags": ["Organization User Invitation"],
+        "summary": "Organizations:Users:Invite:Accept",
+        "operationId": "organizations_users_invite_accept_organizations__organization_id__invite_accept_patch",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite/accept",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/invite/accept",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/users": {
+      "get": {
+        "tags": ["Organization User"],
+        "summary": "Organizations:Users",
+        "operationId": "organizations_users_organizations__organization_id__users_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "default": "id",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "email__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Email  Icontains"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Gte"
+            }
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Lte"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserListRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/users/{user_id}": {
+      "get": {
+        "tags": ["Organization User"],
+        "summary": "Organizations:User",
+        "operationId": "organizations_user_organizations__organization_id__users__user_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "User Id" }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserRead" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users/{user_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users/{user_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Organization User"],
+        "summary": "Organizations:User:Delete",
+        "operationId": "organizations_user_delete_organizations__organization_id__users__user_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "User Id" }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users/{user_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/users/{user_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/wallet-transactions": {
+      "get": {
+        "tags": ["Organization Wallet Transactions"],
+        "summary": "Organization Wallet Transactions:List Organization Wallet Transactions",
+        "description": "Retrieve a list of organization_wallet transactions with filtering, sorting, and pagination.",
+        "operationId": "organization_wallet_transactions_list_organization_wallet_transactions_organizations__organization_id__wallet_transactions_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "created_at",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "amount__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Amount  Gte"
+            }
+          },
+          {
+            "name": "amount__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Amount  Lte"
+            }
+          },
+          {
+            "name": "balance_after_transaction__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Balance After Transaction  Gte"
+            }
+          },
+          {
+            "name": "balance_after_transaction__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Balance After Transaction  Lte"
+            }
+          },
+          {
+            "name": "wallet_transaction_type__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletTransactionType"
+                  }
+                },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Type  In"
+            }
+          },
+          {
+            "name": "wallet_transaction_status__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WalletTransactionStatus"
+                  }
+                },
+                { "type": "null" }
+              ],
+              "title": "Wallet Transaction Status  In"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Gte"
+            }
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Lte"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationWalletTransactionListRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/wallet-transactions",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/wallet-transactions",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/wallet-transactions/{organization_wallet_transaction_id}": {
+      "get": {
+        "tags": ["Organization Wallet Transactions"],
+        "summary": "Organization Wallet Transactions:Get Organization Wallet Transaction",
+        "operationId": "organization_wallet_transactions_get_organization_wallet_transaction_organizations__organization_id__wallet_transactions__organization_wallet_transaction_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_wallet_transaction_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Organization Wallet Transaction Id"
+            }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationWalletTransactionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/wallet-transactions/{organization_wallet_transaction_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/wallet-transactions/{organization_wallet_transaction_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/api-keys": {
+      "get": {
+        "tags": ["Organization API Keys"],
+        "summary": "Organization Api Keys:List Organization Api Keys",
+        "description": "Retrieve a list of organization API keys with filtering, sorting, and pagination.",
+        "operationId": "organization_api_keys_list_organization_api_keys_organizations__organization_id__api_keys_get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "sorted_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "default": "id",
+              "title": "Sorted By"
+            }
+          },
+          {
+            "name": "sorted_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc",
+              "title": "Sorted Order"
+            }
+          },
+          {
+            "name": "name__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Name  Icontains"
+            }
+          },
+          {
+            "name": "api_key__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Api Key  Icontains"
+            }
+          },
+          {
+            "name": "expires_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Expires At  Gte"
+            }
+          },
+          {
+            "name": "expires_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Expires At  Lte"
+            }
+          },
+          {
+            "name": "allowed_origin__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Allowed Origin  Icontains"
+            }
+          },
+          {
+            "name": "allowed_ip__icontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Allowed Ip  Icontains"
+            }
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Gte"
+            }
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Created At  Lte"
+            }
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Gte"
+            }
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "type": "string", "format": "date-time" },
+                { "type": "null" }
+              ],
+              "title": "Updated At  Lte"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationApiKeyListRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Organization API Keys"],
+        "summary": "Organization Api Keys:Create Organization Api Key",
+        "description": "Create a new organization API key.",
+        "operationId": "organization_api_keys_create_organization_api_key_organizations__organization_id__api_keys_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationApiKeyCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationApiKeyRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/api-keys/{organization_api_key_id}": {
+      "get": {
+        "tags": ["Organization API Keys"],
+        "summary": "Organization Api Keys:Get Organization Api Keys",
+        "description": "Retrieve a organization API key by its ID.",
+        "operationId": "organization_api_keys_get_organization_api_keys_organizations__organization_id__api_keys__organization_api_key_id__get",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Api Key Id" }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationApiKeyRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Organization API Keys"],
+        "summary": "Organization Api Keys:Update Organization Api Key",
+        "description": "Update an existing organization API key.",
+        "operationId": "organization_api_keys_update_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__patch",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Api Key Id" }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationApiKeyUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationApiKeyRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Organization API Keys"],
+        "summary": "Organization Api Keys:Delete Organization Api Key",
+        "description": "Delete a organization API key.",
+        "operationId": "organization_api_keys_delete_organization_api_key_organizations__organization_id__api_keys__organization_api_key_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Api Key Id" }
+          },
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/api-keys/{organization_api_key_id}",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/payment-intents": {
+      "post": {
+        "tags": ["Payment Intents"],
+        "summary": "Organization::Payment Intents:Create Payment Intent",
+        "operationId": "organization__payment_intents_create_payment_intent_organizations__organization_id__payment_intents_post",
+        "security": [{ "OAuth2PasswordBearer": [] }, { "APIKeyCookie": [] }],
+        "parameters": [
+          {
+            "name": "organization_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Organization Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentIntentCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentIntentCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation failed on input data.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unprocessable Entity",
+                      "status": 422,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/payment-intents",
+                      "errors": [
+                        {
+                          "status": "422",
+                          "code": "validation_error",
+                          "title": "Validation Error",
+                          "detail": "The input data did not pass validation checks.",
+                          "source": { "pointer": "#/body" }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "unauthorized": {
+                    "summary": "Authentication credentials missing or invalid.",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "instance": "http://127.0.0.1:8000/app/v1/organizations/{organization_id}/payment-intents",
+                      "errors": [
+                        {
+                          "status": "401",
+                          "code": "unauthorized",
+                          "title": "Unauthorized",
+                          "detail": "Authentication credentials were not provided or are invalid."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AddressRead": {
+        "properties": {
+          "city": {
+            "type": "string",
+            "title": "City",
+            "description": "City, district, suburb, town, or village."
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "Country",
+            "description": "ISO-3166-1 alpha-2 country code."
+          },
+          "line1": {
+            "type": "string",
+            "title": "Line1",
+            "description": "Address line 1 (street, PO Box, company name)."
+          },
+          "line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Line2",
+            "description": "Address line 2 (apartment, suite etc.)."
+          },
+          "postal_code": {
+            "type": "string",
+            "title": "Postal Code",
+            "description": "ZIP or postal code."
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "ISO-3166-2 subdivision code (e.g. 'NY' or 'TX', *without* country prefix)."
+          }
+        },
+        "type": "object",
+        "required": ["city", "country", "line1", "postal_code", "state"],
+        "title": "AddressRead"
+      },
+      "AddressWrite": {
+        "properties": {
+          "city": {
+            "type": "string",
+            "title": "City",
+            "description": "City, district, suburb, town, or village."
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "Country",
+            "description": "ISO-3166-1 alpha-2 country code."
+          },
+          "line1": {
+            "type": "string",
+            "title": "Line1",
+            "description": "Address line 1 (street, PO Box, company name)."
+          },
+          "line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Line2",
+            "description": "Address line 2 (apartment, suite etc.)."
+          },
+          "postal_code": {
+            "type": "string",
+            "title": "Postal Code",
+            "description": "ZIP or postal code."
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "ISO-3166-2 subdivision code (e.g. 'NY' or 'TX', *without* country prefix)."
+          }
+        },
+        "type": "object",
+        "required": ["city", "country", "line1", "postal_code", "state"],
+        "title": "AddressWrite"
+      },
+      "ApiKeyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key",
+            "description": "The actual API key",
+            "example": "1234567890abcdef"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Creation datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Last updated datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "api_key", "created_at", "updated_at"],
+        "title": "ApiKeyRead"
+      },
       "BearerResponse": {
         "properties": {
           "access_token": { "type": "string", "title": "Access Token" },
@@ -2490,6 +4744,460 @@
         "required": ["authorization_url"],
         "title": "OAuth2AuthorizeResponse"
       },
+      "OrganizationApiKeyCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "OrganizationApiKeyCreate"
+      },
+      "OrganizationApiKeyListRead": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/ApiKeyRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "OrganizationApiKeyListRead"
+      },
+      "OrganizationApiKeyRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "api_key": {
+            "type": "string",
+            "title": "Api Key",
+            "description": "The actual API key",
+            "example": "1234567890abcdef"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Creation datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Last updated datetime of the API key",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "created_by_user": {
+            "$ref": "#/components/schemas/UserRead",
+            "description": "User who created the organization API key."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "api_key",
+          "created_at",
+          "updated_at",
+          "created_by_user"
+        ],
+        "title": "OrganizationApiKeyRead"
+      },
+      "OrganizationApiKeyUpdate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the API key",
+            "example": "My API Key"
+          },
+          "expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Expires At",
+            "description": "Expiration datetime of the API key",
+            "example": "2024-12-31T23:59:59Z"
+          },
+          "allowed_origin": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Origin",
+            "description": "CORS allowed origin",
+            "example": "https://example.com"
+          },
+          "allowed_ip": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Allowed Ip",
+            "description": "Allowed IP address",
+            "example": "192.168.1.1"
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "OrganizationApiKeyUpdate"
+      },
+      "OrganizationCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Name",
+            "description": "Organization name.",
+            "example": "Acme Inc."
+          },
+          "description": {
+            "anyOf": [
+              { "type": "string", "maxLength": 1000 },
+              { "type": "null" }
+            ],
+            "title": "Description",
+            "description": "Organization description.",
+            "example": "A leading provider of innovative solutions."
+          },
+          "profile_image_key": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Profile Image Key",
+            "description": "Key (e.g. S3/MinIO object key) of the profile image.",
+            "example": "org/1/profile.png"
+          },
+          "billing_email": {
+            "anyOf": [
+              { "type": "string", "format": "email" },
+              { "type": "null" }
+            ],
+            "title": "Billing Email",
+            "description": "Billing contact e-mail address.",
+            "example": "billing@acme.com"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressWrite",
+            "description": "Registered address of the organization.",
+            "example": {
+              "city": "Metropolis",
+              "country": "US",
+              "line1": "123 Main St",
+              "line2": "Suite 100",
+              "postal_code": "12345",
+              "state": "NY"
+            }
+          },
+          "tax_type": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Type",
+            "description": "Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object",
+            "example": "VAT"
+          },
+          "tax_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Id",
+            "description": "Tax ID (e.g., VAT number).",
+            "example": "VAT123456789"
+          }
+        },
+        "type": "object",
+        "required": ["name", "address"],
+        "title": "OrganizationCreate"
+      },
+      "OrganizationListRead": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/OrganizationRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "OrganizationListRead"
+      },
+      "OrganizationRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Organization name."
+          },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description",
+            "description": "Organization description."
+          },
+          "profile_image_key": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Profile Image Key",
+            "description": "Profile image object key."
+          },
+          "billing_email": {
+            "anyOf": [
+              { "type": "string", "format": "email" },
+              { "type": "null" }
+            ],
+            "title": "Billing Email",
+            "description": "Billing contact e-mail."
+          },
+          "tax_type": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Type",
+            "description": "Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object"
+          },
+          "tax_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Id",
+            "description": "Tax ID (e.g., VAT number)."
+          },
+          "created_by_user": {
+            "$ref": "#/components/schemas/UserRead",
+            "description": "User who created the organization."
+          },
+          "address": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/AddressRead" },
+              { "type": "null" }
+            ],
+            "description": "Registered address of the organization."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Record creation timestamp."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Record update timestamp."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "created_by_user",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OrganizationRead"
+      },
+      "OrganizationUpdate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Name",
+            "description": "Organization name.",
+            "example": "Acme Inc."
+          },
+          "description": {
+            "anyOf": [
+              { "type": "string", "maxLength": 1000 },
+              { "type": "null" }
+            ],
+            "title": "Description",
+            "description": "Organization description.",
+            "example": "A leading provider of innovative solutions."
+          },
+          "profile_image_key": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Profile Image Key",
+            "description": "Key (e.g. S3/MinIO object key) of the profile image.",
+            "example": "org/1/profile.png"
+          },
+          "billing_email": {
+            "anyOf": [
+              { "type": "string", "format": "email" },
+              { "type": "null" }
+            ],
+            "title": "Billing Email",
+            "description": "Billing contact e-mail address.",
+            "example": "billing@acme.com"
+          },
+          "address": {
+            "$ref": "#/components/schemas/AddressWrite",
+            "description": "Registered address of the organization.",
+            "example": {
+              "city": "Metropolis",
+              "country": "US",
+              "line1": "123 Main St",
+              "line2": "Suite 100",
+              "postal_code": "12345",
+              "state": "NY"
+            }
+          },
+          "tax_type": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Type",
+            "description": "Tax type (e.g., eu_vat) for the organization. ref: https://docs.stripe.com/api/tax_ids/object",
+            "example": "VAT"
+          },
+          "tax_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Id",
+            "description": "Tax ID (e.g., VAT number).",
+            "example": "VAT123456789"
+          }
+        },
+        "type": "object",
+        "required": ["name", "address"],
+        "title": "OrganizationUpdate"
+      },
+      "OrganizationUserInvite": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "format": "email",
+            "title": "Email",
+            "description": "The email address of the user to invite.",
+            "example": "user@example.com"
+          }
+        },
+        "type": "object",
+        "required": ["email"],
+        "title": "OrganizationUserInvite"
+      },
+      "OrganizationWalletTransactionListRead": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/WalletTransactionRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "OrganizationWalletTransactionListRead"
+      },
+      "OrganizationWalletTransactionRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "amount": {
+            "type": "string",
+            "title": "Amount",
+            "description": "The amount of the transaction in USD",
+            "example": "10.00"
+          },
+          "balance_after_transaction": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Balance After Transaction",
+            "description": "The balance after the transaction in USD",
+            "example": "100.00"
+          },
+          "wallet_transaction_type": {
+            "$ref": "#/components/schemas/WalletTransactionType",
+            "description": "The type of the user_wallet transaction (e.g., 'deposit', 'spend').",
+            "example": "deposit"
+          },
+          "wallet_transaction_status": {
+            "$ref": "#/components/schemas/WalletTransactionStatus",
+            "description": "The status of the user_wallet transaction (e.g., 'pending', 'completed').",
+            "example": "completed"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "The date and time when the transaction was created.",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "The date and time when the transaction was last updated.",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "amount",
+          "wallet_transaction_type",
+          "wallet_transaction_status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OrganizationWalletTransactionRead"
+      },
       "PaymentIntentCreate": {
         "properties": {
           "amount": {
@@ -2518,6 +5226,12 @@
             "description": "The amount to be charged in the smallest currency unit (e.g., cents for USD).",
             "example": "10"
           },
+          "amount_inclusive_tax": {
+            "type": "string",
+            "title": "Amount Inclusive Tax",
+            "description": "The amount to be charged inclusive of tax in the smallest currency unit.",
+            "example": "11"
+          },
           "currency": {
             "type": "string",
             "title": "Currency",
@@ -2538,7 +5252,14 @@
           }
         },
         "type": "object",
-        "required": ["id", "amount", "currency", "client_secret", "status"],
+        "required": [
+          "id",
+          "amount",
+          "amount_inclusive_tax",
+          "currency",
+          "client_secret",
+          "status"
+        ],
         "title": "PaymentIntentCreateResponse"
       },
       "UserApiKeyCreate": {
@@ -2581,7 +5302,7 @@
         "properties": {
           "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
           "data": {
-            "items": { "$ref": "#/components/schemas/UserApiKeyRead" },
+            "items": { "$ref": "#/components/schemas/ApiKeyRead" },
             "type": "array",
             "title": "Data"
           }
@@ -2699,8 +5420,7 @@
         },
         "type": "object",
         "required": ["is_valid"],
-        "title": "UserApiKeyVerifyResponse",
-        "description": "Response model for verifying an API key."
+        "title": "UserApiKeyVerifyResponse"
       },
       "UserCreate": {
         "properties": {
@@ -2722,6 +5442,19 @@
         "type": "object",
         "required": ["email", "password"],
         "title": "UserCreate"
+      },
+      "UserListRead": {
+        "properties": {
+          "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/UserRead" },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": ["meta", "data"],
+        "title": "UserListRead"
       },
       "UserRead": {
         "properties": {
@@ -2756,6 +5489,21 @@
             "title": "Password",
             "description": "The password of the user.",
             "example": "password123%"
+          },
+          "address": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/AddressWrite" },
+              { "type": "null" }
+            ],
+            "description": "Registered address of the user.",
+            "example": {
+              "city": "Metropolis",
+              "country": "US",
+              "line1": "123 Main St",
+              "line2": "Suite 100",
+              "postal_code": "12345",
+              "state": "NY"
+            }
           }
         },
         "type": "object",
@@ -2786,23 +5534,20 @@
         },
         "type": "object",
         "required": ["balance", "created_at", "updated_at"],
-        "title": "UserWalletRead",
-        "description": "Schema for reading user_wallet information."
+        "title": "UserWalletRead"
       },
-      "UserWalletTransactionListResponse": {
+      "UserWalletTransactionListRead": {
         "properties": {
           "meta": { "$ref": "#/components/schemas/ListResponseMeta" },
           "data": {
-            "items": {
-              "$ref": "#/components/schemas/UserWalletTransactionRead"
-            },
+            "items": { "$ref": "#/components/schemas/WalletTransactionRead" },
             "type": "array",
             "title": "Data"
           }
         },
         "type": "object",
         "required": ["meta", "data"],
-        "title": "UserWalletTransactionListResponse"
+        "title": "UserWalletTransactionListRead"
       },
       "UserWalletTransactionRead": {
         "properties": {
@@ -2824,12 +5569,12 @@
             "description": "The balance after the transaction in USD",
             "example": "100.00"
           },
-          "user_wallet_transaction_type": {
+          "wallet_transaction_type": {
             "$ref": "#/components/schemas/WalletTransactionType",
             "description": "The type of the user_wallet transaction (e.g., 'deposit', 'spend').",
             "example": "deposit"
           },
-          "user_wallet_transaction_status": {
+          "wallet_transaction_status": {
             "$ref": "#/components/schemas/WalletTransactionStatus",
             "description": "The status of the user_wallet transaction (e.g., 'pending', 'completed').",
             "example": "completed"
@@ -2853,15 +5598,14 @@
         "required": [
           "id",
           "amount",
-          "user_wallet_transaction_type",
-          "user_wallet_transaction_status",
+          "wallet_transaction_type",
+          "wallet_transaction_status",
           "created_at",
           "updated_at"
         ],
-        "title": "UserWalletTransactionRead",
-        "description": "Schema for reading user_wallet transaction information."
+        "title": "UserWalletTransactionRead"
       },
-      "UserWithUserWalletRead": {
+      "UserWithRelationRead": {
         "properties": {
           "id": { "title": "Id" },
           "email": { "type": "string", "format": "email", "title": "Email" },
@@ -2873,11 +5617,75 @@
           "user_wallet": {
             "$ref": "#/components/schemas/UserWalletRead",
             "description": "The user_wallet associated with the user."
+          },
+          "address": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/AddressRead" },
+              { "type": "null" }
+            ],
+            "description": "Address associated with the user."
           }
         },
         "type": "object",
         "required": ["id", "email", "user_wallet"],
-        "title": "UserWithUserWalletRead"
+        "title": "UserWithRelationRead"
+      },
+      "WalletTransactionRead": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "The ID of the object",
+            "example": "abcd1234xyzc"
+          },
+          "amount": {
+            "type": "string",
+            "title": "Amount",
+            "description": "The amount of the transaction in USD",
+            "example": "10.00"
+          },
+          "balance_after_transaction": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Balance After Transaction",
+            "description": "The balance after the transaction in USD",
+            "example": "100.00"
+          },
+          "wallet_transaction_type": {
+            "$ref": "#/components/schemas/WalletTransactionType",
+            "description": "The type of the user_wallet transaction (e.g., 'deposit', 'spend').",
+            "example": "deposit"
+          },
+          "wallet_transaction_status": {
+            "$ref": "#/components/schemas/WalletTransactionStatus",
+            "description": "The status of the user_wallet transaction (e.g., 'pending', 'completed').",
+            "example": "completed"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "The date and time when the transaction was created.",
+            "example": "2023-10-01T12:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "The date and time when the transaction was last updated.",
+            "example": "2023-10-01T12:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "amount",
+          "wallet_transaction_type",
+          "wallet_transaction_status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "WalletTransactionRead",
+        "description": "Schema for reading user_wallet transaction information."
       },
       "WalletTransactionStatus": {
         "type": "string",

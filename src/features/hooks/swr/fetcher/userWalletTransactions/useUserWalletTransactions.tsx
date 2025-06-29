@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { fetcher } from "@/features/hooks/swr/fetcher/fetcher";
 import type {
-  UserWalletTransactionListResponse,
+  UserWalletTransactionListRead,
   UserWalletTransactionListRequestQuery,
 } from "@/types/api/userWalletTransaction/userWalletTransaction";
 import { buildQueryString } from "@/lib/buildQueryString";
@@ -11,7 +11,7 @@ export function useUserWalletTransactions(
 ) {
   const queryString = buildQueryString(query);
   const { data, error, isLoading, mutate } =
-    useSWR<UserWalletTransactionListResponse>(
+    useSWR<UserWalletTransactionListRead>(
       `/user-wallet-transactions?${queryString}`,
       fetcher
     );
