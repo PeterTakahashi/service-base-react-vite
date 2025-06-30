@@ -1,0 +1,5 @@
+.storybook
+.github
+public/vite.svg
+src/assets/react.svg
+*.stories.tsx
